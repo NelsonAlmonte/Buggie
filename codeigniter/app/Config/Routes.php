@@ -31,6 +31,12 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+$routes->group('project', static function ($routes) {
+    $routes->get('/', 'Project::projects');
+    $routes->get('add', 'Project::add');
+    $routes->post('save', 'Project::save');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

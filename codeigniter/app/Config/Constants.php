@@ -92,3 +92,7 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
+
+// Custom constants
+define('MESSAGE_SUCCESS', 'Action done successfully');
+define('MESSAGE_ERROR', 'There is appear to be an error');

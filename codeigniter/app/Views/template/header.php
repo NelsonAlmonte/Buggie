@@ -15,7 +15,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="#" class="logo d-flex align-items-center">
+        <a href="/" class="logo d-flex align-items-center">
           <i class="bi bi-bug me-2"></i>
           <span class="d-none d-lg-block">Buggie</span>
         </a>
@@ -121,7 +121,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center text-white" href="#">
                 <i class="bi bi-people"></i>
-                <span>Users</span>
+                <span>Collaborators</span>
               </a>
             </li>
           </ul>
@@ -163,14 +163,14 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="/">
           <i class="bi bi-house"></i>
           <span>Home</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="<?=site_url('project')?>">
           <i class="bi bi-briefcase"></i>
           <span>Projects</span>
         </a>
@@ -216,7 +216,3 @@
   </aside>
 
   <main id="main" class="main">
-    <div class="container fluid">
-      <h2>Under construction</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem saepe, voluptas, pariatur aspernatur nostrum tempora dignissimos velit recusandae placeat culpa suscipit obcaecati. Numquam.</p>
-    </div>
