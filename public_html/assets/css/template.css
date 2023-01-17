@@ -1,8 +1,21 @@
+:root {
+  scroll-behavior: smooth;
+  /* Template colors */
+  --color-dominant: #222831; /* %60 */
+  --color-secondary: #393E46; /* %30 */
+  --color-accent: #3282B8; /* %10 */
+}
+
+body {
+  background-color: var(--color-dominant);
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 .logo {
   line-height: 1;
+  color: var(--color-accent);
 }
 
 @media (min-width: 1200px) {
@@ -124,6 +137,7 @@
   min-width: 240px;
   padding-bottom: 0;
   top: 8px !important;
+  background-color: var(--color-dominant);
   box-shadow: 0 5px 20px rgb(0 0 0 / 20%);
   border: none;
 }
@@ -154,15 +168,15 @@
 }
 
 .header-nav .profile .dropdown-item:hover {
-  background-color: var(--bs-tertiary-bg);
+  background-color: var(--color-secondary);
 }
 
 .header-nav .nav-item .nav-link {
-  color: #f3f3f3c0;
+  color: #fff;
 }
 
 .header-nav .nav-item .nav-link:hover {
-  color: #fff;
+  color: var(--color-accent);
 }
 
 /*--------------------------------------------------------------
@@ -179,7 +193,7 @@
   padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #aab7cf transparent;
+  scrollbar-color: var(--color-secondary) transparent;
 }
 
 @media (max-width: 1199px) {
@@ -191,11 +205,11 @@
 .sidebar::-webkit-scrollbar {
   width: 5px;
   height: 8px;
-  background-color: #fff;
+  background-color: var(--color-dominant);
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: #aab7cf;
+  background-color: var(--color-secondary);
 }
 
 @media (min-width: 1200px) {
@@ -275,7 +289,7 @@
 
 .sidebar-nav .nav-link:hover {
   color: #fff;
-  background: var(--bs-tertiary-bg);
+  background: var(--color-secondary);
 }
 
 .sidebar-nav .nav-link:hover i {
@@ -322,4 +336,19 @@
 
 .sidebar-nav .nav-content a.active i {
   background-color: #fff;
+}
+
+/*--------------------------------------------------------------
+# Main
+--------------------------------------------------------------*/
+#main {
+  margin-top: 60px;
+  padding: 20px 30px;
+  transition: all 0.3s;
+}
+
+@media (max-width: 1199px) {
+  #main {
+    padding: 20px;
+  }
 }

@@ -214,3 +214,9 @@
       </li>
     </ul>
   </aside>
+
+  <main id="main" class="main">
+    <div class="container fluid">
+      <h2>Under construction</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem saepe, voluptas, pariatur aspernatur nostrum tempora dignissimos velit recusandae placeat culpa suscipit obcaecati. Numquam.</p>
+    </div>
