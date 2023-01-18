@@ -95,4 +95,8 @@ define('EVENT_PRIORITY_HIGH', 10);
 
 // Custom constants
 define('MESSAGE_SUCCESS', 'Action done successfully');
+define('MESSAGE_SUCCESS_COLOR', 'success');
+define('MESSAGE_SUCCESS_ICON', 'bi bi-check-circle');
 define('MESSAGE_ERROR', 'There is appear to be an error');
+define('MESSAGE_ERROR_COLOR', 'danger');
+define('MESSAGE_ERROR_ICON', 'bi bi-x-circle');

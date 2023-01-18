@@ -35,6 +35,8 @@ $routes->group('project', static function ($routes) {
     $routes->get('/', 'Project::projects');
     $routes->get('add', 'Project::add');
     $routes->post('save', 'Project::save');
+    $routes->get('(:segment)/edit/(:num)', 'Project::edit/$1/$2');
+    $routes->post('(:segment)/update/(:num)', 'Project::update/$1/$2');
 });
 
 /*

@@ -1,0 +1,7 @@
+.card-project {
+  transition: 0.3s;
+}
+
+.card-project:hover {
+  background-color: var(--color-accent);
+}

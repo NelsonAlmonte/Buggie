@@ -9,6 +9,7 @@
   <link href="/assets/third-party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link href="/assets/css/template.css" rel="stylesheet">
+  <link href="/assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -46,7 +47,7 @@
           </li>
           <li class="nav-item me-4">
             <a class="nav-link" href="#">
-              Users
+              Collaborators
             </a>
           </li>
         </ul>
@@ -64,13 +65,13 @@
               <h6>Kevin Anderson</h6>
               <span>Web Designer</span>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
@@ -94,25 +95,25 @@
               <h6>Projec 1 name</h6>
               <span>Project menu</span>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="#">
-                <i class="bi bi-grid"></i>
+                <i class="bi bi-columns-gap"></i>
                 <span>Dashboard</span>
               </a>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="#">
                 <i class="bi bi-bug"></i>
                 <span>Issues</span>
               </a>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="#">
                 <i class="bi bi-file-earmark-bar-graph"></i>
                 <span>Reports</span>
               </a>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="#">
                 <i class="bi bi-file-earmark-text"></i>
                 <span>Documents</span>
@@ -136,13 +137,13 @@
               <h6>Kevin Anderson</h6>
               <span>Web Designer</span>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
             </li>
-            <li class="mb-3">
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>

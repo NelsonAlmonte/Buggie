@@ -19,12 +19,13 @@ class CreateProjectsTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '250',
             ],
-            'owner' => [
+            'slug' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '250',
             ],
-            'deadline' => [
-                'type' => 'DATE',
+            'owner' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '250',
             ],
             'status' => [
                 'type'       => 'VARCHAR',

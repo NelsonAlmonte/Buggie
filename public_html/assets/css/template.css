@@ -2,14 +2,28 @@
   scroll-behavior: smooth;
   /* Template colors */
   --color-dominant: #222831; /* %60 */
-  --color-secondary: #393E46; /* %30 */
-  --color-accent: #3282B8; /* %10 */
+  --color-complementary: #393E46; /* %30 */
+  --color-accent: #0d6efd; /* %10 */
 }
 
 body {
   background-color: var(--color-dominant);
 }
 
+/*--------------------------------------------------------------
+# Background
+--------------------------------------------------------------*/
+.bg-dominant {
+  background-color: var(--color-dominant);
+}
+
+.bg-complementary {
+  background-color: var(--color-complementary);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -168,7 +182,7 @@ body {
 }
 
 .header-nav .profile .dropdown-item:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-complementary);
 }
 
 .header-nav .nav-item .nav-link {
@@ -193,7 +207,7 @@ body {
   padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-secondary) transparent;
+  scrollbar-color: var(--color-complementary) transparent;
 }
 
 @media (max-width: 1199px) {
@@ -209,7 +223,7 @@ body {
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background-color: var(--color-secondary);
+  background-color: var(--color-complementary);
 }
 
 @media (min-width: 1200px) {
@@ -289,7 +303,7 @@ body {
 
 .sidebar-nav .nav-link:hover {
   color: #fff;
-  background: var(--color-secondary);
+  background: var(--color-complementary);
 }
 
 .sidebar-nav .nav-link:hover i {
@@ -351,4 +365,44 @@ body {
   #main {
     padding: 20px;
   }
+}
+
+/*--------------------------------------------------------------
+# Button
+--------------------------------------------------------------*/
+.btn-rounded {
+  padding: 10px 14px;
+  font-weight: 500;
+  color: #fff;
+  border-radius: 0.875rem;
+}
+
+/*--------------------------------------------------------------
+# Dropdown
+--------------------------------------------------------------*/
+
+.dropdown-menu {
+  /* min-width: 240px; */
+  padding-bottom: 0;
+  top: 8px !important;
+  background-color: var(--color-dominant);
+  box-shadow: 0 5px 20px rgb(0 0 0 / 20%);
+  border: none;
+}
+
+.dropdown-menu .dropdown-item {
+  font-size: 14px;
+  padding: 10px 15px;
+  transition: 0.3s;
+  border-radius: 10px;
+}
+
+.dropdown-menu .dropdown-item i {
+  margin-right: 10px;
+  font-size: 16px;
+  line-height: 0;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--color-complementary);
 }
