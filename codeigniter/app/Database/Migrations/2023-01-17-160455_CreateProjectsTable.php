@@ -23,6 +23,10 @@ class CreateProjectsTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '250',
             ],
+            'description' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '250',
+            ],
             'owner' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '250',
@@ -31,11 +35,19 @@ class CreateProjectsTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '50'
             ],
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
-            'updated_at TIMESTAMP NULL',
-            'deleted_at TIMESTAMP NULL',
+            'start_date' => [
+                'type'       => 'date',
+            ],
+            'end_date' => [
+                'type'       => 'date',
+                'null'       => true
+            ],
+            'completed_date' => [
+                'type'       => 'date',
+                'null'       => true
+            ],
         ]);
-        $this->forge->addKey('id', true);
+        $this->forge->addPrimaryKey('id');
         $this->forge->createTable('projects');
     }
 

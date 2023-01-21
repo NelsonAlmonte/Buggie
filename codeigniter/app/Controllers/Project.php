@@ -10,6 +10,7 @@ class Project extends BaseController
 
   public function projects()
   {
+    helper('text');
     $projectModel = model(ProjectModel::class);
 
     $data['projects'] = $projectModel->getProjects();
@@ -34,8 +35,11 @@ class Project extends BaseController
     $data = [
       'name' => $this->request->getPost('name'),
       'slug' => url_title($_POST['name'], '-', true),
+      'description' => $this->request->getPost('description'),
       'owner' => $this->request->getPost('owner'),
       'status' => $this->request->getPost('status'),
+      'start_date' => $this->request->getPost('start_date'),
+      'end_date' => $this->request->getPost('end_date'),
     ];
 
     if ($projectModel->saveProject($data)) {
@@ -68,15 +72,18 @@ class Project extends BaseController
 
   public function update($slug, $id)
   {
+    helper('url');
     $projectModel = model(ProjectModel::class);
 
     $data = [
       'id' => $id,
       'name' => $this->request->getPost('name'),
       'slug' => url_title($_POST['name'], '-', true),
+      'description' => $this->request->getPost('description'),
       'owner' => $this->request->getPost('owner'),
       'status' => $this->request->getPost('status'),
-      'updated_at' => date('Y-m-d H:i:s'),
+      'start_date' => $this->request->getPost('start_date'),
+      'end_date' => $this->request->getPost('end_date'),
     ];
 
     if ($projectModel->updateProject($data)) {
