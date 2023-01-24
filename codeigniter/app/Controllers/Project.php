@@ -24,7 +24,7 @@ class Project extends BaseController
   {
     return view('template/header')
       . view('project/add')
-      . view('template/footer');        
+      . view('template/footer');
   }
 
   public function save()
@@ -67,7 +67,7 @@ class Project extends BaseController
 
     return view('template/header')
       . view('project/edit', $data)
-      . view('template/footer');        
+      . view('template/footer');
   }
 
   public function update($slug, $id)
@@ -101,5 +101,18 @@ class Project extends BaseController
       ]);
       return redirect()->to('project/edit/' . $id);
     }
+  }
+
+  public function dashboard($slug)
+  {
+    helper('text');
+    
+    $projectModel = model(ProjectModel::class);
+
+    $data['project'] = $projectModel->getProject('', $slug);
+
+    return view('template/header')
+      . view('project/dashboard', $data)
+      . view('template/footer');
   }
 }

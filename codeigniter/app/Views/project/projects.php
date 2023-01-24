@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="d-flex align-items-center justify-content-between">
-    <h2>Projects view works</h2>
+    <h2>Projects you are working on</h2>
     <a class="btn btn-rounded btn-primary" href="<?=site_url('project/add')?>">Add project</a>
   </div>
   <?php if(session()->getFlashdata('message') !== null): ?>
@@ -17,7 +17,7 @@
       <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="card-body px-4 pt-3 pb-4">
           <div class="d-flex justify-content-between align-items-center mb-1">
-            <div class="project-status-badge text-capitalize" style="color: #0d6efd; background-color: #0d6efd1a;"><?=esc($project['status'])?></div>
+            <div class="status-badge text-capitalize" style="color: #0d6efd; background-color: #0d6efd1a; border: 1px solid #0d6efd;"><?=esc($project['status'])?></div>
             <div>
               <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false"><i
                   class="bi bi-three-dots"></i></a>

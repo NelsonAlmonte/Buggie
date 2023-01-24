@@ -6,12 +6,32 @@
   background-color: var(--color-accent);
 }
 
-.project-status-badge {
+.status-badge {
   font-weight: 700;
   font-size: 14px;
   text-decoration: none;
   border-radius: 0.5rem;
-  color: hsl(0, 0%, 100%);
+  color: #fff;
   padding: 4px 8px;
   transition: all 0.2s ease 0s;
+}
+
+.issues-card {
+  max-height: 350px;
+  min-height: 350px;
+}
+
+.issues-card::-webkit-scrollbar {
+  width: 16px;
+}
+
+.issues-card::-webkit-scrollbar-thumb {
+  background-color: var(--color-dominant);
+  border-radius: 10px;
+  border: 3px solid var(--color-complementary);
+}
+
+.issues-card::-webkit-scrollbar-track {
+  background: var(--color-complementary);
+  border-bottom-right-radius: 1rem;
 }

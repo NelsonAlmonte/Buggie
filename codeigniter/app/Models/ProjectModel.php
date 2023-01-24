@@ -29,11 +29,13 @@ class ProjectModel extends Model
         return $this->db->insertID();
     }
 
-    public function getProject($id)
+    public function getProject($id = '', $slug = '')
     {
         return $this->db
             ->table('projects')
-            ->getWhere(['id' => $id])
+            ->where('id', $id)
+            ->orWhere('slug', $slug)
+            ->get()
             ->getRowArray();
     }
 

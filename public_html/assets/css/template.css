@@ -9,6 +9,21 @@
 body {
   background-color: var(--color-dominant);
 }
+/* 
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-dominant);
+  border-radius: 10px;
+  border: 3px solid var(--color-complementary);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-complementary);
+  border-bottom-right-radius: 1rem;
+} */
 
 /*--------------------------------------------------------------
 # Background
@@ -375,6 +390,12 @@ body {
   font-weight: 500;
   color: #fff;
   border-radius: 0.875rem;
+  transition: 0.3s;
+}
+
+.btn-rounded:hover {
+  color: #fff;
+  background-color: var(--color-complementary);
 }
 
 /*--------------------------------------------------------------
@@ -405,4 +426,26 @@ body {
 
 .dropdown-menu .dropdown-item:hover {
   background-color: var(--color-complementary);
+}
+
+/*--------------------------------------------------------------
+# Text
+--------------------------------------------------------------*/
+
+.text-accent {
+  color: #fff;
+  transition: 0.2s;
+}
+
+.text-accent:hover {
+  color: var(--color-accent);
+}
+
+/*--------------------------------------------------------------
+# Card
+--------------------------------------------------------------*/
+
+.card-empty-icon {
+  max-width: 147px;
+  max-height: 147px;
 }
