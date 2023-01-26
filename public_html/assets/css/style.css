@@ -35,3 +35,8 @@
   background: var(--color-complementary);
   border-bottom-right-radius: 1rem;
 }
+
+.info-card-icon {
+  width: 70px;
+  height: 70px;
+}
