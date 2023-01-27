@@ -2,10 +2,15 @@
   <div class="d-flex justify-content-between align-items-center mb-5">
     <div>
       <h2><?=$project['name']?></h2>
-      <div class="status-badge d-inline-block text-capitalize"
-        style="color: #0d6efd; background-color: #0d6efd1a; border: 1px solid #0d6efd;">
+      <div class="status-badge d-inline-block text-capitalize" style="<?=esc($project['statusStyle'])?>">
         <?=esc($project['status'])?>
       </div>
+      <div class="d-inline-block mx-2">|</div>
+      <?php if($project['end_date'] != '0000-00-00'): ?>
+        <?php $endDate = new DateTime($project['end_date']);?>
+        <?php $startDate = new DateTime($project['start_date']);?>
+        <span><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></span>
+      <?php endif; ?>
       <div class="d-inline-block mx-2">|</div>
       <div class="d-inline-block">
         Owner: <span class="text-white"><?=esc($project['owner'])?></span>
@@ -139,7 +144,8 @@
   <div class="row">
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
-        <div class="d-flex justify-content-between align-items-center card-header bg-complementary rounded-top-4 px-4 py-3">
+        <div
+          class="d-flex justify-content-between align-items-center card-header bg-complementary rounded-top-4 px-4 py-3">
           <span class="fs-5 text-white">Latest issues</span>
           <div>
             <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false"><i

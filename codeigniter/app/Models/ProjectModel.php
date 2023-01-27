@@ -17,6 +17,8 @@ class ProjectModel extends Model
     {
         return $this->db
             ->table('projects')
+            ->select('projects.*, categories.name AS status, categories.color')
+            ->join('categories', 'categories.id = projects.status')
             ->get()
             ->getResultArray();
     }
@@ -33,8 +35,10 @@ class ProjectModel extends Model
     {
         return $this->db
             ->table('projects')
-            ->where('id', $id)
-            ->orWhere('slug', $slug)
+            ->select('projects.*, categories.name AS status, categories.color')
+            ->join('categories', 'categories.id = projects.status')
+            ->where('projects.id', $id)
+            ->orWhere('projects.slug', $slug)
             ->get()
             ->getRowArray();
     }

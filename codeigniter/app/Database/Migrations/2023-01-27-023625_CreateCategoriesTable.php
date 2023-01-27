@@ -21,8 +21,13 @@ class CreateCategoriesTable extends Migration
             ],
             'type' => [
                 'type'       => 'ENUM',
-                'constraint' => ['status', 'classification', 'severity'],
-                'default'    => 'status',
+                'constraint' => [
+                    'project_status', 
+                    'issue_status', 
+                    'classification', 
+                    'severity'
+                ],
+                'default'    => 'issue_status',
             ],
             'color' => [
                 'type'       => 'VARCHAR',

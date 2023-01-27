@@ -393,10 +393,10 @@ body {
   transition: 0.3s;
 }
 
-.btn-rounded:hover {
+/* .btn-rounded:hover {
   color: #fff;
   background-color: var(--color-complementary);
-}
+} */
 
 /*--------------------------------------------------------------
 # Dropdown

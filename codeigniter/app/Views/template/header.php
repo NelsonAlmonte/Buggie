@@ -23,30 +23,31 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div>
 
-      <nav class="header-nav d-none d-sm-block ms-3">
+      <?php $uri = service('uri')?>
+      <nav class="header-nav ms-3 <?=empty($uri->getSegment(2)) ? 'd-none' : 'd-none d-sm-block' ;?>">
         <ul class="d-flex align-items-center">
           <li class="nav-item me-4">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?=site_url('project/' . $uri->getSegment(2) . '/dashboard')?>">
               Dashboard
             </a>
           </li>
           <li class="nav-item me-4">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?=site_url('issue/' . $uri->getSegment(2))?>">
               Issues
             </a>
           </li>
           <li class="nav-item me-4">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?=site_url('report/' . $uri->getSegment(2))?>">
               Reports
             </a>
           </li>
           <li class="nav-item me-4">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?=site_url('document/' . $uri->getSegment(2))?>">
               Documents
             </a>
           </li>
           <li class="nav-item me-4">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?=site_url('collaborator/' . $uri->getSegment(2))?>">
               Collaborators
             </a>
           </li>
@@ -86,7 +87,7 @@
           </ul>
         </li>
 
-        <li class="nav-item dropdown d-block d-md-none pe-3">
+        <li class="nav-item dropdown pe-3 <?=empty($uri->getSegment(2)) ? 'd-none' : 'd-block d-md-none' ;?>">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <span class="ps-2"><i class="bi bi-briefcase"></i></span>
           </a>
@@ -96,31 +97,31 @@
               <span>Project menu</span>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('project/' . $uri->getSegment(2) . '/dashboard')?>">
                 <i class="bi bi-columns-gap"></i>
                 <span>Dashboard</span>
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('issue/' . $uri->getSegment(2))?>">
                 <i class="bi bi-bug"></i>
                 <span>Issues</span>
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('report/' . $uri->getSegment(2))?>">
                 <i class="bi bi-file-earmark-bar-graph"></i>
                 <span>Reports</span>
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('document/' . $uri->getSegment(2))?>">
                 <i class="bi bi-file-earmark-text"></i>
                 <span>Documents</span>
               </a>
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/' . $uri->getSegment(2))?>">
                 <i class="bi bi-people"></i>
                 <span>Collaborators</span>
               </a>

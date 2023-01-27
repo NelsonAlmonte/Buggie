@@ -10,23 +10,43 @@ class InsertCategories extends Seeder
     {
         $categories = [
             [
+                'name' => 'active',
+                'type' => 'project_status',
+                'color' => '0d6efd',
+            ],
+            [
+                'name' => 'on hold',
+                'type' => 'project_status',
+                'color' => 'ffc107',
+            ],
+            [
+                'name' => 'cancelled',
+                'type' => 'project_status',
+                'color' => 'dc3545',
+            ],
+            [
+                'name' => 'completed',
+                'type' => 'project_status',
+                'color' => '198754',
+            ],
+            [
                 'name' => 'open',
-                'type' => 'status',
+                'type' => 'issue_status',
                 'color' => '0d6efd',
             ],
             [
                 'name' => 'in progress',
-                'type' => 'status',
+                'type' => 'issue_status',
                 'color' => 'ffc107',
             ],
             [
                 'name' => 'to be tested',
-                'type' => 'status',
+                'type' => 'issue_status',
                 'color' => '0dcaf0',
             ],
             [
                 'name' => 'closed',
-                'type' => 'status',
+                'type' => 'issue_status',
                 'color' => '198754',
             ],
             [

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\CategoryModel;
 use App\Models\ProjectModel;
 
 class Project extends BaseController
@@ -15,6 +16,13 @@ class Project extends BaseController
 
     $data['projects'] = $projectModel->getProjects();
 
+    foreach ($data['projects'] as $key => $project) {
+      $color = 'color: #' . $project['color'] . ';';
+      $backgroundColor = 'background-color: #' . $project['color'] . '1a;';
+      $border = 'border: 1px solid #' . $project['color'];
+      $data['projects'][$key]['statusStyle'] = $color . $backgroundColor . $border;
+    }
+
     return view('template/header')
       . view('project/projects', $data)
       . view('template/footer');
@@ -22,8 +30,18 @@ class Project extends BaseController
 
   public function add()
   {
+    $categoryModel = model(CategoryModel::class);
+
+    $categories = $categoryModel->getCategories();
+    $data['projectStatus'] = array_values(
+      array_filter(
+        $categories, 
+        fn ($category) => $category['type'] == 'project_status'
+      )
+    );
+
     return view('template/header')
-      . view('project/add')
+      . view('project/add', $data)
       . view('template/footer');
   }
 
@@ -62,8 +80,17 @@ class Project extends BaseController
   public function edit($slug, $id)
   {
     $projectModel = model(ProjectModel::class);
+    $categoryModel = model(CategoryModel::class);
 
     $data['project'] = $projectModel->getProject($id);
+
+    $categories = $categoryModel->getCategories();
+    $data['projectStatus'] = array_values(
+      array_filter(
+        $categories, 
+        fn ($category) => $category['type'] == 'project_status'
+      )
+    );
 
     return view('template/header')
       . view('project/edit', $data)
@@ -110,6 +137,11 @@ class Project extends BaseController
     $projectModel = model(ProjectModel::class);
 
     $data['project'] = $projectModel->getProject('', $slug);
+
+    $color = 'color: #' . $data['project']['color'] . ';';
+    $backgroundColor = 'background-color: #' . $data['project']['color'] . '1a;';
+    $border = 'border: 1px solid #' . $data['project']['color'];
+    $data['project']['statusStyle'] = $color . $backgroundColor . $border;
 
     return view('template/header')
       . view('project/dashboard', $data)
