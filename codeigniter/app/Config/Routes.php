@@ -41,6 +41,14 @@ $routes->group('project', static function ($routes) {
     $routes->get('(:segment)/dashboard', 'Project::dashboard/$1');
 });
 
+$routes->group('collaborator', static function ($routes) {
+    $routes->get('add', 'Collaborator::add');
+    $routes->get('(:segment)', 'Collaborator::collaborators/$1');
+    $routes->post('save', 'Collaborator::save');
+    $routes->get('edit/(:num)', 'Collaborator::edit/$1');
+    $routes->post('update/(:num)', 'Collaborator::update/$1');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

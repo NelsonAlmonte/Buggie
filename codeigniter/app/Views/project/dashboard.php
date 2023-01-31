@@ -54,11 +54,11 @@
           </a>
         </li>
         <li>
-          <a class="dropdown-item text-white" href="#">
+          <a class="dropdown-item text-white" href="<?=site_url('collaborator/' . $project['slug'])?>">
             <div class="d-inline-block">
               <i class="bi bi-people"></i>
             </div>
-            <span>Collaborator</span>
+            <span>Collaborators</span>
           </a>
         </li>
       </ul>
@@ -75,7 +75,7 @@
                 <i class="bi bi-bug fs-1" style="color: #0d6efd;"></i>
               </div>
               <div>
-                <h3 class="mb-1">16</h3>
+                <h4 class="mb-1">16</h4>
                 <h5 class="text-white-50">Open issues</h5>
               </div>
             </div>
@@ -94,7 +94,7 @@
                 <i class="bi bi-bug-fill fs-1" style="color: #198754;"></i>
               </div>
               <div>
-                <h3 class="mb-1">32</h3>
+                <h4 class="mb-1">32</h4>
                 <h5 class="text-white-50">Closed issues</h5>
               </div>
             </div>
@@ -103,7 +103,7 @@
       </a>
     </div>
     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
-      <a class="text-decoration-none" href="#">
+      <a class="text-decoration-none" href="<?=site_url('collaborator/' . $project['slug'])?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">
             <div class="d-flex justify-content-start align-items-center">
@@ -113,7 +113,7 @@
                 <i class="bi bi-people fs-1" style="color: #fd7e14;"></i>
               </div>
               <div>
-                <h3 class="mb-1">64</h3>
+                <h4 class="mb-1">64</h4>
                 <h5 class="text-white-50">Collaborators</h5>
               </div>
             </div>
@@ -132,7 +132,7 @@
                 <i class="bi bi-file-earmark-text fs-1" style="color: #6610f2;"></i>
               </div>
               <div>
-                <h3 class="mb-1">128</h3>
+                <h4 class="mb-1">128</h4>
                 <h5 class="text-white-50">Documents</h5>
               </div>
             </div>

@@ -64,11 +64,11 @@
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white" href="#">
+                  <a class="dropdown-item text-white" href="<?=site_url('collaborator/' . $project['slug'])?>">
                     <div class="d-inline-block">
                       <i class="bi bi-people"></i>
                     </div>
-                    <span>Collaborator</span>
+                    <span>Collaborators</span>
                   </a>
                 </li>
               </ul>
