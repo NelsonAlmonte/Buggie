@@ -37,8 +37,8 @@ $routes->group('project', static function ($routes) {
     $routes->post('save', 'Project::save');
     $routes->get('(:segment)/edit/(:num)', 'Project::edit/$1/$2');
     $routes->post('(:segment)/update/(:num)', 'Project::update/$1/$2');
-    $routes->get('(:segment)', 'Project::dashboard/$1');
     $routes->get('(:segment)/dashboard', 'Project::dashboard/$1');
+    $routes->post('searchProjects', 'Project::searchProjects');
 });
 
 $routes->group('collaborator', static function ($routes) {

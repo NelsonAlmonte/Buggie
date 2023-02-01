@@ -50,4 +50,13 @@ class ProjectModel extends Model
             ->where(['id' => $data['id']])
             ->update($data);
     }
+
+    public function searchProjects($query)
+    {
+        return $this->db
+            ->table('projects')
+            ->like('name', $query)
+            ->get()
+            ->getResultArray();
+    }
 }

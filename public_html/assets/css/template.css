@@ -428,6 +428,25 @@ body {
   background-color: var(--color-complementary);
 }
 
+.dropdown-toggle-split {
+  margin-left: 2px !important;
+  border-radius: 0.875rem;
+  font-weight: 600;
+}
+
+.dropdown-toggle-split:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.dropdown-toggle[aria-expanded="true"]:after {
+  transform: rotate(180deg);
+}
+
+.dropdown-toggle::after {
+  transition: 0.5s;
+}
+
 /*--------------------------------------------------------------
 # Text
 --------------------------------------------------------------*/

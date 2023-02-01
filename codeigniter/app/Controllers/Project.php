@@ -147,4 +147,21 @@ class Project extends BaseController
       . view('project/dashboard', $data)
       . view('template/footer');
   }
+
+	public function searchProjects()
+	{
+		if ($this->request->isAJAX()) {
+			$projectModel = model(ProjectModel::class);
+
+			$json = $this->request->getJSON(true);
+
+			$response['token'] = csrf_hash();
+
+      $response['data'] = [];
+      if (!empty($json['query'])) 
+			  $response['data'] = $projectModel->searchProjects($json['query']);
+
+			echo json_encode($response);
+		}
+	}
 }
