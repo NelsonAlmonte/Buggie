@@ -34,6 +34,9 @@ class Collaborator extends BaseController
     {
         $collaboratorModel = model(CollaboratorModel::class);
 
+        $validationTarget = 2;
+        $affectedRecords = 0;
+
         $data = [
             'name' => $this->request->getPost('name'),
             'last' => $this->request->getPost('last'),
@@ -43,7 +46,17 @@ class Collaborator extends BaseController
             'image' => 'A',
         ];
 
-        if ($collaboratorModel->saveCollaborator($data)) {
+        $savedCollaborator = $collaboratorModel->saveCollaborator($data);
+        if ($savedCollaborator) $affectedRecords ++;
+
+        // TODO: Add multiple projects
+        $collaboratorProject = [
+            'collaborator' => $savedCollaborator,
+            'project' => $this->request->getPost('project'), 
+        ];
+        if ($collaboratorModel->saveCollaboratorProject($collaboratorProject)) $affectedRecords ++;
+        
+        if ($affectedRecords == $validationTarget) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 

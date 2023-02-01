@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <div class="d-flex align-items-center justify-content-between">
+    <h2>Collaborators on <span class="text-primary"><?=esc($project['name'])?></span></h2>
     <a class="btn btn-rounded btn-primary" href="<?=site_url('collaborator/add')?>">Add collaborator</a>
   </div>
   <?php if(session()->getFlashdata('message') !== null): ?>

@@ -49,6 +49,13 @@
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
+            <input type="file" class="form-control bg-dominant border-0" id="image" name="image" required
+              placeholder="Image" autocomplete="off">
+            <label for="image">Profile picture*</label>
+          </div>
+        </div>
+        <div class="col-12 mb-4">
+          <div class="form-floating">
             <select class="form-select bg-dominant border-0" id="project" name="project" aria-label="project">
               <?php foreach($projects as $project): ?>
               <option class="text-capitalize" value="<?=esc($project['id'])?>">
@@ -57,13 +64,6 @@
               <?php endforeach; ?>
             </select>
             <label for="project">Project</label>
-          </div>
-        </div>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-          <div class="form-floating">
-            <input type="file" class="form-control bg-dominant border-0" id="image" name="image" required
-              placeholder="Image" autocomplete="off">
-            <label for="image">Profile picture*</label>
           </div>
         </div>
         <div class="col-12 mb-4">

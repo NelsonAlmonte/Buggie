@@ -21,6 +21,13 @@ class CollaboratorModel extends Model
         return $this->db->insertID();
     }
 
+    public function saveCollaboratorProject($data)
+    {
+        return $this->db
+            ->table('collaborators_projects')
+            ->insert($data);
+    }
+
     public function getCollaborator($id)
     {
         return $this->db

@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateProjectsCollaborators extends Migration
+class CreateCollaboratorsProjectsTable extends Migration
 {
     public function up()
     {
@@ -15,12 +15,12 @@ class CreateProjectsCollaborators extends Migration
                 'unsigned' => true,
                 'auto_increment' => true
             ],
-            'project' => [
+            'collaborator' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
             ],
-            'collaborator' => [
+            'project' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -28,15 +28,15 @@ class CreateProjectsCollaborators extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addForeignKey('project', 'projects', 'id', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('collaborator', 'collaborators', 'id');
-        $this->forge->createTable('projects_collaborators');
+        $this->forge->addForeignKey('project', 'projects', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('collaborators_projects');
     }
 
     public function down()
     {
-        $this->forge->dropForeignKey('projects_collaborators', 'projects_collaborators_project_foreign');
-        $this->forge->dropForeignKey('projects_collaborators', 'projects_collaborators_collaborator_foreign');
-        $this->forge->dropTable('projects_collaborators');
+        $this->forge->dropForeignKey('collaborators_projects', 'collaborators_projects_project_foreign');
+        $this->forge->dropForeignKey('collaborators_projects', 'collaborators_projects_collaborator_foreign');
+        $this->forge->dropTable('collaborators_projects');
     }
 }
