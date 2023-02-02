@@ -16,7 +16,7 @@
           x-data="{ selectedProjects: [] }" 
           @get-selected-projects.window="selectedProjects = $event.detail"
         >
-          <input type="text" name="projects" x-model="selectedProjects">
+          <input type="hidden" name="projects" x-model="selectedProjects">
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
@@ -116,7 +116,7 @@
         </div>
       </div>
       <div class="p-3">
-        <button type="button" class="btn btn-rounded btn-primary btn-block w-100 py-3" @click="$dispatch('get-selected-projects', JSON.stringify(selectedProjects))">Save changes</button>
+        <button type="button" class="btn btn-rounded btn-primary btn-block w-100 py-3" data-bs-dismiss="modal" @click="$dispatch('get-selected-projects', JSON.stringify(selectedProjects))">Save changes</button>
       </div>
     </div>
   </div>

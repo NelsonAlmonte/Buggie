@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <h2>Edit a collaborator</h2>
+  <h2>Edit collaborator</h2>
   <div class="card mt-4">
     <div class="card-body bg-complementary p-4">
       <?php if(session()->getFlashdata('message') !== null): ?>
@@ -11,7 +11,14 @@
       </div>
       <?php endif; ?>
       <form class="row gx-5" action="<?=site_url('collaborator/update/' . $collaborator['id'])?>" method="post">
-        <?= csrf_field() ?>
+        <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+        <div 
+          x-data="{ selectedProjects: [] }" 
+          x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>' 
+          @get-selected-projects.window="selectedProjects = $event.detail"
+        >
+          <input type="text" name="projects" x-model="selectedProjects">
+        </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="name" name="name" required
@@ -49,22 +56,17 @@
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
-            <select class="form-select bg-dominant border-0" id="project" name="project" aria-label="project">
-              <?php foreach($projects as $project): ?>
-              <option class="text-capitalize" value="<?=esc($project['id'])?>">
-                <?=esc($project['name'])?>
-              </option>
-              <?php endforeach; ?>
-            </select>
-            <label for="project">Project</label>
-          </div>
-        </div>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
-          <div class="form-floating">
             <input type="file" class="form-control bg-dominant border-0" id="image" name="image" placeholder="Image"
               autocomplete="off">
             <label for="image">Profile picture*</label>
           </div>
+        </div>
+        <div class="col-12 mb-4">
+          <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" data-bs-toggle="modal"
+            data-bs-target="#projects-modal">
+            <i class="bi bi-briefcase me-2"></i>
+            <span>Assign projects</span>
+          </button>
         </div>
         <div class="col-12 mb-4">
           <small>Fields with * are required.</small>
@@ -73,6 +75,46 @@
           <button class="btn btn-rounded btn-primary" type="submit">Update collaborator</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+<div x-data="assignProjects" x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>' class="modal fade" id="projects-modal" tabindex="-1" aria-labelledby="projects-modal-label"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dominant border-0">
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <div class="modal-header-placeholder"></div>
+        <h1 class="modal-title fs-5" id="projects-modal-label">Assign projects</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control bg-complementary border-0" id="projects" placeholder="project"
+            autocomplete="off" x-model="query" @input="getProjects">
+          <label for="projects">Search for projects</label>
+        </div>
+        <div class="mb-4">
+          <h6 :class="projects.length <= 0 ? 'd-none' : ''">Suggestions</h6>
+          <template x-for="project in projects">
+            <div class="project-item d-inline-block text-white fw-bold rounded-5 px-3 py-2 m-1" x-text="project.name"
+              @click="selectProject(project)">
+            </div>
+          </template>
+        </div>
+        <div>
+          <h6 :class="selectedProjects.length <= 0 ? 'd-none' : ''">Projects to be assigned</h6>
+          <template x-for="selectedProject in selectedProjects">
+            <div
+              class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
+              x-text="selectedProject.name" @click="removeProject(selectedProject)">
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="p-3">
+        <button type="button" class="btn btn-rounded btn-primary btn-block w-100 py-3" data-bs-dismiss="modal"
+          @click="$dispatch('get-selected-projects', JSON.stringify(selectedProjects))">Save changes</button>
+      </div>
     </div>
   </div>
 </div>

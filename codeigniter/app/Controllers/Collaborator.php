@@ -8,11 +8,15 @@ use App\Models\ProjectModel;
 
 class Collaborator extends BaseController
 {
-    public function collaborators($projectSlug)
+    public function collaborators($slug = '')
     {   
         $projectModel = model(ProjectModel::class);
+        $collaboratorModel = model(CollaboratorModel::class);
 
-        $data['project'] = $projectModel->getProject('', $projectSlug);
+        $data['project'] = $projectModel->getProject('', $slug);
+        $data['slug'] = $slug;
+        
+        $data['collaborators'] = $collaboratorModel->getCollaborators($data['project']['id']);
 
         return view('template/header')
         . view('collaborator/collaborators', $data)
@@ -84,6 +88,7 @@ class Collaborator extends BaseController
 
         $data['collaborator'] = $collaboratorModel->getCollaborator($id);
         $data['projects'] = $projectModel->getProjects();
+        $data['collaboratorProjects'] = $collaboratorModel->getCollaboratorProjects($id);
 
         return view('template/header')
         . view('collaborator/edit', $data)

@@ -42,6 +42,7 @@ $routes->group('project', static function ($routes) {
 });
 
 $routes->group('collaborator', static function ($routes) {
+    $routes->get('/', 'Collaborator::collaborators');
     $routes->get('add', 'Collaborator::add');
     $routes->get('(:segment)', 'Collaborator::collaborators/$1');
     $routes->post('save', 'Collaborator::save');

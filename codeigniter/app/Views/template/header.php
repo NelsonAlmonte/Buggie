@@ -193,6 +193,13 @@
         </a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?=site_url('collaborator')?>">
+          <i class="bi bi-people"></i>
+          <span>Collaborators</span>
+        </a>
+      </li>
+
       <li class="nav-heading mt-4">Your projects</li>
 
       <li class="nav-item">

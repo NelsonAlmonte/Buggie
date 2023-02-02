@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <div class="d-flex align-items-center justify-content-between">
-    <h2>Collaborators on <span class="text-primary"><?=esc($project['name'])?></span></h2>
+    <h2>Collaborators <span class="text-primary"><?=!empty($slug) ? 'on ' . $project['name'] : '' ; ?></span>
+    </h2>
     <div class="btn-group" role="group">
       <a class="btn btn-rounded btn-primary" href="<?=site_url('collaborator/add')?>">Add collaborator</a>
       <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split px-3" data-bs-toggle="dropdown"
@@ -17,7 +18,7 @@
         <li>
           <a class="dropdown-item d-flex align-items-center text-white" href="#">
             <i class="bi bi-briefcase"></i>
-            <span>To this project</span>
+            <span>To project</span>
           </a>
         </li>
       </ul>
@@ -31,4 +32,10 @@
     </div>
   </div>
   <?php endif; ?>
+  <div class="row mt-4">
+    <?php foreach ($collaborators as $collaborator): ?>
+    <h4><?=esc($collaborator['name'])?></h4>
+    <a href="<?=site_url('collaborator/edit/' . $collaborator['id'])?>">Edit</a>
+    <?php endforeach; ?>
+  </div>
 </div>
