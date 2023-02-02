@@ -468,3 +468,14 @@ body {
   max-width: 147px;
   max-height: 147px;
 }
+
+
+/*--------------------------------------------------------------
+# Modal
+--------------------------------------------------------------*/
+
+.modal-header-placeholder {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+}

@@ -64,7 +64,7 @@
           <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" data-bs-toggle="modal"
             data-bs-target="#projects-modal">
             <i class="bi bi-briefcase me-2"></i>
-            <span>Asign projects</span>
+            <span>Assign projects</span>
           </button>
         </div>
         <div class="col-12 mb-4">
@@ -80,14 +80,15 @@
 <div x-data="assignProjects" class="modal fade" id="projects-modal" tabindex="-1" aria-labelledby="projects-modal-label"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-complementary border-0">
-      <div class="modal-header">
+    <div class="modal-content bg-dominant border-0">
+      <div class="d-flex justify-content-between align-items-center p-3">
+        <div class="modal-header-placeholder"></div>
         <h1 class="modal-title fs-5" id="projects-modal-label">Assign projects</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control bg-dominant border-0" id="projects" placeholder="project"
+          <input type="text" class="form-control bg-complementary border-0" id="projects" placeholder="project"
             autocomplete="off" x-model="query" @input="getProjects">
           <label for="projects">Search for projects</label>
         </div>
@@ -95,7 +96,7 @@
           <h6 :class="projects.length <= 0 ? 'd-none' : ''">Suggestions</h6>
           <template x-for="project in projects">
             <div 
-              class="project-item d-inline-block bg-dominant text-white rounded-3 px-3 py-2 mx-2"
+              class="project-item d-inline-block text-white fw-bold rounded-5 px-3 py-2 m-1"
               x-text="project.name" 
               @click="selectProject(project)"
             >
@@ -106,7 +107,7 @@
           <h6 :class="selectedProjects.length <= 0 ? 'd-none' : ''">Projects to be assigned</h6>
           <template x-for="selectedProject in selectedProjects">
             <div 
-              class="project-item d-inline-block bg-primary text-white rounded-3 px-3 py-2 mx-2"
+              class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
               x-text="selectedProject.name" 
               @click="removeProject(selectedProject)"
             >
@@ -114,8 +115,8 @@
           </template>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-rounded btn-primary" @click="$dispatch('get-selected-projects', JSON.stringify(selectedProjects))">Save changes</button>
+      <div class="p-3">
+        <button type="button" class="btn btn-rounded btn-primary btn-block w-100 py-3" @click="$dispatch('get-selected-projects', JSON.stringify(selectedProjects))">Save changes</button>
       </div>
     </div>
   </div>

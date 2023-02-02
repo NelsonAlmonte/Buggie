@@ -29,13 +29,12 @@ document.addEventListener('alpine:init', () => {
 			csrfSelector.value = response.token;
 		},
 		selectProject(project) {
-			const selectedProject = project;
-			this.selectedProjects.push(selectedProject);
+			if (!this.selectedProjects.includes(project))
+				this.selectedProjects.push(project);
 		},
 		removeProject(selectedProject) {
-			const projectToBeRemoved = selectedProject;
 			this.selectedProjects = this.selectedProjects.filter(
-				selectedProject => selectedProject.id !== projectToBeRemoved.id
+				project => project.id !== selectedProject.id
 			);
 		},
 	}));
