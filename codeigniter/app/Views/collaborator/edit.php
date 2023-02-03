@@ -17,7 +17,7 @@
           x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>' 
           @get-selected-projects.window="selectedProjects = $event.detail"
         >
-          <input type="text" name="projects" x-model="selectedProjects">
+          <input type="text" name="projects" x-model="JSON.stringify(selectedProjects)">
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
@@ -113,7 +113,7 @@
       </div>
       <div class="p-3">
         <button type="button" class="btn btn-rounded btn-primary btn-block w-100 py-3" data-bs-dismiss="modal"
-          @click="$dispatch('get-selected-projects', JSON.stringify(selectedProjects))">Save changes</button>
+          @click="$dispatch('get-selected-projects', selectedProjects)">Save changes</button>
       </div>
     </div>
   </div>
