@@ -158,8 +158,13 @@ class Project extends BaseController
 			$response['token'] = csrf_hash();
 
       $response['data'] = [];
-      if (!empty($json['query'])) 
-			  $response['data'] = $projectModel->searchProjects($json['query']);
+      if (!empty($json['query'])) {
+			  $projects = $projectModel->searchProjects($json['query']);
+        $response['data'] = array_udiff(
+          $projects, $json['unwanted'], 
+          fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
+        );
+      }
 
 			echo json_encode($response);
 		}

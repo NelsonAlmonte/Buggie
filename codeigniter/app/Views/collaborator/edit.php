@@ -17,7 +17,7 @@
           x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>' 
           @get-selected-projects.window="selectedProjects = $event.detail"
         >
-          <input type="text" name="projects" x-model="JSON.stringify(selectedProjects)">
+          <input type="hidden" name="projects" x-model="JSON.stringify(selectedProjects)">
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">

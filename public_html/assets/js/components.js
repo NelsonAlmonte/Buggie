@@ -13,6 +13,7 @@ document.addEventListener('alpine:init', () => {
 				[csrfName]: csrfHash,
 				csrfSelector: csrfSelector,
 				query: this.query,
+				unwanted: this.selectedProjects,
 			};
 
 			const source = await fetch(this.url, {
@@ -28,9 +29,11 @@ document.addEventListener('alpine:init', () => {
 			this.projects = response.data;
 			csrfSelector.value = response.token;
 		},
-		selectProject(project) {
-			if (!this.selectedProjects.includes(project))
-				this.selectedProjects.push(project);
+		selectProject(selectedProject) {
+			this.selectedProjects.push(selectedProject);
+			this.projects = this.projects.filter(
+				project => project.id !== selectedProject.id
+			);
 		},
 		removeProject(selectedProject) {
 			this.selectedProjects = this.selectedProjects.filter(

@@ -21,11 +21,20 @@ class CollaboratorModel extends Model
         return $this->db->insertID();
     }
 
-    public function saveCollaboratorProject($data)
+    public function saveCollaboratorProjects($data)
     {
         return $this->db
             ->table('collaborators_projects')
-            ->insert($data);
+            ->insertBatch($data);
+    }
+
+    public function deleteCollaboratorProjects($data)
+    {
+        return $this->db
+            ->table('collaborators_projects')
+            ->setData($data)
+            ->onConstraint('collaborator, project')
+            ->deleteBatch();
     }
 
     public function getCollaborator($id)

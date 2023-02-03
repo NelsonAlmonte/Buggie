@@ -47,23 +47,16 @@ class Collaborator extends BaseController
             'image' => 'A',
         ];
 
-        $projects = json_decode($_POST['projects'], true);
+        $selectedProjects = json_decode($_POST['projects'], true);
 
-        $validationTarget = count($projects) + 1;
+        $validationTarget = 2;
         $affectedRecords = 0;
 
         $savedCollaborator = $collaboratorModel->saveCollaborator($data);
-        if ($savedCollaborator) $affectedRecords ++;
-
-        foreach ($projects as $project) {
-            $collaboratorProject = [
-                'collaborator' => $savedCollaborator,
-                'project' => $project['id'],
-            ];
-            if ($collaboratorModel->saveCollaboratorProject($collaboratorProject)) 
-                $affectedRecords ++;
-        }
         
+        if ($savedCollaborator) $affectedRecords ++;
+        if ($this->manageCollaboratorProjects($savedCollaborator, $selectedProjects)) $affectedRecords ++;
+
         if ($affectedRecords == $validationTarget) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
@@ -99,6 +92,9 @@ class Collaborator extends BaseController
     {
         $collaboratorModel = model(CollaboratorModel::class);
 
+        $validationTarget = 2;
+        $affectedRecords = 0;
+
         $data = [
             'id' => $id,
             'name' => $this->request->getPost('name'),
@@ -109,7 +105,12 @@ class Collaborator extends BaseController
             'image' => 'A',
         ];
 
-        if ($collaboratorModel->updateCollaborator($data)) {
+        $selectedProjects = json_decode($_POST['projects'], true);
+
+        if ($collaboratorModel->updateCollaborator($data)) $affectedRecords ++;
+        if ($this->manageCollaboratorProjects($id, $selectedProjects)) $affectedRecords ++;
+
+        if ($affectedRecords == $validationTarget) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
@@ -123,6 +124,49 @@ class Collaborator extends BaseController
                 'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('collaborator/edit/' . $id);
+        }
+    }
+
+    public function manageCollaboratorProjects($collaborator, $selectedProjects)
+    {
+        $collaboratorModel = model(CollaboratorModel::class);
+        $collaboratorProjects = $collaboratorModel->getCollaboratorProjects($collaborator);
+
+        $validationTarget = 0;
+        $affectedRecords = 0;
+
+        $projectsToAdd = array_udiff(
+            $selectedProjects, $collaboratorProjects,
+            fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
+        );
+        $projectsToAdd = array_map(
+            fn ($project) => [
+                'collaborator' => $collaborator,
+                'project' => $project['id'],
+            ], $projectsToAdd
+        );
+        if (!empty($projectsToAdd))
+            $affectedRecords += $collaboratorModel->saveCollaboratorProjects($projectsToAdd);
+        
+        $projectsToRemove = array_udiff(
+            $collaboratorProjects, $selectedProjects,
+            fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
+        );
+        $projectsToRemove = array_map(
+            fn ($project) => [
+                'collaborator' => $collaborator,
+                'project' => $project['id'],
+            ], $projectsToRemove
+        );
+        if (!empty($projectsToRemove))
+            $affectedRecords += $collaboratorModel->deleteCollaboratorProjects($projectsToRemove);
+
+        $validationTarget = count($projectsToAdd) + count($projectsToRemove);
+
+        if ($affectedRecords == $validationTarget) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
