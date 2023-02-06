@@ -66,7 +66,19 @@ class CollaboratorModel extends Model
             ->update($data);
     }
 
-    public function getCollaborators($project)
+    public function getCollaborators()
+    {
+        return $this->db
+            ->table('collaborators c')
+            ->select('c.id, c.name, c.last, c.username, c.email, c.image')
+            ->join('collaborators_projects cp', 'cp.collaborator = c.id')
+            ->join('projects p', 'p.id = cp.project')
+            ->groupBy('c.id')
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getCollaboratorsByProject($project)
     {
         return $this->db
             ->table('collaborators c')

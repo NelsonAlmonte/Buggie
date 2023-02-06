@@ -41,4 +41,16 @@ document.addEventListener('alpine:init', () => {
 			);
 		},
 	}));
+
+	Alpine.data('imagePreview', () => ({
+		imageUrl: '',
+		renderImage(event) {
+			const target = event.target;
+			if (target.files.length <= 0) return;
+			const image = target.files[0];
+			const reader = new FileReader();
+			reader.onload = () => this.imageUrl = reader.result;
+			reader.readAsDataURL(image);
+		}
+	}));
 });

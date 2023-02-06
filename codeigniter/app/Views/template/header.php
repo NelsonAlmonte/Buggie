@@ -17,7 +17,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="/" class="logo d-flex align-items-center">
+        <a href="<?=site_url('home')?>" class="logo d-flex align-items-center">
           <i class="bi bi-bug me-2"></i>
           <span class="d-none d-lg-block">Buggie</span>
         </a>
@@ -166,7 +166,7 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/">
+        <a class="nav-link collapsed" href="<?=site_url('home')?>">
           <i class="bi bi-house"></i>
           <span>Home</span>
         </a>

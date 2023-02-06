@@ -10,7 +10,7 @@
         </div>
       </div>
       <?php endif; ?>
-      <form class="row gx-5" action="<?=site_url('collaborator/update/' . $collaborator['id'])?>" method="post">
+      <form class="row gx-5" action="<?=site_url('collaborator/update/' . $collaborator['id'])?>" method="post" enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <div 
           x-data="{ selectedProjects: [] }" 
@@ -54,19 +54,47 @@
             <label for="password">Password*</label>
           </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
-          <div class="form-floating">
-            <input type="file" class="form-control bg-dominant border-0" id="image" name="image" placeholder="Image"
-              autocomplete="off">
-            <label for="image">Profile picture*</label>
+        <div class="row text-center mt-4">
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <div 
+              x-data="{ selectedProjects: [] }"
+              x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>'
+              @get-selected-projects.window="selectedProjects = $event.detail"
+            >
+              <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" data-bs-toggle="modal"
+                data-bs-target="#projects-modal">
+                <i class="bi bi-briefcase me-2"></i>
+                <span>Assign projects</span>
+              </button>
+              <template x-if="selectedProjects.length > 0">
+                <div class="mt-4">
+                  <h6>Assigned projects</h6>
+                  <template x-for="selectedProject in selectedProjects">
+                    <div 
+                      class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
+                      x-text="selectedProject.name" 
+                    >
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
           </div>
-        </div>
-        <div class="col-12 mb-4">
-          <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" data-bs-toggle="modal"
-            data-bs-target="#projects-modal">
-            <i class="bi bi-briefcase me-2"></i>
-            <span>Assign projects</span>
-          </button>
+          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4" x-data>
+            <div x-data="imagePreview">
+              <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" @click="$refs.image.click()">
+                <i class="bi bi-image me-2"></i>
+                <span>Add picture*</span>
+              </button>
+              <template x-if="imageUrl === ''">
+                <img class="img-fluid rounded-4 mt-4" src="<?='/uploads/profile_image/' . $collaborator['image']?>" alt="profile picture">
+              </template>
+              <template x-if="imageUrl !== ''">
+                <img class="img-fluid rounded-4 mt-4" :src="imageUrl" alt="Profile picture">
+              </template>
+              <input class="d-none" type="file" name="image" id="image" x-ref="image" @change="renderImage($event)" accept="image/*">
+            </div>
+          </div>
         </div>
         <div class="col-12 mb-4">
           <small>Fields with * are required.</small>

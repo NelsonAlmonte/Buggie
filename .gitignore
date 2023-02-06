@@ -64,6 +64,10 @@ codeigniter/!writable/uploads/index.html
 public_html/uploads/*
 !public_html/uploads/.gitkeep
 
+!public_html/uploads/profile_image
+public_html/uploads/profile_image/*
+!public_html/uploads/profile_image/.gitkeep
+
 codeigniter/writable/debugbar/*
 codeigniter/!writable/debugbar/.gitkeep
 
