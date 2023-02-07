@@ -32,8 +32,9 @@ class Collaborator extends BaseController
     {
         $projectModel = model(ProjectModel::class);
         $data = [];
-
+        
         $data['projects'] = $projectModel->getProjects();
+        $data['collaboratorProjects'] = [];
 
         return view('template/header')
         . view('collaborator/add', $data)

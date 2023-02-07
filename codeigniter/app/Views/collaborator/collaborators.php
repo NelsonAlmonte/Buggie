@@ -16,7 +16,8 @@
           </a>
         </li>
         <li>
-          <a class="dropdown-item d-flex align-items-center text-white" href="#">
+          <a class="dropdown-item d-flex align-items-center text-white" href="#" data-bs-toggle="modal"
+            data-bs-target="#collaborators-modal">
             <i class="bi bi-briefcase"></i>
             <span>To project</span>
           </a>
@@ -39,3 +40,4 @@
     <?php endforeach; ?>
   </div>
 </div>
+<?= view_cell('App\Cells\Collaborator\AssignCollaboratorModal\AssignCollaboratorModal::render'); ?>

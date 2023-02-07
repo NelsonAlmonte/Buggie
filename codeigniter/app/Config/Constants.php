@@ -100,4 +100,4 @@ define('MESSAGE_SUCCESS_ICON', 'bi bi-check-circle');
 define('MESSAGE_ERROR', 'There is appear to be an error');
 define('MESSAGE_ERROR_COLOR', 'danger');
 define('MESSAGE_ERROR_ICON', 'bi bi-x-circle');
-define('PATH_UPLOAD_PROFILE_IMAGE', '../public_html/uploads/profile_image/');
+define('PATH_UPLOAD_PROFILE_IMAGE', '../public_html/uploads/profile-image/');

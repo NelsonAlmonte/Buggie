@@ -14,10 +14,16 @@
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <div 
           x-data="{ selectedProjects: [] }" 
-          x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>' 
+          x-init='
+            selectedProjects = <?=json_encode($collaboratorProjects)?>;
+            selectedProjects = JSON.stringify(selectedProjects);
+          ' 
           @get-selected-projects.window="selectedProjects = $event.detail"
         >
-          <input type="hidden" name="projects" x-model="JSON.stringify(selectedProjects)">
+          <input type="hidden" name="projects" x-model="selectedProjects">
+        </div>
+        <div class="col-12 mb-4">
+          <h4><i class="bi bi-person-vcard text-primary me-3"></i>Basic info</h4>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
@@ -40,6 +46,9 @@
             <label for="email">Email*</label>
           </div>
         </div>
+        <div class="col-12 my-4">
+          <h4><i class="bi bi-box-arrow-in-right text-primary me-3"></i>Login credentials</h4>
+        </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="username" name="username" required
@@ -54,46 +63,50 @@
             <label for="password">Password*</label>
           </div>
         </div>
-        <div class="row text-center mt-4">
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
-            <div 
-              x-data="{ selectedProjects: [] }"
-              x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>'
-              @get-selected-projects.window="selectedProjects = $event.detail"
-            >
-              <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" data-bs-toggle="modal"
-                data-bs-target="#projects-modal">
-                <i class="bi bi-briefcase me-2"></i>
-                <span>Assign projects</span>
-              </button>
-              <template x-if="selectedProjects.length > 0">
-                <div class="mt-4">
-                  <h6>Assigned projects</h6>
-                  <template x-for="selectedProject in selectedProjects">
-                    <div 
-                      class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
-                      x-text="selectedProject.name" 
-                    >
-                    </div>
-                  </template>
-                </div>
-              </template>
-            </div>
+        <div class="col-12 my-4">
+          <h4><i class="bi bi-images text-primary me-3"></i>Multimedia</h4>
+        </div>
+        <div class="col-12 mb-4" x-data>
+          <div x-data="imagePreview">
+            <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" @click="$refs.image.click()">
+              <i class="bi bi-image me-2"></i>
+              <span>Add picture*</span>
+            </button>
+            <template x-if="imageUrl === ''">
+              <img class="d-block w-25 rounded-4 mt-4" src="<?='/uploads/profile-image/' . $collaborator['image']?>" alt="profile picture">
+            </template>
+            <template x-if="imageUrl !== ''">
+              <img class="d-block w-25 rounded-4 mt-4" :src="imageUrl" alt="Profile picture">
+            </template>
+            <input class="d-none" type="file" name="image" id="image" x-ref="image" @change="renderImage($event)" accept="image/*">
           </div>
-          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4" x-data>
-            <div x-data="imagePreview">
-              <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" @click="$refs.image.click()">
-                <i class="bi bi-image me-2"></i>
-                <span>Add picture*</span>
-              </button>
-              <template x-if="imageUrl === ''">
-                <img class="img-fluid rounded-4 mt-4" src="<?='/uploads/profile_image/' . $collaborator['image']?>" alt="profile picture">
-              </template>
-              <template x-if="imageUrl !== ''">
-                <img class="img-fluid rounded-4 mt-4" :src="imageUrl" alt="Profile picture">
-              </template>
-              <input class="d-none" type="file" name="image" id="image" x-ref="image" @change="renderImage($event)" accept="image/*">
-            </div>
+        </div>
+        <div class="col-12 my-4">
+          <h4><i class="bi bi-briefcase text-primary me-3"></i>Projects</h4>
+        </div>
+        <div class="col-12 mb-4">
+          <div 
+            x-data="{ selectedProjects: [] }"
+            x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>'
+            @get-selected-projects.window="selectedProjects = JSON.parse($event.detail)"
+          >
+            <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" data-bs-toggle="modal"
+              data-bs-target="#projects-modal">
+              <i class="bi bi-briefcase me-2"></i>
+              <span>Assign projects</span>
+            </button>
+            <template x-if="selectedProjects.length > 0">
+              <div class="mt-4">
+                <h6>Assigned projects</h6>
+                <template x-for="selectedProject in selectedProjects">
+                  <div 
+                    class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
+                    x-text="selectedProject.name" 
+                  >
+                  </div>
+                </template>
+              </div>
+            </template>
           </div>
         </div>
         <div class="col-12 mb-4">
@@ -106,43 +119,4 @@
     </div>
   </div>
 </div>
-<div x-data="assignProjects" x-init='selectedProjects = <?=json_encode($collaboratorProjects)?>' class="modal fade" id="projects-modal" tabindex="-1" aria-labelledby="projects-modal-label"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content bg-dominant border-0">
-      <div class="d-flex justify-content-between align-items-center p-3">
-        <div class="modal-header-placeholder"></div>
-        <h1 class="modal-title fs-5" id="projects-modal-label">Assign projects</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control bg-complementary border-0" id="projects" placeholder="project"
-            autocomplete="off" x-model="query" @input="getProjects">
-          <label for="projects">Search for projects</label>
-        </div>
-        <div class="mb-4">
-          <h6 :class="projects.length <= 0 ? 'd-none' : ''">Suggestions</h6>
-          <template x-for="project in projects">
-            <div class="project-item d-inline-block text-white fw-bold rounded-5 px-3 py-2 m-1" x-text="project.name"
-              @click="selectProject(project)">
-            </div>
-          </template>
-        </div>
-        <div>
-          <h6 :class="selectedProjects.length <= 0 ? 'd-none' : ''">Projects to be assigned</h6>
-          <template x-for="selectedProject in selectedProjects">
-            <div
-              class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
-              x-text="selectedProject.name" @click="removeProject(selectedProject)">
-            </div>
-          </template>
-        </div>
-      </div>
-      <div class="p-3">
-        <button type="button" class="btn btn-rounded btn-primary btn-block w-100 py-3" data-bs-dismiss="modal"
-          @click="$dispatch('get-selected-projects', selectedProjects)">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+<?= view_cell('App\Cells\Collaborator\AssignProjectModal\AssignProjectModal::render', ['collaboratorProjects' => $collaboratorProjects]); ?>

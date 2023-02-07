@@ -30,10 +30,10 @@ document.addEventListener('alpine:init', () => {
 			csrfSelector.value = response.token;
 		},
 		selectProject(selectedProject) {
+			if (this.selectedProjects.includes(selectedProject)) return;
 			this.selectedProjects.push(selectedProject);
-			this.projects = this.projects.filter(
-				project => project.id !== selectedProject.id
-			);
+			this.projects = [];
+			this.query = '';
 		},
 		removeProject(selectedProject) {
 			this.selectedProjects = this.selectedProjects.filter(
