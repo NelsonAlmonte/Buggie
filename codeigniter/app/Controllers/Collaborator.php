@@ -74,7 +74,7 @@ class Collaborator extends BaseController
                 'color' => MESSAGE_SUCCESS_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
-            return redirect()->to('project');
+            return redirect()->to('collaborator');
         } else {
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
@@ -217,4 +217,26 @@ class Collaborator extends BaseController
             return false;
         }
     }
+
+    public function searchCollaborators()
+	{
+        if ($this->request->isAJAX()) {
+			$collaboratorModel = model(CollaboratorModel::class);
+
+			$json = $this->request->getJSON(true);
+
+			$response['token'] = csrf_hash();
+
+            $response['data'] = [];
+            if (!empty($json['query'])) {
+		        $collaborators = $collaboratorModel->searchCollaborators($json['query']);
+                $response['data'] = array_udiff(
+                    $collaborators, $json['unwanted'], 
+                    fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
+                );
+            }
+
+			echo json_encode($response);
+		}
+	}
 }

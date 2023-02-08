@@ -9,12 +9,12 @@
           </div>
         </div>
         <h1 class="modal-title fs-5" id="collaborators-modal-label">Assign collaborators</h1>
-        <div class="modal-header-icon" type="button" data-bs-dismiss="modal" aria-label="Close">
+        <div class="modal-header-icon" data-bs-dismiss="modal" aria-label="Close">
           <i class="bi bi-x"></i>
         </div>
       </div>
       <div class="modal-body">
-        <div x-data="assignCollaboratorsToProjects" :class="step === 0 ? '' : 'd-none'">
+        <div x-data="searchSelect" :class="step === 0 ? '' : 'd-none'">
           <div class="form-floating mb-3">
             <input 
               class="form-control bg-complementary border-0" 
@@ -23,107 +23,108 @@
               placeholder="project"
               autocomplete="off" 
               x-model="query" 
-              @input="getProjects"
+              @input="getItems('project', 'searchProjects')"
             >
             <label for="project">Search for projects</label>
           </div>
           <div class="mb-4">
-            <h6 :class="projects.length <= 0 ? 'd-none' : ''">Suggestions</h6>
-            <template x-for="project in projects">
+            <h6 :class="items.length <= 0 ? 'd-none' : ''">Suggestions</h6>
+            <template x-for="item in items">
               <div 
                 class="project-item d-inline-block text-white fw-bold rounded-5 px-3 py-2 m-1" 
-                x-text="project.name"
-                @click="selectProject(project)"
+                x-text="item.name"
+                @click="selectItem(item)"
               >
               </div>
             </template>
           </div>
           <div>
-            <h6 :class="selectedProjects.length <= 0 ? 'd-none' : ''">Projects to be assigned</h6>
-            <template x-for="selectedProject in selectedProjects">
+            <h6 :class="selectedItems.length <= 0 ? 'd-none' : ''">Projects to be assigned</h6>
+            <template x-for="selectedItem in selectedItems">
               <div
                 class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
-                x-text="selectedProject.name" 
-                @click="removeProject(selectedProject)"
+                x-text="selectedItem.name" 
+                @click="removeItem(selectedItem)"
               >
               </div>
             </template>
           </div>
           <button 
             class="btn btn-rounded btn-primary btn-block w-100 mt-4 py-3"
-            type="button" 
-            @click="step ++"
+            type="button"
+            :class="selectedItems.length > 0 ? '' : 'disabled'"
+            @click="
+              $dispatch('get-selected-projects', JSON.stringify(selectedItems));
+              step ++;
+            "
           >
             Select projects
           </button>
         </div>
-        <div x-data :class="step === 1 ? '' : 'd-none'">
-          <h1>Siuuu</h1>
+        <div 
+          x-data="searchSelect, selectedProjects = []" 
+          :class="step === 1 ? '' : 'd-none'"
+          @get-selected-projects.window="selectedProjects = JSON.parse($event.detail)"
+        >
+          <h6>Assign these projects to</h6>
+          <template x-for="selectedProject in selectedProjects" :key="selectedProject.id">
+            <div
+              class="project-item selected border-0 d-inline-block bg-primary text-white fw-bold rounded-5 px-3 py-2 m-1"
+              x-text="selectedProject.name"
+            >
+            </div>
+          </template>
+          <div class="form-floating my-3">
+            <input 
+              class="form-control bg-complementary border-0" 
+              type="text" 
+              id="collaborator" 
+              placeholder="collaborator"
+              autocomplete="off" 
+              x-model="query" 
+              @input="getItems('collaborator', 'searchCollaborators')"
+            >
+            <label for="collaborator">Search for collaborators</label>
+          </div>
+          <div class="mb-4">
+            <h6 :class="items.length <= 0 ? 'd-none' : ''">Suggestions</h6>
+            <template x-for="item in items">
+              <div class="collaborator-item d-inline-block rounded-5 px-2 py-2 m-1" @click="selectItem(item)">
+                <div class="d-flex align-items-center">
+                  <img class="collaborator-item-image" :src="'/uploads/profile-image/' + item.image">
+                  <span class="text-white fw-bold mx-2" x-text="item.name"></span>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div>
+            <h6 :class="selectedItems.length <= 0 ? 'd-none' : ''">Selected collaborators</h6>
+            <template x-for="selectedItem in selectedItems">
+              <div class="project-item d-inline-block border-0 bg-primary rounded-5 px-2 py-2 m-1" @click="removeItem(selectedItem)">
+                <div class="d-flex align-items-center">
+                  <img class="collaborator-item-image" :src="'/uploads/profile-image/' + selectedItem.image">
+                  <span class="text-white fw-bold mx-2" x-text="selectedItem.name"></span>
+                </div>
+              </div>
+            </template>
+          </div>
           <button 
             class="btn btn-rounded btn-primary btn-block w-100 mt-4 py-3"
-            type="button" 
-            @click="step ++"
+            type="button"
+            :class="selectedItems.length > 0 ? '' : 'disabled'"
+            @click="
+              $dispatch('get-selected-items', JSON.stringify(selectedItems));
+              step ++;
+            "
           >
-            Save changes
+            Assign to projects
           </button>
+        </div>
+        <div x-data :class="step === 2 ? '' : 'd-none'">
+          
         </div>
       </div>
     </div>
   </div>
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-<script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('assignCollaboratorsToProjects', () => ({
-      query: '',
-      projects: [],
-      selectedProjects: [],
-      async getProjects() {
-        const data = {
-          url: '/project/searchProjects',
-          query: this.query,
-          unwanted: this.selectedProjects,
-        };
-
-        const [response, error] = await useFetch(data);
-
-        this.projects = response.data;
-      },
-      selectProject(selectedProject) {
-        if (this.selectedProjects.includes(selectedProject)) return;
-        this.selectedProjects.push(selectedProject);
-        this.projects = [];
-        this.query = '';
-      },
-      removeProject(selectedProject) {
-        this.selectedProjects = this.selectedProjects.filter(
-          project => project.id !== selectedProject.id
-        );
-      },
-    }));
-  });
-
-  async function useFetch(data) {
-    try {
-      const csrfSelector = document.querySelector('.csrf');
-			const csrfName = csrfSelector.attributes.name.value;
-			const csrfHash = csrfSelector.value;
-      data[csrfName] = csrfHash;
-
-      const source = await fetch(data.url, {
-        method: 'POST',
-        headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-				},
-        body: JSON.stringify(data),
-      });
-      const response = await source.json();
-			csrfSelector.value = response.token;
-      return [response, null];
-    } catch (error) {
-      console.log(error);
-      return [null, error];
-    }
-  }
-</script>

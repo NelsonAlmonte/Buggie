@@ -41,12 +41,19 @@
   height: 70px;
 }
 
-.project-item {
+.project-item, .collaborator-item {
   cursor: pointer;
   border: 1px solid var(--color-complementary);
   transition: all 0.2s ease 0s;
 }
 
-.project-item:hover {
+.project-item:hover, .collaborator-item:hover  {
   background-color: var(--color-complementary);
+}
+
+.collaborator-item-image {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  object-fit: cover;
 }

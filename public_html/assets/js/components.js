@@ -1,43 +1,28 @@
 document.addEventListener('alpine:init', () => {
-	Alpine.data('assignProjects', () => ({
-		url: '/project/searchProjects',
+	Alpine.data('searchSelect', () => ({
 		query: '',
-		projects: [],
-		selectedProjects: [],
-		async getProjects() {
-			const csrfSelector = document.querySelector('.csrf');
-			const csrfName = csrfSelector.attributes.name.value;
-			const csrfHash = csrfSelector.value;
-
-			const data = {
-				[csrfName]: csrfHash,
-				csrfSelector: csrfSelector,
+		items: [],
+		selectedItems: [],
+		async getItems(controller, method) {
+			const payload = {
+				url: `/${controller}/${method}`,
 				query: this.query,
-				unwanted: this.selectedProjects,
+				unwanted: this.selectedItems,
 			};
 
-			const source = await fetch(this.url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-				},
-				body: JSON.stringify(data),
-			});
+			const [response, error] = await useFetch(payload);
 
-			const response = await source.json();
-			this.projects = response.data;
-			csrfSelector.value = response.token;
+			this.items = response.data;
 		},
-		selectProject(selectedProject) {
-			if (this.selectedProjects.includes(selectedProject)) return;
-			this.selectedProjects.push(selectedProject);
-			this.projects = [];
+		selectItem(selectedItem) {
+			if (this.selectedItems.includes(selectedItem)) return;
+			this.selectedItems.push(selectedItem);
+			this.items = [];
 			this.query = '';
 		},
-		removeProject(selectedProject) {
-			this.selectedProjects = this.selectedProjects.filter(
-				project => project.id !== selectedProject.id
+		removeItem(selectedItem) {
+			this.selectedItems = this.selectedItems.filter(
+				(project) => project.id !== selectedItem.id
 			);
 		},
 	}));
@@ -49,8 +34,32 @@ document.addEventListener('alpine:init', () => {
 			if (target.files.length <= 0) return;
 			const image = target.files[0];
 			const reader = new FileReader();
-			reader.onload = () => this.imageUrl = reader.result;
+			reader.onload = () => (this.imageUrl = reader.result);
 			reader.readAsDataURL(image);
-		}
+		},
 	}));
+
+	async function useFetch(payload) {
+		try {
+			const csrfSelector = document.querySelector('.csrf');
+			const csrfName = csrfSelector.attributes.name.value;
+			const csrfHash = csrfSelector.value;
+			payload[csrfName] = csrfHash;
+
+			const source = await fetch(payload.url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest',
+				},
+				body: JSON.stringify(payload),
+			});
+			const response = await source.json();
+			csrfSelector.value = response.token;
+			return [response, null];
+		} catch (error) {
+			console.log(error);
+			return [null, error];
+		}
+	}
 });

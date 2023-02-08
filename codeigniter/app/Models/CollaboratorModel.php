@@ -89,4 +89,13 @@ class CollaboratorModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function searchCollaborators($query)
+    {
+        return $this->db
+            ->table('collaborators')
+            ->like('name', $query)
+            ->get()
+            ->getResultArray();
+    }
 }
