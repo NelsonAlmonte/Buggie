@@ -479,3 +479,23 @@ body {
   height: 2rem;
   width: 2rem;
 }
+
+.modal-header-icon {
+  align-items: center;
+  border-radius: 50%;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: inline-flex;
+  height: 1rem;
+  justify-content: center;
+  padding: 0.5rem;
+  width: 1rem;
+}
+
+.modal-header-icon:hover {
+  background-color: var(--color-complementary);
+}
+
+.modal-header-icon i {
+  font-size: 32px;
+}
