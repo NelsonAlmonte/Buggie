@@ -239,4 +239,40 @@ class Collaborator extends BaseController
 			echo json_encode($response);
 		}
 	}
+
+    public function assignProjects()
+    {
+        if ($this->request->isAJAX()) {
+			$collaboratorModel = model(CollaboratorModel::class);
+
+			$json = $this->request->getJSON(true);
+            $projects = $json['projects'];
+            $collaborators = $json['collaborators'];
+            $cartesian = $this->cartesian([$collaborators, $projects]);
+
+			$response['token'] = csrf_hash();
+
+            $response['data'] = $cartesian;
+
+			echo json_encode($response);
+		}
+    }
+
+    public function cartesian($array)
+    {
+        $result = [[]];
+
+        foreach ($array as $key => $values) {
+            $append = [];
+
+            foreach($result as $product) {
+                foreach($values as $item) {
+                    $product[$key] = $item;
+                    $append[] = $product;
+                }
+            }
+            $result = $append;
+        }
+        return $result;
+    }
 }

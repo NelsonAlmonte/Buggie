@@ -49,6 +49,7 @@ $routes->group('collaborator', static function ($routes) {
     $routes->get('edit/(:num)', 'Collaborator::edit/$1');
     $routes->post('update/(:num)', 'Collaborator::update/$1');
     $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
+    $routes->post('assignProjects', 'Collaborator::assignProjects');
 });
 
 /*
