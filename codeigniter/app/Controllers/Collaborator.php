@@ -222,6 +222,9 @@ class Collaborator extends BaseController
 	{
         if ($this->request->isAJAX()) {
 			$collaboratorModel = model(CollaboratorModel::class);
+            $json = [];
+            $response = [];
+            $collaborators = [];
 
 			$json = $this->request->getJSON(true);
 
@@ -244,18 +247,54 @@ class Collaborator extends BaseController
     {
         if ($this->request->isAJAX()) {
 			$collaboratorModel = model(CollaboratorModel::class);
+            $json = [];
+            $response = [];
+            $cartesian = [];
+            $projectsToAdd = [];
+            $operationsToValidate = 0;
+            $successfulOperations = 0;
 
 			$json = $this->request->getJSON(true);
-            $projects = $json['projects'];
-            $collaborators = $json['collaborators'];
-            $cartesian = $this->cartesian([$collaborators, $projects]);
 
-			$response['token'] = csrf_hash();
+            $cartesian = $this->cartesian([$json['collaborators'], $json['projects']]);
+            $projectsToAdd = $this->verifyCollaboratorProjects($cartesian);
+            $operationsToValidate = count($projectsToAdd);
+            if (!empty($projectsToAdd))
+                $successfulOperations += $collaboratorModel->saveCollaboratorProjects($projectsToAdd);
 
-            $response['data'] = $cartesian;
+            $response['status'] = EXIT_DATABASE;
+            $response['token'] = csrf_hash();
+            $response['data'] = $projectsToAdd;
+
+            if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
 
 			echo json_encode($response);
 		}
+    }
+
+    public function verifyCollaboratorProjects($data)
+    {
+		$collaboratorModel = model(CollaboratorModel::class);
+        $collaborator = '';
+        $project = '';
+        $collaboratorProjects = [];
+        $projectsToAdd = [];
+
+        foreach ($data as $value) {
+            $collaborator = $value[0]['id'];
+            $project = $value[1]['id'];
+            $collaboratorProjects = $collaboratorModel->getCollaboratorProjects($collaborator);
+            $collaboratorProjects = array_map(fn ($project) => $project['id'], $collaboratorProjects);
+            
+            if (!in_array($project, $collaboratorProjects)) {
+                $projectsToAdd[] = [
+                    'collaborator' => $collaborator,
+                    'project' => $project,
+                ];
+            }
+        }
+
+        return $projectsToAdd;
     }
 
     public function cartesian($array)

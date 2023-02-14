@@ -69,11 +69,7 @@ class CollaboratorModel extends Model
     public function getCollaborators()
     {
         return $this->db
-            ->table('collaborators c')
-            ->select('c.id, c.name, c.last, c.username, c.email, c.image')
-            ->join('collaborators_projects cp', 'cp.collaborator = c.id')
-            ->join('projects p', 'p.id = cp.project')
-            ->groupBy('c.id')
+            ->table('collaborators')
             ->get()
             ->getResultArray();
     }
