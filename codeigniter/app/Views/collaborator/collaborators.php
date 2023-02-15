@@ -36,12 +36,12 @@
     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="position-relative">
-          <div class="position-absolute top-0 end-0 mt-3 me-3">
+          <div class="position-absolute top-0 end-0 mt-3 me-4">
             <a role="button" class="btn btn-rounded btn-dropdown" data-bs-toggle="dropdown" aria-expanded="false"><i
                 class="bi bi-three-dots"></i></a>
             <ul class="dropdown-menu p-2">
               <li>
-                <a class="dropdown-item text-white" href="#">
+                <a class="dropdown-item text-white" href="<?=site_url('collaborator/view/'. $collaborator['id'])?>">
                   <div class="d-inline-block">
                     <i class="bi bi-eye"></i>
                   </div>
@@ -81,7 +81,7 @@
             <div class="text-center">
               <i class="bi bi-briefcase text-white fs-4"></i>
               <small class="d-block">Projects</small>
-              <h5 class="fw-bold mb-0">42</h5>
+              <h5 class="fw-bold mb-0"><?=esc(count($collaborator['projects']))?></h5>
             </div>
             <div class="text-center">
               <i class="bi bi-bug text-white fs-4"></i>

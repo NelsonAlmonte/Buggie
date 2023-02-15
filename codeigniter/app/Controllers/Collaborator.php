@@ -22,9 +22,27 @@ class Collaborator extends BaseController
         } else {
             $data['collaborators'] = $collaboratorModel->getCollaborators();
         }
+
+        foreach ($data['collaborators'] as $key => $collaborator) {
+            $data['collaborators'][$key]['projects'] = $collaboratorModel->getCollaboratorProjects($collaborator['id']);
+        }
         
         return view('template/header')
         . view('collaborator/collaborators', $data)
+        . view('template/footer');
+    }
+
+    public function view($id)
+    {
+        helper('text');
+        $collaboratorModel = model(CollaboratorModel::class);
+        $data = [];
+
+        $data['collaborator'] = $collaboratorModel->getCollaborator($id);
+        $data['collaboratorProjects'] = $collaboratorModel->getCollaboratorProjects($id);
+
+        return view('template/header')
+        . view('collaborator/view', $data)
         . view('template/footer');
     }
 

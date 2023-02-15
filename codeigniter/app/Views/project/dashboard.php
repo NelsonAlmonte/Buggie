@@ -145,30 +145,8 @@
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
         <div
-          class="d-flex justify-content-between align-items-center card-header bg-complementary rounded-top-4 px-4 py-3">
+          class="card-header bg-complementary rounded-top-4 px-4 py-3">
           <span class="fs-5 text-white">Latest issues</span>
-          <div>
-            <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false"><i
-                class="bi bi-three-dots"></i></a>
-            <ul class="dropdown-menu p-2">
-              <li>
-                <a class="dropdown-item text-white" href="<?=site_url('issue/' . $project['slug'])?>">
-                  <div class="d-inline-block">
-                    <i class="bi bi-bug"></i>
-                  </div>
-                  <span>Issues</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="#">
-                  <div class="d-inline-block">
-                    <i class="bi bi-plus-lg"></i>
-                  </div>
-                  <span>Add issue</span>
-                </a>
-              </li>
-            </ul>
-          </div>
         </div>
         <div class="issues-card card-body overflow-y-auto p-4">
           <?php for ($i=0; $i < 7; $i++): ?>
@@ -204,7 +182,7 @@
     </div>
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
-        <div class="card-header bg-complementary fs-5 text-white rounded-top-4 p-4">Issues graph</div>
+        <div class="card-header bg-complementary fs-5 text-white rounded-top-4 px-4 py-3">Issues graph</div>
         <div class="issues-card card-body p-4">
           <div class="text-center m-5">
             <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
