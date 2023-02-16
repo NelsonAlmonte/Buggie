@@ -72,7 +72,7 @@
             <div class="d-flex justify-content-start align-items-center">
               <div class="info-card-icon d-flex justify-content-center align-items-center rounded-4 me-4 p-4"
                 style="background-color: #0d6efd1a; border: 1px solid #0d6efd;">
-                <i class="bi bi-bug fs-1" style="color: #0d6efd;"></i>
+                <i class="bi bi-bug fs-2" style="color: #0d6efd;"></i>
               </div>
               <div>
                 <h4 class="mb-1">16</h4>
@@ -91,7 +91,7 @@
               <div
                 class="info-card-icon d-flex justify-content-center align-items-center bg-dominant rounded-4 me-4 p-4"
                 style="background-color: #1987541a; border: 1px solid #198754;">
-                <i class="bi bi-bug-fill fs-1" style="color: #198754;"></i>
+                <i class="bi bi-bug-fill fs-2" style="color: #198754;"></i>
               </div>
               <div>
                 <h4 class="mb-1">32</h4>
@@ -110,10 +110,10 @@
               <div
                 class="info-card-icon d-flex justify-content-center align-items-center bg-dominant rounded-4 me-4 p-4"
                 style="background-color: #fd7e141a; border: 1px solid #fd7e14;">
-                <i class="bi bi-people fs-1" style="color: #fd7e14;"></i>
+                <i class="bi bi-people fs-2" style="color: #fd7e14;"></i>
               </div>
               <div>
-                <h4 class="mb-1">64</h4>
+                <h4 class="mb-1"><?=esc(count($collaborators))?></h4>
                 <h5 class="text-white-50">Collaborators</h5>
               </div>
             </div>
@@ -129,7 +129,7 @@
               <div
                 class="info-card-icon d-flex justify-content-center align-items-center bg-dominant rounded-4 me-4 p-4"
                 style="background-color: #6610f21a; border: 1px solid #6610f2;">
-                <i class="bi bi-file-earmark-text fs-1" style="color: #6610f2;"></i>
+                <i class="bi bi-file-earmark-text fs-2" style="color: #6610f2;"></i>
               </div>
               <div>
                 <h4 class="mb-1">128</h4>

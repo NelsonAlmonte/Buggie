@@ -70,7 +70,7 @@
         <div class="card-body text-center p-5">
           <img class="collaborator-image" src="<?='/uploads/profile-image/' . $collaborator['image']?>"
             alt="<?=$collaborator['image']?>">
-          <a class="text-decoration-none" href="#">
+          <a class="text-decoration-none" href="<?=site_url('collaborator/view/'. $collaborator['id'])?>">
             <h4 class="card-title text-white mt-3 mb-0">
               <?=esc($collaborator['name'])?>
               <?=esc($collaborator['last'])?>

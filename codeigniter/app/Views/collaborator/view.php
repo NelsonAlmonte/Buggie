@@ -23,39 +23,40 @@
   </div>
   <div class="row">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-      <div class="card bg-complementary border border-0 rounded-4">
-        <div class="card-body text-center p-5">
-          <img class="collaborator-image" src="<?='/uploads/profile-image/' . $collaborator['image']?>"
-            alt="<?=$collaborator['image']?>">
-          <h4 class="card-title text-white mt-3 mb-0">
-            <?=esc($collaborator['name'])?>
-            <?=esc($collaborator['last'])?>
-          </h4>
-          <p class="mb-0"><?=esc($collaborator['username'])?></p>
-          <p class="mb-0"><?=esc($collaborator['email'])?></p>
-          <!-- <div class="d-flex justify-content-between">
-            <div class="text-center">
-              <i class="bi bi-briefcase text-white fs-4"></i>
-              <small class="d-block">Projects</small>
-              <h5 class="fw-bold mb-0"><?=esc(count($collaboratorProjects))?></h5>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <div class="card bg-complementary border border-0 rounded-4">
+            <div class="card-body text-center p-5">
+              <img class="collaborator-image" src="<?='/uploads/profile-image/' . $collaborator['image']?>"
+                alt="<?=$collaborator['image']?>">
+              <h4 class="card-title text-white mt-3 mb-0">
+                <?=esc($collaborator['name'])?>
+                <?=esc($collaborator['last'])?>
+              </h4>
+              <p class="mb-0"><?=esc($collaborator['username'])?></p>
+              <p class="mb-0"><?=esc($collaborator['email'])?></p>
             </div>
-            <div class="text-center">
-              <i class="bi bi-bug text-white fs-4"></i>
-              <small class="d-block">Issues</small>
-              <h5 class="fw-bold mb-0">42</h5>
+          </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
+          <div class="card bg-complementary border border-0 rounded-4">
+            <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
+              <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['name'])?> projects</span>
             </div>
-            <div class="text-center">
-              <i class="bi bi-bug-fill text-white fs-4"></i>
-              <small class="d-block">Closed</small>
-              <h5 class="fw-bold mb-0">42</h5>
+            <div class="card-body text-center p-4">
+              <?php foreach($collaboratorProjects as $project): ?>
+                <a class="project-item d-inline-block bg-primary border-0 rounded-5 text-white fw-bold text-decoration-none px-3 py-2 m-1" href="<?=site_url('project/' . $project['slug'] . '/dashboard')?>">
+                  <?=esc($project['name'])?>
+                </a>
+              <?php endforeach; ?>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12">
-      <div class="row mb-4">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="card bg-complementary border border-0 rounded-4">
             <div class="card-body p-4">
               <div class="d-flex justify-content-start align-items-center">
@@ -71,7 +72,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="card bg-complementary border border-0 rounded-4">
             <div class="card-body p-4">
               <div class="d-flex justify-content-start align-items-center">
@@ -87,7 +88,7 @@
             </div>
           </div>
         </div>
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="card bg-complementary border border-0 rounded-4">
             <div class="card-body p-4">
               <div class="d-flex justify-content-start align-items-center">
@@ -106,8 +107,7 @@
       </div>
       <div>
         <div class="card bg-complementary border border-0 rounded-4">
-          <div
-            class="card-header bg-complementary rounded-top-4 px-4 py-3">
+          <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
             <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['name'])?> issues</span>
           </div>
           <div class="issues-card card-body overflow-y-auto p-4">

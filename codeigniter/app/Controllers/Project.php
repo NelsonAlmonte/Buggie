@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CategoryModel;
+use App\Models\CollaboratorModel;
 use App\Models\ProjectModel;
 
 class Project extends BaseController
@@ -13,6 +14,10 @@ class Project extends BaseController
   {
     helper('text');
     $projectModel = model(ProjectModel::class);
+    $data = [];
+    $color = '';
+    $backgroundColor = '';
+    $border = '';
 
     $data['projects'] = $projectModel->getProjects();
 
@@ -31,6 +36,8 @@ class Project extends BaseController
   public function add()
   {
     $categoryModel = model(CategoryModel::class);
+    $data = [];
+    $categories = [];
 
     $categories = $categoryModel->getCategories();
     $data['projectStatus'] = array_values(
@@ -49,6 +56,7 @@ class Project extends BaseController
   {
     helper('url');
     $projectModel = model(ProjectModel::class);
+    $data = [];
 
     $data = [
       'name' => $this->request->getPost('name'),
@@ -81,6 +89,8 @@ class Project extends BaseController
   {
     $projectModel = model(ProjectModel::class);
     $categoryModel = model(CategoryModel::class);
+    $data = [];
+    $categories = [];
 
     $data['project'] = $projectModel->getProject($id);
 
@@ -101,6 +111,7 @@ class Project extends BaseController
   {
     helper('url');
     $projectModel = model(ProjectModel::class);
+    $data = [];
 
     $data = [
       'id' => $id,
@@ -135,8 +146,14 @@ class Project extends BaseController
     helper('text');
     
     $projectModel = model(ProjectModel::class);
+    $collaboratorModel = model(CollaboratorModel::class);
+    $data = [];
+    $color = '';
+    $backgroundColor = '';
+    $border = '';
 
     $data['project'] = $projectModel->getProject('', $slug);
+    $data['collaborators'] = $collaboratorModel->getCollaboratorsByProject($data['project']['id']);
 
     $color = 'color: #' . $data['project']['color'] . ';';
     $backgroundColor = 'background-color: #' . $data['project']['color'] . '1a;';
@@ -152,6 +169,9 @@ class Project extends BaseController
 	{
 		if ($this->request->isAJAX()) {
 			$projectModel = model(ProjectModel::class);
+      $json = [];
+      $response = [];
+      $projects = [];
 
 			$json = $this->request->getJSON(true);
 
