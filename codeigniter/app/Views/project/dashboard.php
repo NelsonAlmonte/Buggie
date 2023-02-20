@@ -66,7 +66,7 @@
   </div>
   <div class="row">
     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
-      <a class="text-decoration-none" href="#">
+      <a class="text-decoration-none" href="<?=site_url('issue/' . $project['slug'])?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">
             <div class="d-flex justify-content-start align-items-center">
@@ -84,7 +84,7 @@
       </a>
     </div>
     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
-      <a class="text-decoration-none" href="#">
+      <a class="text-decoration-none" href="<?=site_url('issue/' . $project['slug'])?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">
             <div class="d-flex justify-content-start align-items-center">

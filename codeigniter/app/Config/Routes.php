@@ -53,6 +53,16 @@ $routes->group('collaborator', static function ($routes) {
     $routes->post('assignProjects', 'Collaborator::assignProjects');
 });
 
+$routes->group('issue', static function ($routes) {
+    $routes->get('(:segment)', 'Issue::issues/$1');
+    $routes->get('(:segment)/issues', 'Issue::issues/$1');
+    $routes->get('(:segment)/issue/(:num)', 'Issue::issues/$1/$2');
+    $routes->get('(:segment)/add', 'Issue::add/$1');
+    $routes->post('save', 'Issue::save');
+    $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2');
+    $routes->post('update/(:num)', 'Issue::update/$1');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
