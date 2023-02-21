@@ -39,6 +39,31 @@ document.addEventListener('alpine:init', () => {
 		},
 	}));
 
+	Alpine.data('filesPreview', () => ({
+		documents: [],
+		renderFiles(event) {
+			const target = event.target;
+			const files = Array.from(target.files);
+			const fileReaders = [];
+			if (files.length <= 0) return;
+			files.forEach(file => {
+				const fileReader = new FileReader();
+				fileReaders.push(fileReader);
+				fileReader.onload = (reader) => {
+					const result = reader.target.result;
+					const document = {
+						result: result,
+						name: file.name,
+						type: file.type,
+					};
+					this.documents.push(document);
+					console.log(file);
+				}
+				fileReader.readAsDataURL(file);
+			});
+		},
+	}));
+
 	async function useFetch(payload) {
 		try {
 			const csrfSelector = document.querySelector('.csrf');
