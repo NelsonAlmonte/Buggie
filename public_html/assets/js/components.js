@@ -40,27 +40,53 @@ document.addEventListener('alpine:init', () => {
 	}));
 
 	Alpine.data('filesPreview', () => ({
-		documents: [],
+		files: [],
 		renderFiles(event) {
-			const target = event.target;
-			const files = Array.from(target.files);
+			const input = event.target;
+			const filesFromInput = Array.from(input.files);
 			const fileReaders = [];
-			if (files.length <= 0) return;
-			files.forEach(file => {
+			if (filesFromInput.length <= 0) return;
+			filesFromInput.forEach((fileFromInput, index) => {
 				const fileReader = new FileReader();
 				fileReaders.push(fileReader);
 				fileReader.onload = (reader) => {
 					const result = reader.target.result;
-					const document = {
+					const file = {
+						id: index,
 						result: result,
-						name: file.name,
-						type: file.type,
+						name: fileFromInput.name,
+						type: fileFromInput.type,
 					};
-					this.documents.push(document);
-					console.log(file);
-				}
-				fileReader.readAsDataURL(file);
+					this.files.push(file);
+				};
+				fileReader.readAsDataURL(fileFromInput);
 			});
+			console.log(input.files);
+			// this.addToInput(0, input)
+		},
+		removeFile(fileIndex, input, selectedFile) {
+			// const dataTransfer = new DataTransfer();
+			// const filesFromInput = input.files;
+			// for (let i = 0; i < filesFromInput.length; i++) {
+			// 	const file = filesFromInput[i];
+			// 	if (fileIndex !== i) {
+			// 		dataTransfer.items.add(file);
+			// 	}
+			// }
+			// input.files = dataTransfer.files;
+			this.files = this.files.filter((file) => file.id !== selectedFile.id);
+			this.addToInput(fileIndex, input);
+		},
+		addToInput(fileIndex, input) {
+			console.log(input.files);
+			const dataTransfer = new DataTransfer();
+			const filesFromInput = input.files;
+			for (let i = 0; i < filesFromInput.length; i++) {
+				const file = filesFromInput[i];
+				if (fileIndex !== i)
+					dataTransfer.items.add(file);
+			}
+			input.files = dataTransfer.files;
 		},
 	}));
 

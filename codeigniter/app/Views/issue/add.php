@@ -38,14 +38,26 @@
               <span>Add documents*</span>
             </button>
             <div class="row">
-              <template x-for="document in documents">
+              <template x-for="(file, index) in files">
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
-                  <img class="img-fluid rounded-4 mt-4" :src="document.result" :alt="document.name">
-                  <span x-text="document.name"></span>
+                  <img 
+                    class="img-fluid rounded-4 mt-4" 
+                    :src="file.result" 
+                    :alt="file.name"
+                    @click="removeFile(index, $refs.files, file)"
+                  >
+                  <span x-text="file.name"></span>
                 </div>
               </template>
             </div>
-            <input class="d-none" type="file" name="files" id="files" x-ref="files" @change="renderFiles($event)" multiple>
+            <input 
+              type="file" 
+              name="files" 
+              id="files" 
+              x-ref="files" 
+              @change="renderFiles($event)" 
+              multiple
+            >
           </div>
         </div>
         <div class="col-12 my-4">
@@ -61,7 +73,7 @@
         <div class="col-6 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="assignee" name="assignee" required
-              placeholder="Assign to" autocomplete="off">
+              placeholder="Assign to" autocomplete="off" value="1">
             <label for="assign to">Assign to*</label>
           </div>
         </div>
