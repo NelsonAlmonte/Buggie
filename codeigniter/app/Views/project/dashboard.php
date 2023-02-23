@@ -50,7 +50,7 @@
             <div class="d-inline-block">
               <i class="bi bi-file-earmark-text"></i>
             </div>
-            <span>Documents</span>
+            <span>Files</span>
           </a>
         </li>
         <li>
@@ -133,7 +133,7 @@
               </div>
               <div>
                 <h4 class="mb-1">128</h4>
-                <h5 class="text-white-50">Documents</h5>
+                <h5 class="text-white-50">Files</h5>
               </div>
             </div>
           </div>

@@ -12,6 +12,7 @@
       <?php endif; ?>
       <form class="row gx-5" action="<?=site_url('issue/save')?>" method="post" enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+        <input type="hidden" value="<?=esc($project['id'])?>">
         <div class="col-12 mb-4">
           <h4><i class="bi bi-person-vcard text-primary me-3"></i>Information</h4>
         </div>
@@ -29,28 +30,40 @@
           </div>
         </div>
         <div class="col-12 my-4">
-          <h4><i class="bi bi-file-earmark-text text-primary me-3"></i>Documents</h4>
+          <h4><i class="bi bi-file-earmark-text text-primary me-3"></i>Files</h4>
         </div>
-        <div class="col-12 mb-4" x-data>
+        <div class="col-12 mb-4">
           <div x-data="filesPreview">
             <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" @click="$refs.files.click()">
               <i class="bi bi-image me-2"></i>
-              <span>Add documents*</span>
+              <span>Add files*</span>
             </button>
-            <div class="row">
-              <template x-for="(file, index) in files">
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
-                  <img 
-                    class="img-fluid rounded-4 mt-4" 
-                    :src="file.result" 
-                    :alt="file.name"
-                    @click="removeFile(index, $refs.files, file)"
-                  >
-                  <span x-text="file.name"></span>
+            <div class="row mt-4">
+              <template x-for="(file, index) in filesPreview">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
+                  <div class="bg-dominant rounded-4 p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex justify-content-start align-items-center text-white">
+                        <div class="bg-primary rounded-3 p-2 me-2">
+                          <small class="text-uppercase" x-text="file.type"></small>
+                        </div>
+                        <span x-text="file.name"></span>
+                      </div>
+                      <div class="d-flex justify-content-start align-items-center">
+                        <button class="btn btn-rounded btn-primary me-2" type="button">
+                          <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-rounded btn-danger" type="button" @click="removeFile(index, $refs.files, file)">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </template>
             </div>
-            <input 
+            <input
+              class="d-none"
               type="file" 
               name="files" 
               id="files" 

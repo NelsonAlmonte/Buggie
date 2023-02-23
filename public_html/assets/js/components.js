@@ -40,54 +40,45 @@ document.addEventListener('alpine:init', () => {
 	}));
 
 	Alpine.data('filesPreview', () => ({
-		files: [],
+		filesPreview: [],
+		inputFiles: [],
 		renderFiles(event) {
 			const input = event.target;
 			const filesFromInput = Array.from(input.files);
-			const fileReaders = [];
-			if (filesFromInput.length <= 0) return;
+			if (filesFromInput.length <= 0) this.addToInput(input);
 			filesFromInput.forEach((fileFromInput, index) => {
 				const fileReader = new FileReader();
-				fileReaders.push(fileReader);
 				fileReader.onload = (reader) => {
-					const result = reader.target.result;
 					const file = {
-						id: index,
-						result: result,
-						name: fileFromInput.name,
-						type: fileFromInput.type,
+						uuid: `${index}-${fileFromInput.name}`,
+						result: reader.target.result,
+						name: this.formatFileName(fileFromInput.name),
+						type: fileFromInput.type.split('/')[1],
 					};
-					this.files.push(file);
+					this.filesPreview.push(file);
+					this.inputFiles.push(fileFromInput);
+					this.addToInput(input);
 				};
 				fileReader.readAsDataURL(fileFromInput);
 			});
-			console.log(input.files);
-			// this.addToInput(0, input)
 		},
 		removeFile(fileIndex, input, selectedFile) {
-			// const dataTransfer = new DataTransfer();
-			// const filesFromInput = input.files;
-			// for (let i = 0; i < filesFromInput.length; i++) {
-			// 	const file = filesFromInput[i];
-			// 	if (fileIndex !== i) {
-			// 		dataTransfer.items.add(file);
-			// 	}
-			// }
-			// input.files = dataTransfer.files;
-			this.files = this.files.filter((file) => file.id !== selectedFile.id);
-			this.addToInput(fileIndex, input);
+			this.filesPreview = this.filesPreview.filter(file => file.uuid !== selectedFile.uuid);
+			this.inputFiles = this.inputFiles.filter((file, index) => fileIndex !== index);
+			this.addToInput(input);
 		},
-		addToInput(fileIndex, input) {
-			console.log(input.files);
+		addToInput(input) {
 			const dataTransfer = new DataTransfer();
-			const filesFromInput = input.files;
-			for (let i = 0; i < filesFromInput.length; i++) {
-				const file = filesFromInput[i];
-				if (fileIndex !== i)
-					dataTransfer.items.add(file);
-			}
+			this.inputFiles.forEach(file => dataTransfer.items.add(file));
 			input.files = dataTransfer.files;
 		},
+		formatFileName(name) {
+			const split = name.split('.');
+			let fileName = split[0];
+			const extension = split[1];
+			if (fileName.length > 15) fileName = fileName.substring(0, 15);
+			return `${fileName}.${extension}`;
+		}
 	}));
 
 	async function useFetch(payload) {

@@ -60,7 +60,7 @@
                     <div class="d-inline-block">
                       <i class="bi bi-file-earmark-text"></i>
                     </div>
-                    <span>Documents</span>
+                    <span>Files</span>
                   </a>
                 </li>
                 <li>

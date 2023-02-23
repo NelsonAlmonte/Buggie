@@ -48,6 +48,37 @@ class Issue extends BaseController
 
     public function save()
     {
-        print_r($_FILES);
+        helper('url');
+        $issueModel = model(IssueModel::class);
+        $data = [];
+
+        $data = [
+            'title' => $this->request->getPost('title'),
+            'description' => $this->request->getPost('description'),
+            'reporter' => $this->request->getPost('reporter'),
+            'assignee' => $this->request->getPost('assignee'),
+            'classification' => $this->request->getPost('classification'),
+            'severity' => $this->request->getPost('severity'),
+            'status' => $this->request->getPost('status'),
+            'start_date' => $this->request->getPost('start_date'),
+            'end_date' => $this->request->getPost('end_date'),
+            'project' => $this->request->getPost('project'),
+        ];
+
+        if ($issueModel->saveIssue($data)) {
+            session()->setFlashdata([
+                'message' => MESSAGE_SUCCESS, 
+                'color' => MESSAGE_SUCCESS_COLOR, 
+                'icon' => MESSAGE_SUCCESS_ICON
+            ]);
+            return redirect()->to('project');
+        } else {
+            session()->setFlashdata([
+                'message' => MESSAGE_ERROR, 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
+            ]);
+            return redirect()->to('project/add');
+        }
     }
 }
