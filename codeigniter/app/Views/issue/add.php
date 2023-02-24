@@ -10,9 +10,10 @@
         </div>
       </div>
       <?php endif; ?>
-      <form class="row gx-5" action="<?=site_url('issue/save')?>" method="post" enctype="multipart/form-data">
+      <form class="row gx-5" action="<?=site_url('issue/'. $project['slug'] . '/save')?>" method="post"
+        enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-        <input type="hidden" value="<?=esc($project['id'])?>">
+        <input type="hidden" id="project" name="project" value="<?=esc($project['id'])?>">
         <div class="col-12 mb-4">
           <h4><i class="bi bi-person-vcard text-primary me-3"></i>Information</h4>
         </div>
@@ -25,7 +26,8 @@
         </div>
         <div class="col-12 mb-4">
           <div class="form-floating">
-            <textarea class="form-control bg-dominant border-0" placeholder="Description" id="description" name="description" style="height: 200px"></textarea>
+            <textarea class="form-control bg-dominant border-0" placeholder="Description" id="description"
+              name="description" style="height: 200px"></textarea>
             <label for="description">Description*</label>
           </div>
         </div>
@@ -53,7 +55,8 @@
                         <button class="btn btn-rounded btn-primary me-2" type="button">
                           <i class="bi bi-eye"></i>
                         </button>
-                        <button class="btn btn-rounded btn-danger" type="button" @click="removeFile(index, $refs.files, file)">
+                        <button class="btn btn-rounded btn-danger" type="button"
+                          @click="removeFile(index, $refs.files, file)">
                           <i class="bi bi-trash"></i>
                         </button>
                       </div>
@@ -62,15 +65,8 @@
                 </div>
               </template>
             </div>
-            <input
-              class="d-none"
-              type="file" 
-              name="files" 
-              id="files" 
-              x-ref="files" 
-              @change="renderFiles($event)" 
-              multiple
-            >
+            <input class="d-none" type="file" name="files" id="files" x-ref="files" @change="renderFiles($event)"
+              multiple>
           </div>
         </div>
         <div class="col-12 my-4">
@@ -79,15 +75,15 @@
         <div class="col-6 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="reporter" name="reporter" required
-              placeholder="Reporter" autocomplete="off" disabled value="1">
+              placeholder="Reporter" autocomplete="off" value="1">
             <label for="reporter">Reporter*</label>
           </div>
         </div>
         <div class="col-6 mb-4">
           <div class="form-floating">
-            <input type="text" class="form-control bg-dominant border-0" id="assignee" name="assignee" required
-              placeholder="Assign to" autocomplete="off" value="1">
-            <label for="assign to">Assign to*</label>
+            <input type="text" class="form-control bg-dominant border-0" id="assignee" name="assignee"
+              placeholder="Assign to" autocomplete="off">
+            <label for="assign to">Assign to</label>
           </div>
         </div>
         <div class="col-12 my-4">
@@ -95,7 +91,8 @@
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
-            <select class="form-select bg-dominant border-0 text-capitalize" id="classification" name="classification" aria-label="classification">
+            <select class="form-select bg-dominant border-0 text-capitalize" id="classification" name="classification"
+              aria-label="classification">
               <?php foreach($status['classification'] as $classification): ?>
               <option value="<?=esc($classification['id'])?>"><?=esc($classification['name'])?></option>
               <?php endforeach; ?>
@@ -105,7 +102,8 @@
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
-            <select class="form-select bg-dominant border-0 text-capitalize" id="severity" name="severity" aria-label="severity">
+            <select class="form-select bg-dominant border-0 text-capitalize" id="severity" name="severity"
+              aria-label="severity">
               <?php foreach($status['severity'] as $classification): ?>
               <option value="<?=esc($classification['id'])?>"><?=esc($classification['name'])?></option>
               <?php endforeach; ?>
@@ -115,8 +113,9 @@
         </div>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
-            <select class="form-select bg-dominant border-0 text-capitalize" id="status" name="status" aria-label="status">
-              <?php foreach($status['project_status'] as $classification): ?>
+            <select class="form-select bg-dominant border-0 text-capitalize" id="status" name="status"
+              aria-label="status">
+              <?php foreach($status['issue_status'] as $classification): ?>
               <option value="<?=esc($classification['id'])?>"><?=esc($classification['name'])?></option>
               <?php endforeach; ?>
             </select>
@@ -135,7 +134,7 @@
         </div>
         <div class="col-6 mb-4">
           <div class="form-floating">
-            <input type="date" class="form-control bg-dominant border-0" id="end_date" name="end_date" required>
+            <input type="date" class="form-control bg-dominant border-0" id="end_date" name="end_date">
             <label for="end_date">End date*</label>
           </div>
         </div>

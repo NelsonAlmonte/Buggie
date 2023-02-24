@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\CategoryModel;
+use App\Models\IssueModel;
 use App\Models\ProjectModel;
 
 class Issue extends BaseController
@@ -10,10 +11,13 @@ class Issue extends BaseController
     public function issues($slug = '')
     {
         $projectModel = model(ProjectModel::class);
+        $issueModel = model(IssueModel::class);
         $data = [];
 
         $data['project'] = $projectModel->getProject('', $slug);
         $data['slug'] = $slug;
+
+        $data['issues'] = $issueModel->getIssues($data['project']['id']);
 
         return view('template/header')
         . view('issue/issues', $data)
@@ -26,7 +30,7 @@ class Issue extends BaseController
         $categoryModel = model(CategoryModel::class);
         $data = [];
         $categories = [];
-        $categoryTypes = ['classification', 'severity', 'project_status'];
+        $categoryTypes = ['classification', 'severity', 'issue_status'];
 
         $data['project'] = $projectModel->getProject('', $slug);
 
@@ -46,7 +50,7 @@ class Issue extends BaseController
         . view('template/footer');
     }
 
-    public function save()
+    public function save($slug)
     {
         helper('url');
         $issueModel = model(IssueModel::class);
@@ -56,7 +60,7 @@ class Issue extends BaseController
             'title' => $this->request->getPost('title'),
             'description' => $this->request->getPost('description'),
             'reporter' => $this->request->getPost('reporter'),
-            'assignee' => $this->request->getPost('assignee'),
+            'assignee' => !empty($_POST['assignee']) ? $_POST['assignee'] : null,
             'classification' => $this->request->getPost('classification'),
             'severity' => $this->request->getPost('severity'),
             'status' => $this->request->getPost('status'),
@@ -65,20 +69,22 @@ class Issue extends BaseController
             'project' => $this->request->getPost('project'),
         ];
 
-        if ($issueModel->saveIssue($data)) {
+        $data['issue'] = $issueModel->saveIssue($data);
+
+        if ($data['issue']) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
-            return redirect()->to('project');
+            return redirect()->to('issue/' . $slug);
         } else {
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
-            return redirect()->to('project/add');
+            return redirect()->to('issue/' . $slug . '/add');
         }
     }
 }

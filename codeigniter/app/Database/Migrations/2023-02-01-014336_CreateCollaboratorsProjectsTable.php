@@ -12,18 +12,15 @@ class CreateCollaboratorsProjectsTable extends Migration
             'id' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
                 'auto_increment' => true
             ],
             'collaborator' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
             'project' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
         ]);
 

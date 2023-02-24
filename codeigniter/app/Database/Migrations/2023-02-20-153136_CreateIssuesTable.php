@@ -12,7 +12,6 @@ class CreateIssuesTable extends Migration
             'id' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
                 'auto_increment' => true,
             ],
             'title' => [
@@ -26,28 +25,23 @@ class CreateIssuesTable extends Migration
             'reporter' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
             'assignee' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
                 'null' => true,
             ],
             'classification' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
             'severity' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
             'status' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
             'start_date' => [
                 'type' => 'date',
@@ -63,7 +57,6 @@ class CreateIssuesTable extends Migration
             'project' => [
                 'type' => 'INT',
                 'constraint' => 11,
-                'unsigned' => true,
             ],
         ]);
         $this->forge->addPrimaryKey('id');
