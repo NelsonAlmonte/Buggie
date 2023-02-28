@@ -7,9 +7,9 @@
       </div>
       <div class="d-inline-block mx-2">|</div>
       <?php if($project['end_date'] != '0000-00-00'): ?>
-        <?php $endDate = new DateTime($project['end_date']);?>
-        <?php $startDate = new DateTime($project['start_date']);?>
-        <span><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></span>
+      <?php $endDate = new DateTime($project['end_date']);?>
+      <?php $startDate = new DateTime($project['start_date']);?>
+      <span><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></span>
       <?php endif; ?>
       <div class="d-inline-block mx-2">|</div>
       <div class="d-inline-block">
@@ -75,7 +75,7 @@
                 <i class="bi bi-bug fs-2" style="color: #0d6efd;"></i>
               </div>
               <div>
-                <h4 class="mb-1">16</h4>
+                <h4 class="mb-1"><?=count($openIssues)?></h4>
                 <h5 class="text-white-50">Open issues</h5>
               </div>
             </div>
@@ -94,7 +94,7 @@
                 <i class="bi bi-bug-fill fs-2" style="color: #198754;"></i>
               </div>
               <div>
-                <h4 class="mb-1">32</h4>
+                <h4 class="mb-1"><?=count($closedIssues)?></h4>
                 <h5 class="text-white-50">Closed issues</h5>
               </div>
             </div>
@@ -144,39 +144,48 @@
   <div class="row">
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
-        <div
-          class="card-header bg-complementary rounded-top-4 px-4 py-3">
+        <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
           <span class="fs-5 text-white">Latest issues</span>
         </div>
-        <div class="issues-card card-body overflow-y-auto p-4">
-          <?php for ($i=0; $i < 7; $i++): ?>
-          <div class="issue d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <a class="text-accent text-decoration-none fw-bold d-block"
-                href="#"><?=esc(character_limiter('Lorem ipsum dolor sit amet, consectetur adipiscing elit', 50, '...'))?></a>
-              <small>
-                <a class="text-accent text-decoration-none fw-bold" href="#"> #124</a>
-                opened on <a class="text-accent text-decoration-none fw-bold" href="#">Jan 24, 2023</a>
-                by <a class="text-accent text-decoration-none fw-bold" href="#">Moquito</a>
-              </small>
+        <div class="issues-card card-body overflow-y-auto p-0">
+          <?php if(!empty($issues)): ?>
+            <?php foreach($issues as $key => $issue): ?>
+            <div
+              class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
+              <div>
+                <a class="text-accent text-decoration-none fw-bold d-block" href="#"><?=esc($issue['title'])?></a>
+                <small>
+                  <a class="text-accent text-decoration-none fw-bold" href="#"> #<?=esc($issue['id'])?></a>
+                  opened on <a class="text-accent text-decoration-none fw-bold" href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a>
+                  by <a class="text-accent text-decoration-none fw-bold" href="#"><?=esc($issue['reporter_name'])?></a>
+                  <?php if(!empty($issue['assignee'])): ?>
+                  assigned to <a class="text-accent text-decoration-none fw-bold"
+                    href="#"><?=esc($issue['assignee_name'])?></a>
+                  <?php endif; ?>
+                </small>
+              </div>
+              <div>
+                <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
+                  style="color: #<?=esc($issue['classification_color'])?>; background-color: #<?=esc($issue['classification_color'])?>1a; border: 1px solid #<?=esc($issue['classification_color'])?>;">
+                  <?=esc($issue['classification_name'])?>
+                </div>
+                <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
+                  style="color: #<?=esc($issue['severity_color'])?>; background-color: #<?=esc($issue['severity_color'])?>1a; border: 1px solid #<?=esc($issue['severity_color'])?>;">
+                  <?=esc($issue['severity_name'])?>
+                </div>
+                <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
+                  style="color: #<?=esc($issue['status_color'])?>; background-color: #<?=esc($issue['status_color'])?>1a; border: 1px solid #<?=esc($issue['status_color'])?>;">
+                  <?=esc($issue['status_name'])?>
+                </div>
+              </div>
             </div>
-            <div>
-              <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
-                style="color: #0d6efd; background-color: #0d6efd1a; border: 1px solid #0d6efd;">
-                Open
-              </div>
-              <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
-                style="color: #dc3545; background-color: #dc35451a; border: 1px solid #dc3545;">
-                Crash
-              </div>
-              <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
-                style="color: #fd7e14; background-color: #fd7e141a; border: 1px solid #fd7e14;">
-                Major
-              </div>
-            </div>
+            <?php endforeach; ?>
+          <?php else: ?>
+          <div class="text-center m-5 p-4">
+            <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
+            <h5 class="mt-5">There is nothing here...</h5>
           </div>
-          <hr>
-          <?php endfor; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>

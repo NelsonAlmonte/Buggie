@@ -10,8 +10,8 @@
         </div>
       </div>
       <?php endif; ?>
-      <form class="row gx-5" action="<?=site_url('issue/'. $project['slug'] . '/save')?>" method="post"
-        enctype="multipart/form-data">
+      <form class="row gx-5" action="<?=site_url('issue/'. $project['slug'] . '/update/' . $issue['id'])?>"
+        method="post" enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <input type="hidden" id="project" name="project" value="<?=esc($project['id'])?>">
         <div class="col-12 mb-4">
@@ -20,14 +20,14 @@
         <div class="col-12 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="title" name="title" required
-              placeholder="Title" autocomplete="off">
+              placeholder="Title" autocomplete="off" value="<?=esc($issue['title'])?>">
             <label for="title">Title*</label>
           </div>
         </div>
         <div class="col-12 mb-4">
           <div class="form-floating">
             <textarea class="form-control bg-dominant border-0" placeholder="Description" id="description"
-              name="description" style="height: 200px"></textarea>
+              name="description" style="height: 200px"><?=esc($issue['description'])?></textarea>
             <label for="description">Description*</label>
           </div>
         </div>
@@ -75,14 +75,14 @@
         <div class="col-6 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="reporter" name="reporter" required
-              placeholder="Reporter" autocomplete="off" value="1">
+              placeholder="Reporter" autocomplete="off" value="<?=esc($issue['reporter'])?>">
             <label for="reporter">Reporter*</label>
           </div>
         </div>
         <div class="col-6 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="assignee" name="assignee"
-              placeholder="Assign to" autocomplete="off">
+              placeholder="Assign to" autocomplete="off" value="<?=esc($issue['assignee'])?>">
             <label for="assign to">Assign to</label>
           </div>
         </div>
@@ -94,7 +94,8 @@
             <select class="form-select bg-dominant border-0 text-capitalize" id="classification" name="classification"
               aria-label="classification">
               <?php foreach($status['classification'] as $classification): ?>
-              <option value="<?=esc($classification['id'])?>"><?=esc($classification['name'])?></option>
+              <option <?=$issue['classification'] == $classification['id'] ? 'selected' : '' ;?>
+                value="<?=esc($classification['id'])?>"><?=esc($classification['name'])?></option>
               <?php endforeach; ?>
             </select>
             <label for="classification">Classification</label>
@@ -105,7 +106,8 @@
             <select class="form-select bg-dominant border-0 text-capitalize" id="severity" name="severity"
               aria-label="severity">
               <?php foreach($status['severity'] as $severity): ?>
-              <option value="<?=esc($severity['id'])?>"><?=esc($severity['name'])?></option>
+              <option <?=$issue['severity'] == $severity['id'] ? 'selected' : '' ;?> value="<?=esc($severity['id'])?>">
+                <?=esc($severity['name'])?></option>
               <?php endforeach; ?>
             </select>
             <label for="severity">Severity</label>
@@ -116,7 +118,8 @@
             <select class="form-select bg-dominant border-0 text-capitalize" id="status" name="status"
               aria-label="status">
               <?php foreach($status['issue_status'] as $issueStatus): ?>
-              <option value="<?=esc($issueStatus['id'])?>"><?=esc($issueStatus['name'])?></option>
+              <option <?=$issue['status'] == $issueStatus['id'] ? 'selected' : '' ;?>
+                value="<?=esc($issueStatus['id'])?>"><?=esc($issueStatus['name'])?></option>
               <?php endforeach; ?>
             </select>
             <label for="status">Status</label>
@@ -128,13 +131,14 @@
         <div class="col-6 mb-4">
           <div class="form-floating">
             <input type="date" class="form-control bg-dominant border-0" id="start_date" name="start_date"
-              value="<?=date('Y-m-d')?>" required>
+              value="<?=esc($issue['start_date'])?>" required>
             <label for="start_date">Start date*</label>
           </div>
         </div>
         <div class="col-6 mb-4">
           <div class="form-floating">
-            <input type="date" class="form-control bg-dominant border-0" id="end_date" name="end_date">
+            <input type="date" class="form-control bg-dominant border-0" id="end_date" name="end_date"
+              value="<?=esc($issue['end_date'])?>">
             <label for="end_date">End date*</label>
           </div>
         </div>
@@ -142,7 +146,7 @@
           <small>Fields with * are required.</small>
         </div>
         <div class="col-12">
-          <button class="btn btn-rounded btn-primary" type="submit">Add issue</button>
+          <button class="btn btn-rounded btn-primary" type="submit">Update issue</button>
         </div>
       </form>
     </div>

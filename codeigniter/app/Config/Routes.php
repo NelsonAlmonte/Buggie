@@ -56,7 +56,7 @@ $routes->group('collaborator', static function ($routes) {
 $routes->group('issue', static function ($routes) {
     $routes->get('(:segment)', 'Issue::issues/$1');
     $routes->get('(:segment)/issues', 'Issue::issues/$1');
-    $routes->get('(:segment)/issue/(:num)', 'Issue::issues/$1/$2');
+    $routes->get('(:segment)/issue/(:num)', 'Issue::issue/$1/$2');
     $routes->get('(:segment)/add', 'Issue::add/$1');
     $routes->post('(:segment)/save', 'Issue::save/$1');
     $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2');

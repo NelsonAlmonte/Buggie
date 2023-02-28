@@ -85,24 +85,7 @@
                 <p><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></p>
               <?php endif; ?>
             </div>
-            <div>
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <a class="text-decoration-none" href="#">
-                  <div class="bg-dominant rounded-pill text-white px-3 py-2">
-                    24 total issues
-                  </div>
-                </a>
-                <a class="text-decoration-none text-warning" href="#">4 issues left</a>
-              </div>
-              <div>
-                <small class="text-white">Progress</small>
-                <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25"
-                  aria-valuemin="0" aria-valuemax="100">
-                  <div class="progress-bar" style="width: 25%"></div>
-                </div>
-                <small class="float-end text-white">25%</small>
-              </div>
-            </div>
+            <?= view_cell('App\Cells\Project\IssuesCount\IssuesCount::render', ['project' => $project]); ?>
           </div>
         </div>
         <a class="text-decoration-none text-white mt-5" href="<?=site_url('project/' . $project['slug'] .'/dashboard')?>">

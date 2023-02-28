@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CategoryModel;
 use App\Models\CollaboratorModel;
+use App\Models\IssueModel;
 use App\Models\ProjectModel;
 
 class Project extends BaseController
@@ -147,6 +148,7 @@ class Project extends BaseController
     
     $projectModel = model(ProjectModel::class);
     $collaboratorModel = model(CollaboratorModel::class);
+    $issueModel = model(IssueModel::class);
     $data = [];
     $color = '';
     $backgroundColor = '';
@@ -154,6 +156,15 @@ class Project extends BaseController
 
     $data['project'] = $projectModel->getProject('', $slug);
     $data['collaborators'] = $collaboratorModel->getCollaboratorsByProject($data['project']['id']);
+    $data['issues'] = $issueModel->getIssues($data['project']['id']);
+    $data['openIssues'] = array_filter(
+      $data['issues'],
+      fn ($issue) => $issue['status_name'] != CATEGORY_ISSUE_STATUS_CLOSED_NAME
+    );
+    $data['closedIssues'] = array_filter(
+      $data['issues'],
+      fn ($issue) => $issue['status_name'] == CATEGORY_ISSUE_STATUS_CLOSED_NAME
+    );
 
     $color = 'color: #' . $data['project']['color'] . ';';
     $backgroundColor = 'background-color: #' . $data['project']['color'] . '1a;';

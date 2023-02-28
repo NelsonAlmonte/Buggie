@@ -101,3 +101,6 @@ define('MESSAGE_ERROR', 'There is appear to be an error');
 define('MESSAGE_ERROR_COLOR', 'danger');
 define('MESSAGE_ERROR_ICON', 'bi bi-x-circle');
 define('PATH_UPLOAD_PROFILE_IMAGE', '../public_html/uploads/profile-image/');
+// Categories
+define('CATEGORY_ISSUE_STATUS_OPEN_NAME', 'open');
+define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');

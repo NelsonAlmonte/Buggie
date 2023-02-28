@@ -8,7 +8,7 @@ use App\Models\ProjectModel;
 
 class Issue extends BaseController
 {
-    public function issues($slug = '')
+    public function issues($slug)
     {
         $projectModel = model(ProjectModel::class);
         $issueModel = model(IssueModel::class);
@@ -52,7 +52,6 @@ class Issue extends BaseController
 
     public function save($slug)
     {
-        helper('url');
         $issueModel = model(IssueModel::class);
         $data = [];
 
@@ -86,5 +85,82 @@ class Issue extends BaseController
             ]);
             return redirect()->to('issue/' . $slug . '/add');
         }
+    }
+
+    public function edit($slug, $id)
+    {
+        $issueModel = model(IssueModel::class);
+        $projectModel = model(ProjectModel::class);
+        $categoryModel = model(CategoryModel::class);
+        $data = [];
+        $categories = [];
+        $categoryTypes = ['classification', 'severity', 'issue_status'];
+
+        $data['issue'] = $issueModel->getIssue($id);
+        $data['project'] = $projectModel->getProject('', $slug);
+
+        $categories = $categoryModel->getCategories();
+
+        foreach ($categoryTypes as $type) {
+            $data['status'][$type] = array_values(
+                array_filter(
+                    $categories, 
+                    fn ($category) => $category['type'] == $type
+                )
+            );
+        }
+
+        return view('template/header')
+        . view('issue/edit', $data)
+        . view('template/footer');
+    }
+
+    public function update($slug, $id)
+    {
+        $issueModel = model(IssueModel::class);
+        $data = [];
+
+        $data = [
+            'id' => $id,
+            'title' => $this->request->getPost('title'),
+            'description' => $this->request->getPost('description'),
+            'reporter' => $this->request->getPost('reporter'),
+            'assignee' => !empty($_POST['assignee']) ? $_POST['assignee'] : null,
+            'classification' => $this->request->getPost('classification'),
+            'severity' => $this->request->getPost('severity'),
+            'status' => $this->request->getPost('status'),
+            'start_date' => $this->request->getPost('start_date'),
+            'end_date' => $this->request->getPost('end_date'),
+            'project' => $this->request->getPost('project'),
+        ];
+
+        if ($issueModel->updateIssue($data)) {
+            session()->setFlashdata([
+                'message' => MESSAGE_SUCCESS, 
+                'color' => MESSAGE_SUCCESS_COLOR, 
+                'icon' => MESSAGE_SUCCESS_ICON
+            ]);
+            return redirect()->to('issue/' . $slug);
+        } else {
+            session()->setFlashdata([
+                'message' => MESSAGE_ERROR, 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
+            ]);
+            return redirect()->to('issue/' . $slug . '/edit/' . $id);
+        }
+    }
+
+    public function issue($slug, $id)
+    {
+        $issueModel = model(IssueModel::class);
+        $data = [];
+
+        $data['issue'] = $issueModel->getIssue($id);
+        $data['slug'] = $slug;
+        
+        return view('template/header')
+        . view('issue/issue', $data)
+        . view('template/footer');
     }
 }
