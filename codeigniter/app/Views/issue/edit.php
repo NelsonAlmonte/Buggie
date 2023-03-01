@@ -25,11 +25,8 @@
           </div>
         </div>
         <div class="col-12 mb-4">
-          <div class="form-floating">
-            <textarea class="form-control bg-dominant border-0" placeholder="Description" id="description"
-              name="description" style="height: 200px"><?=esc($issue['description'])?></textarea>
-            <label for="description">Description*</label>
-          </div>
+          <textarea x-data="froalaEditor" x-init="initFroala($el)" x-cloak x-show="false" id="description"
+            name="description"><?=esc($issue['description'])?></textarea>
         </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-file-earmark-text text-primary me-3"></i>Files</h4>

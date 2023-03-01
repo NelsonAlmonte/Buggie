@@ -63,13 +63,17 @@ document.addEventListener('alpine:init', () => {
 			});
 		},
 		removeFile(fileIndex, input, selectedFile) {
-			this.filesPreview = this.filesPreview.filter(file => file.uuid !== selectedFile.uuid);
-			this.inputFiles = this.inputFiles.filter((file, index) => fileIndex !== index);
+			this.filesPreview = this.filesPreview.filter(
+				(file) => file.uuid !== selectedFile.uuid
+			);
+			this.inputFiles = this.inputFiles.filter(
+				(file, index) => fileIndex !== index
+			);
 			this.addToInput(input);
 		},
 		addToInput(input) {
 			const dataTransfer = new DataTransfer();
-			this.inputFiles.forEach(file => dataTransfer.items.add(file));
+			this.inputFiles.forEach((file) => dataTransfer.items.add(file));
 			input.files = dataTransfer.files;
 		},
 		formatFileName(name) {
@@ -78,14 +82,86 @@ document.addEventListener('alpine:init', () => {
 			const extension = split[1];
 			if (fileName.length > 15) fileName = fileName.substring(0, 15);
 			return `${fileName}.${extension}`;
-		}
+		},
+	}));
+
+	Alpine.data('froalaEditor', () => ({
+		initFroala(el) {
+			let { csrfName, csrfHash } = getCsrf();
+			const editor = new FroalaEditor(`#${el.getAttribute('id')}`, {
+				toolbarButtons: {
+					moreText: {
+						buttons: [
+							'bold',
+							'italic',
+							'underline',
+							'fontSize',
+							'strikeThrough',
+							'clearFormatting',
+						],
+						buttonsVisible: 4,
+					},
+					moreParagraph: {
+						buttons: [
+							'alignLeft',
+							'alignCenter',
+							'alignJustify',
+							'formatOLSimple',
+							'formatUL',
+							'quote',
+						],
+					},
+					moreRich: {
+						buttons: ['insertLink', 'insertImage', 'insertTable', 'insertHR'],
+						buttonsVisible: 4,
+					},
+				},
+				quickInsertEnabled: false,
+				imageUploadURL: '/issue/uploadIssueImage',
+				imageUploadParams: {
+					[csrfName]: csrfHash,
+				},
+				imageUploadMethod: 'POST',
+				events: {
+					// 'image.beforeUpload': () => {
+					// 	this.options.imageUploadParams[csrfName] = csrfHash;
+					// },
+					'image.uploaded': (response) => {
+						const parsedResponse = JSON.parse(response);
+						getCsrf(parsedResponse.token);
+						csrfHash = parsedResponse.token;
+					},
+					'image.error': (error, response) => {
+						console.log(error);
+						console.log(response);
+					},
+				// 	'image.removed': (image) => {
+				// 		fetch(`deleteupload.php`, {
+				// 			method: 'POST',
+				// 			headers: {
+				// 				'Content-Type': 'application/json',
+				// 			},
+				// 			body: JSON.stringify({
+				// 				image: image[0].src,
+				// 			}),
+				// 		})
+				// 			.then((response) => response.json())
+				// 			.then((response) => {
+				// 				console.log('Success:', response);
+				// 			})
+				// 			.catch((error) => {
+				// 				console.error('Error:', error);
+				// 			});
+				// 	},
+				},
+			});
+			editor.opts.imageUploadParams[csrfName] = csrfHash;
+		},
 	}));
 
 	async function useFetch(payload) {
 		try {
-			const csrfSelector = document.querySelector('.csrf');
-			const csrfName = csrfSelector.attributes.name.value;
-			const csrfHash = csrfSelector.value;
+			const { csrfName, csrfHash } = getCsrf();
 			payload[csrfName] = csrfHash;
 
 			const source = await fetch(payload.url, {
@@ -97,11 +173,19 @@ document.addEventListener('alpine:init', () => {
 				body: JSON.stringify(payload),
 			});
 			const response = await source.json();
-			csrfSelector.value = response.token;
+			getCsrf(response.token);
 			return [response, null];
 		} catch (error) {
 			console.log(error);
 			return [null, error];
 		}
+	}
+
+	function getCsrf(csrfValue) {
+		const csrfSelector = document.querySelector('.csrf');
+		if (csrfValue) csrfSelector.value = csrfValue;
+		const csrfName = csrfSelector.attributes.name.value;
+		const csrfHash = csrfSelector.value;
+		return { csrfName: csrfName, csrfHash: csrfHash };
 	}
 });

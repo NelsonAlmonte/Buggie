@@ -61,6 +61,7 @@ $routes->group('issue', static function ($routes) {
     $routes->post('(:segment)/save', 'Issue::save/$1');
     $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2');
     $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2');
+    $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
 });
 
 /*

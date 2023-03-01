@@ -12,7 +12,7 @@
       <?php endif; ?>
       <form class="row gx-5" action="<?=site_url('issue/'. $project['slug'] . '/save')?>" method="post"
         enctype="multipart/form-data">
-        <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+        <input class="csrf" type="text" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <input type="hidden" id="project" name="project" value="<?=esc($project['id'])?>">
         <div class="col-12 mb-4">
           <h4><i class="bi bi-person-vcard text-primary me-3"></i>Information</h4>
@@ -25,11 +25,8 @@
           </div>
         </div>
         <div class="col-12 mb-4">
-          <div class="form-floating">
-            <textarea class="form-control bg-dominant border-0" placeholder="Description" id="description"
-              name="description" style="height: 200px"></textarea>
-            <label for="description">Description*</label>
-          </div>
+          <textarea x-data="froalaEditor" x-init="initFroala($el)" id="description"
+            name="description"></textarea>
         </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-file-earmark-text text-primary me-3"></i>Files</h4>

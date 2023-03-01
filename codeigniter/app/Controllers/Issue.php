@@ -163,4 +163,24 @@ class Issue extends BaseController
         . view('issue/issue', $data)
         . view('template/footer');
     }
+
+    public function uploadIssueImage()
+    {
+        $response = [];
+        $file = $this->request->getFile('file');
+        $file->move(ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES, $file->getName());
+
+        $fileRoute = "/uploads/issues-images/";
+  
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") {
+            $protocol = "https://";
+        } else {
+            $protocol = "http://";
+        }
+        
+        $response['token'] = csrf_hash();
+        $response['link'] = $protocol . $_SERVER["HTTP_HOST"] . $fileRoute . $file->getName();
+        
+        return $this->response->setJSON($response);
+    }
 }
