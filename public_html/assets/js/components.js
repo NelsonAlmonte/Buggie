@@ -91,28 +91,14 @@ document.addEventListener('alpine:init', () => {
 			const editor = new FroalaEditor(`#${el.getAttribute('id')}`, {
 				toolbarButtons: {
 					moreText: {
-						buttons: [
-							'bold',
-							'italic',
-							'underline',
-							'fontSize',
-							'strikeThrough',
-							'clearFormatting',
-						],
-						buttonsVisible: 4,
+						buttons: ['bold', 'italic', 'underline', 'strikeThrough', 'quote'],
+						buttonsVisible: 5,
 					},
 					moreParagraph: {
-						buttons: [
-							'alignLeft',
-							'alignCenter',
-							'alignJustify',
-							'formatOLSimple',
-							'formatUL',
-							'quote',
-						],
+						buttons: ['formatOLSimple', 'formatUL'],
 					},
 					moreRich: {
-						buttons: ['insertLink', 'insertImage', 'insertTable', 'insertHR'],
+						buttons: ['insertLink', 'insertImage', 'insertHR'],
 						buttonsVisible: 4,
 					},
 				},
@@ -123,39 +109,32 @@ document.addEventListener('alpine:init', () => {
 				},
 				imageUploadMethod: 'POST',
 				events: {
-					// 'image.beforeUpload': () => {
-					// 	this.options.imageUploadParams[csrfName] = csrfHash;
-					// },
 					'image.uploaded': (response) => {
 						const parsedResponse = JSON.parse(response);
 						getCsrf(parsedResponse.token);
-						csrfHash = parsedResponse.token;
+						editor.opts.imageUploadParams[csrfName] = parsedResponse.token;
 					},
 					'image.error': (error, response) => {
 						console.log(error);
 						console.log(response);
 					},
-				// 	'image.removed': (image) => {
-				// 		fetch(`deleteupload.php`, {
-				// 			method: 'POST',
-				// 			headers: {
-				// 				'Content-Type': 'application/json',
-				// 			},
-				// 			body: JSON.stringify({
-				// 				image: image[0].src,
-				// 			}),
-				// 		})
-				// 			.then((response) => response.json())
-				// 			.then((response) => {
-				// 				console.log('Success:', response);
-				// 			})
-				// 			.catch((error) => {
-				// 				console.error('Error:', error);
-				// 			});
-				// 	},
+					'image.removed': async (image) => {
+						if (image[0].classList.contains('fr-uploading')) return;
+
+						const payload = {
+							url: `/issue/deleteIssueImage`,
+							image: image[0].src,
+						};
+			
+						const [response, error] = await useFetch(payload);
+						
+						getCsrf(response.token);
+						editor.opts.imageUploadParams[csrfName] = response.token;
+						console.log(response);
+						console.log(error);
+					},
 				},
 			});
-			editor.opts.imageUploadParams[csrfName] = csrfHash;
 		},
 	}));
 

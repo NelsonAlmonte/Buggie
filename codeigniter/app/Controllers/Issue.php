@@ -167,10 +167,11 @@ class Issue extends BaseController
     public function uploadIssueImage()
     {
         $response = [];
-        $file = $this->request->getFile('file');
-        $file->move(ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES, $file->getName());
+        $directory = "/uploads/issues-images/";
+        $protocol = '';
 
-        $fileRoute = "/uploads/issues-images/";
+        $file = $this->request->getFile('file');
+        $file->move(ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES, $file->getRandomName());
   
         if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") {
             $protocol = "https://";
@@ -179,8 +180,28 @@ class Issue extends BaseController
         }
         
         $response['token'] = csrf_hash();
-        $response['link'] = $protocol . $_SERVER["HTTP_HOST"] . $fileRoute . $file->getName();
+        $response['link'] = $protocol . $_SERVER["HTTP_HOST"] . $directory . $file->getName();
         
+        return $this->response->setJSON($response);
+    }
+
+    public function deleteIssueImage()
+    {
+        $json = [];
+        $response = [];
+        $image = '';
+        $directory = ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES;
+
+        $json = $this->request->getJSON(true);
+        $json['image'] = explode('/', $json['image']);
+
+        $response['token'] = csrf_hash();
+        $response['status'] = EXIT_DATABASE;
+
+        $image = end($json['image']);
+
+        if (unlink($directory . $image)) $response['status'] = EXIT_SUCCESS;
+
         return $this->response->setJSON($response);
     }
 }
