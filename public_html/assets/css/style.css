@@ -64,3 +64,67 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+.auto-complete > ul {
+  position: absolute;
+  max-height: 226px;
+  box-sizing: border-box;
+  left: 0;
+  right: 0;
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+  z-index: 1;
+  list-style: none;
+  border-radius: 0.6rem;
+  background-color: var(--color-dominant);
+  border: 1px solid rgba(33, 33, 33, 0.07);
+  box-shadow: 0 0.125rem 0.25rem rgba(var(--bs-body-color-rgb), 0.075) !important;
+  outline: none;
+  transition: opacity 0.15s ease-in-out;
+  -moz-transition: opacity 0.15s ease-in-out;
+  -webkit-transition: opacity 0.15s ease-in-out;
+}
+
+.auto-complete > ul[hidden],
+.auto-complete > ul:empty {
+  display: block;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.auto-complete > ul > li {
+  margin: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+  font-size: 1rem;
+  color: var(--bs-body-color);
+  border-radius: 0.35rem;
+  background-color: var(--color-dominant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.2s ease;
+}
+
+.auto-complete > ul > li mark {
+  background-color: transparent;
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.auto-complete > ul > li:hover {
+  cursor: pointer;
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.auto-complete > ul > li[aria-selected="true"] {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+  .auto-complete > input {
+    width: 18rem;
+  }
+}

@@ -25,8 +25,7 @@
           </div>
         </div>
         <div class="col-12 mb-4">
-          <textarea x-data="froalaEditor" x-init="initFroala($el)" id="description"
-            name="description"></textarea>
+          <textarea x-data="froalaEditor" x-init="initFroala($el)" id="description" name="description"></textarea>
         </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-file-earmark-text text-primary me-3"></i>Files</h4>
@@ -77,11 +76,18 @@
           </div>
         </div>
         <div class="col-6 mb-4">
-          <div class="form-floating">
-            <input type="text" class="form-control bg-dominant border-0" id="assignee" name="assignee"
-              placeholder="Assign to" autocomplete="off">
+          <div x-data="searchSelect" class="form-floating auto-complete">
+            <input type="text" class="form-control bg-dominant border-0" id="assignee-search" name="assignee-search"
+              placeholder="Assign to" autocomplete="off" x-model="query"
+              @input="getItems('collaborator', 'searchCollaborators')">
+            <ul x-show="items.length > 0">
+              <template x-for="item in items">
+                <li x-text="`${item.name} ${item.last}`" @click="query = `${item.name} ${item.last}`; items = []; $dispatch('get-item', { item: item })"></li>
+              </template>
+            </ul>
             <label for="assign to">Assign to</label>
           </div>
+          <input type="hidden" id="assignee" name="assignee" x-data="{ itemId: '' }" @get-item.window="itemId = $event.detail.item.id" x-model="itemId">
         </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-info-circle text-primary me-3"></i>Status</h4>

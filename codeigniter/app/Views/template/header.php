@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buggie</title>
-  <link href="/assets/third-party/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/assets/third-party/froala/froala_editor.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/third-party/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/third-party/froala/froala_editor.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  <link href="/assets/css/template.css" rel="stylesheet">
-  <link href="/assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/template.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
