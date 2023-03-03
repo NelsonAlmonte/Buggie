@@ -6,8 +6,12 @@ use CodeIgniter\View\Cells\Cell;
 
 class AssignProjectModal extends Cell
 {
+    protected $collaboratorProjects = [];
+
     public function render(): string
     {
-        return $this->view('assign_project_modal_cell');
+        $data = [];
+        $data['collaboratorProjects'] = $this->collaboratorProjects;
+        return $this->view('assign_project_modal_cell', $data);
     }
 }

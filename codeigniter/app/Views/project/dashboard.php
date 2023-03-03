@@ -142,7 +142,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+    <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
         <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
           <span class="fs-5 text-white">Latest issues</span>
@@ -189,7 +189,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-4">
+    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
         <div class="card-header bg-complementary fs-5 text-white rounded-top-4 px-4 py-3">Issues graph</div>
         <div class="issues-card card-body p-4">

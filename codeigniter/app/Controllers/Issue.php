@@ -64,7 +64,7 @@ class Issue extends BaseController
             'severity' => $this->request->getPost('severity'),
             'status' => $this->request->getPost('status'),
             'start_date' => $this->request->getPost('start_date'),
-            'end_date' => $this->request->getPost('end_date'),
+            'end_date' => !empty($_POST['end_date']) ? $_POST['end_date'] : null,
             'project' => $this->request->getPost('project'),
         ];
 
@@ -130,7 +130,7 @@ class Issue extends BaseController
             'severity' => $this->request->getPost('severity'),
             'status' => $this->request->getPost('status'),
             'start_date' => $this->request->getPost('start_date'),
-            'end_date' => $this->request->getPost('end_date'),
+            'end_date' => !empty($_POST['end_date']) ? $_POST['end_date'] : null,
             'project' => $this->request->getPost('project'),
         ];
 
