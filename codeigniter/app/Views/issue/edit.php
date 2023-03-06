@@ -62,7 +62,7 @@
                 </div>
               </template>
             </div>
-            <input class="d-none" type="file" name="files" id="files" x-ref="files" @change="renderFiles($event)"
+            <input class="d-none" type="file" name="files[]" id="files" x-ref="files" @change="renderFiles($event)"
               multiple>
           </div>
         </div>
@@ -83,8 +83,14 @@
               @input="getItems('collaborator', 'searchCollaborators')">
             <ul x-show="items.length > 0">
               <template x-for="item in items">
-                <li x-text="`${item.name} ${item.last}`"
-                  @click="query = `${item.name} ${item.last}`; items = []; $dispatch('get-item', { item: item })"></li>
+                <li 
+                  x-text="`${item.name} ${item.last}`"
+                  @click="
+                    query = `${item.name} ${item.last}`; 
+                    items = []; 
+                    $dispatch('get-item', { item: item })"
+                  @click.outside="items = []">
+                </li>
               </template>
             </ul>
             <label for="assign to">Assign to</label>

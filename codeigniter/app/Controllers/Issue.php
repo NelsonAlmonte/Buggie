@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\CategoryModel;
+use App\Models\FileModel;
 use App\Models\IssueModel;
 use App\Models\ProjectModel;
 
@@ -54,6 +55,10 @@ class Issue extends BaseController
     {
         $issueModel = model(IssueModel::class);
         $data = [];
+        $savedIssue = 0;
+        $files = $this->request->getFiles();
+        $operationsToValidate = 1;
+        $successfulOperations = 0;
 
         $data = [
             'title' => $this->request->getPost('title'),
@@ -68,9 +73,14 @@ class Issue extends BaseController
             'project' => $this->request->getPost('project'),
         ];
 
-        $data['issue'] = $issueModel->saveIssue($data);
+        $savedIssue = $issueModel->saveIssue($data);
+        if ($savedIssue > 0) $successfulOperations ++;
+        if (!empty($files['files'][0]->getName())) {
+            $operationsToValidate = 2;
+            if ($this->manageFiles($files, $savedIssue)) $successfulOperations ++;
+        }
 
-        if ($data['issue']) {
+        if ($successfulOperations == $operationsToValidate) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
@@ -85,6 +95,35 @@ class Issue extends BaseController
             ]);
             return redirect()->to('issue/' . $slug . '/add');
         }
+    }
+
+    public function manageFiles($files, $issue)
+    {
+        $fileModel = model(FileModel::class);
+        $randomFileName = '';
+        $filesUploaded = 0;
+        $filesSaved = 0;
+        $operationResult = false;
+        $data = [];
+        
+        foreach ($files['files'] as $file) {
+            if ($file->isValid() && !$file->hasMoved()) {
+                $randomFileName = $file->getRandomName();
+                $file->move(ROOTPATH . PATH_UPLOAD_ISSUES_FILES, $randomFileName);
+                $filesUploaded ++;
+            }
+            
+            $data = [
+                'name' => $randomFileName,
+                'issue' => $issue,
+            ];
+
+            if ($fileModel->saveFile($data)) $filesSaved ++;
+        }
+
+        if ($filesUploaded == $filesSaved) $operationResult = true;
+
+        return $operationResult;
     }
 
     public function edit($slug, $id)
@@ -119,6 +158,9 @@ class Issue extends BaseController
     {
         $issueModel = model(IssueModel::class);
         $data = [];
+        $files = $this->request->getFiles();
+        $operationsToValidate = 1;
+        $successfulOperations = 0;
 
         $data = [
             'id' => $id,
@@ -134,7 +176,13 @@ class Issue extends BaseController
             'project' => $this->request->getPost('project'),
         ];
 
-        if ($issueModel->updateIssue($data)) {
+        if ($issueModel->updateIssue($data)) $successfulOperations ++;
+        if (!empty($files['files'][0]->getName())) {
+            $operationsToValidate = 2;
+            if ($this->manageFiles($files, $id)) $successfulOperations ++;
+        }
+
+        if ($successfulOperations == $operationsToValidate) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
