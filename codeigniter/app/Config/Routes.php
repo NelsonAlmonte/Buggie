@@ -63,6 +63,7 @@ $routes->group('issue', static function ($routes) {
     $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2');
     $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
     $routes->post('deleteIssueImage', 'Issue::deleteIssueImage');
+    $routes->post('deleteIssueFile', 'Issue::deleteIssueFile');
 });
 
 /*

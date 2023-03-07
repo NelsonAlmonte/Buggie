@@ -131,6 +131,7 @@ class Issue extends BaseController
         $issueModel = model(IssueModel::class);
         $projectModel = model(ProjectModel::class);
         $categoryModel = model(CategoryModel::class);
+        $fileModel = model(FileModel::class);
         $data = [];
         $categories = [];
         $categoryTypes = ['classification', 'severity', 'issue_status'];
@@ -148,6 +149,8 @@ class Issue extends BaseController
                 )
             );
         }
+
+        $data['files'] = $fileModel->getIssueFiles($id);
 
         return view('template/header')
         . view('issue/edit', $data)
@@ -249,6 +252,27 @@ class Issue extends BaseController
         $image = end($json['image']);
 
         if (unlink($directory . $image)) $response['status'] = EXIT_SUCCESS;
+
+        return $this->response->setJSON($response);
+    }
+
+    public function deleteIssueFile()
+    {
+        $fileModel = model(FileModel::class);
+        $json = [];
+        $response = [];
+        $directory = ROOTPATH . PATH_UPLOAD_ISSUES_FILES;
+        $operationsToValidate = 2;
+        $successfulOperations = 0;
+
+        $json = $this->request->getJSON(true);
+
+        $response['token'] = csrf_hash();
+        $response['status'] = EXIT_DATABASE;
+
+        if (unlink($directory . $json['fileName'])) $successfulOperations ++;
+        if ($fileModel->deleteFile($json['fileId'])) $successfulOperations ++;
+        if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
 
         return $this->response->setJSON($response);
     }

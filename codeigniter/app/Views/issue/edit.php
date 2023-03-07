@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="col-12 mb-4">
-          <textarea x-data="froalaEditor" x-init="initFroala($el)" x-cloak x-show="false" id="description"
+          <textarea x-data="froalaEditor" x-init="initFroala($el)" id="description"
             name="description"><?=esc($issue['description'])?></textarea>
         </div>
         <div class="col-12 my-4">
@@ -38,6 +38,30 @@
               <span>Add files*</span>
             </button>
             <div class="row mt-4">
+              <?php if(!empty($files)): ?>
+                <?php foreach($files as $file): ?>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4" >
+                    <div class="bg-dominant rounded-4 p-3">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-start align-items-center text-white">
+                          <div class="bg-primary rounded-3 p-2 me-2">
+                            <small class="text-uppercase"><?=esc(explode('.', $file['name'])[1])?></small>
+                          </div>
+                          <span><?=esc($file['name'])?></span>
+                        </div>
+                        <div class="d-flex justify-content-start align-items-center">
+                          <button class="btn btn-rounded btn-primary me-2" type="button">
+                            <i class="bi bi-eye"></i>
+                          </button>
+                          <button class="btn btn-rounded btn-danger" type="button">
+                            <i class="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              <?php endif;?>
               <template x-for="(file, index) in filesPreview">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4">
                   <div class="bg-dominant rounded-4 p-3">

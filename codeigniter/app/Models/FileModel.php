@@ -19,4 +19,13 @@ class FileModel extends Model
             ->table('files')
             ->insert($data);
     }
+
+    public function getIssueFiles($issue)
+    {
+        return $this->db
+            ->table('files')
+            ->where('issue', $issue)
+            ->get()
+            ->getResultArray();
+    }
 }
