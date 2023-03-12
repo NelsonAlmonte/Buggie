@@ -40,7 +40,12 @@
             <div class="row mt-4">
               <?php if(!empty($files)): ?>
                 <?php foreach($files as $file): ?>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4" >
+                  <div 
+                    class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4" 
+                    x-data="manageFile" 
+                    x-init='file = <?=json_encode($file)?>' 
+                    x-ref="file"
+                  >
                     <div class="bg-dominant rounded-4 p-3">
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-start align-items-center text-white">
@@ -53,7 +58,7 @@
                           <button class="btn btn-rounded btn-primary me-2" type="button">
                             <i class="bi bi-eye"></i>
                           </button>
-                          <button class="btn btn-rounded btn-danger" type="button">
+                          <button class="btn btn-rounded btn-danger" type="button" @click="deleteFile(file, $refs.file)">
                             <i class="bi bi-trash"></i>
                           </button>
                         </div>

@@ -260,18 +260,20 @@ class Issue extends BaseController
     {
         $fileModel = model(FileModel::class);
         $json = [];
+        $file = [];
         $response = [];
         $directory = ROOTPATH . PATH_UPLOAD_ISSUES_FILES;
         $operationsToValidate = 2;
         $successfulOperations = 0;
 
         $json = $this->request->getJSON(true);
+        $file = $json['file'];
 
         $response['token'] = csrf_hash();
         $response['status'] = EXIT_DATABASE;
 
-        if (unlink($directory . $json['fileName'])) $successfulOperations ++;
-        if ($fileModel->deleteFile($json['fileId'])) $successfulOperations ++;
+        if (unlink($directory . $file['name'])) $successfulOperations ++;
+        if ($fileModel->deleteFile($file['id'])) $successfulOperations ++;
         if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
 
         return $this->response->setJSON($response);

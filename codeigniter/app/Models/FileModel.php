@@ -28,4 +28,12 @@ class FileModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function deleteFile($id)
+    {
+        return $this->db
+            ->table('files')
+            ->where('id', $id)
+            ->delete();
+    }
 }

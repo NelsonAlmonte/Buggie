@@ -138,6 +138,23 @@ document.addEventListener('alpine:init', () => {
 		},
 	}));
 
+	Alpine.data('manageFile', () => ({
+		file: '',
+		async deleteFile(file, element) {
+			const payload = {
+				url: `/issue/deleteIssueFile`,
+				file: file,
+			};
+
+			const [response, error] = await useFetch(payload);
+
+			if (response.status === 0) element.remove();
+		},
+		viewFile() {
+			//TODO - view file with fancybox
+		}
+	}));
+
 	async function useFetch(payload) {
 		try {
 			const { csrfName, csrfHash } = getCsrf();
