@@ -6,6 +6,8 @@ use App\Models\CategoryModel;
 use App\Models\FileModel;
 use App\Models\IssueModel;
 use App\Models\ProjectModel;
+use DOMDocument;
+use DOMXPath;
 
 class Issue extends BaseController
 {
@@ -219,16 +221,12 @@ class Issue extends BaseController
     {
         $response = [];
         $directory = "/uploads/issues-images/";
-        $protocol = '';
+        $protocol = 'http://';
 
         $file = $this->request->getFile('file');
         $file->move(ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES, $file->getRandomName());
   
-        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") {
-            $protocol = "https://";
-        } else {
-            $protocol = "http://";
-        }
+        if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] != "off") $protocol = "https://";
         
         $response['token'] = csrf_hash();
         $response['link'] = $protocol . $_SERVER["HTTP_HOST"] . $directory . $file->getName();
@@ -236,24 +234,29 @@ class Issue extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function deleteIssueImage()
+    public function deleteIssueImage($image, $isAjax = true)
     {
-        $json = [];
-        $response = [];
-        $image = '';
         $directory = ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES;
 
-        $json = $this->request->getJSON(true);
-        $json['image'] = explode('/', $json['image']);
+        if ($isAjax) {
+            $json = [];
+            $response = [];
+            $image = '';
 
-        $response['token'] = csrf_hash();
-        $response['status'] = EXIT_DATABASE;
+            $json = $this->request->getJSON(true);
+            $json['image'] = explode('/', $json['image']);
 
-        $image = end($json['image']);
+            $response['token'] = csrf_hash();
+            $response['status'] = EXIT_DATABASE;
 
-        if (unlink($directory . $image)) $response['status'] = EXIT_SUCCESS;
-
-        return $this->response->setJSON($response);
+            $image = end($json['image']);
+    
+            if (unlink($directory . $image)) $response['status'] = EXIT_SUCCESS;
+    
+            return $this->response->setJSON($response);
+        } else {
+            return unlink($directory . $image);
+        }
     }
 
     public function deleteIssueFile()
@@ -277,5 +280,48 @@ class Issue extends BaseController
         if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
 
         return $this->response->setJSON($response);
+    }
+
+    public function deleteIssue()
+    {
+        $json = [];
+        $imagesFromDescription = [];
+        $operationsToValidate = 1;
+        $successfulOperations = 0;
+
+        $json = $this->request->getJSON(true);
+
+        $imagesFromDescription = $this->getImagesFromDescription($json['issue']['description']);
+        if (!empty($imagesFromDescription)) {
+            $operationsToValidate += count($imagesFromDescription);
+            foreach ($imagesFromDescription as $image) {
+                $image = explode('/', $image);
+                $image = end($image);
+                if ($this->deleteIssueImage($image, false)) $successfulOperations ++;
+            }
+        }
+
+        //TODO - Eliminar los archivos y el issue
+
+        $response['token'] = csrf_hash();
+        $response['data'] = ['imagesfromdescription' => $imagesFromDescription, 'operations' => $operationsToValidate, 'success' => $successfulOperations];
+        return $this->response->setJSON($response);
+    }
+
+    public function getImagesFromDescription($description)
+    {
+        $images = [];
+        $imagesFromDescription = [];
+
+        $document = new DOMDocument();
+        $document->loadHTML($description);
+        $xpath = new DOMXPath($document);
+        $images = $xpath->query('//img/@src');
+        if ($images->length > 0) {
+            foreach ($images as $image) {
+                $imagesFromDescription[] = urldecode($image->value);
+            }
+        }
+        return $imagesFromDescription;
     }
 }

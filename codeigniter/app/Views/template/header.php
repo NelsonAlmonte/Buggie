@@ -8,6 +8,7 @@
   <title>Buggie</title>
   <link rel="stylesheet" href="/assets/third-party/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/third-party/froala/froala_editor.css">
+  <link rel="stylesheet" href="/assets/third-party/glightbox/glightbox.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="/assets/css/template.css">
   <link rel="stylesheet" href="/assets/css/style.css">

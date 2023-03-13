@@ -48,9 +48,6 @@
                         <span x-text="file.name"></span>
                       </div>
                       <div class="d-flex justify-content-start align-items-center">
-                        <button class="btn btn-rounded btn-primary me-2" type="button">
-                          <i class="bi bi-eye"></i>
-                        </button>
                         <button class="btn btn-rounded btn-danger" type="button"
                           @click="removeFile(index, $refs.files, file)">
                           <i class="bi bi-trash"></i>

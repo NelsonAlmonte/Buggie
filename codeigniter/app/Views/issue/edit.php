@@ -42,8 +42,7 @@
                 <?php foreach($files as $file): ?>
                   <div 
                     class="col-xl-6 col-lg-6 col-md-6 col-sm-12 mb-4" 
-                    x-data="manageFile" 
-                    x-init='file = <?=json_encode($file)?>' 
+                    x-data 
                     x-ref="file"
                   >
                     <div class="bg-dominant rounded-4 p-3">
@@ -55,10 +54,20 @@
                           <span><?=esc($file['name'])?></span>
                         </div>
                         <div class="d-flex justify-content-start align-items-center">
-                          <button class="btn btn-rounded btn-primary me-2" type="button">
+                          <a class="btn btn-rounded btn-primary me-2 glightbox" href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" role="button">
                             <i class="bi bi-eye"></i>
-                          </button>
-                          <button class="btn btn-rounded btn-danger" type="button" @click="deleteFile(file, $refs.file)">
+                          </a>
+                          <button 
+                            class="btn btn-rounded btn-danger" 
+                            type="button"
+                            x-data="deleteItem"
+                            x-init='
+                              item = <?=json_encode($file)?>;
+                              url = "/issue/deleteIssueFile";
+                              key = "file";
+                            '
+                            @click="deleteItem($refs.file)"
+                          >
                             <i class="bi bi-trash"></i>
                           </button>
                         </div>
@@ -78,9 +87,6 @@
                         <span x-text="file.name"></span>
                       </div>
                       <div class="d-flex justify-content-start align-items-center">
-                        <button class="btn btn-rounded btn-primary me-2" type="button">
-                          <i class="bi bi-eye"></i>
-                        </button>
                         <button class="btn btn-rounded btn-danger" type="button"
                           @click="removeFile(index, $refs.files, file)">
                           <i class="bi bi-trash"></i>

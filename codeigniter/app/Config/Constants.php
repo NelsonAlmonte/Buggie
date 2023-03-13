@@ -104,6 +104,10 @@ define('MESSAGE_ERROR_ICON', 'bi bi-x-circle');
 define('PATH_UPLOAD_PROFILE_IMAGE', '../public_html/uploads/profile-image/');
 define('PATH_UPLOAD_ISSUES_IMAGES', '../public_html/uploads/issues-images/');
 define('PATH_UPLOAD_ISSUES_FILES', '../public_html/uploads/issues-files/');
+// View files
+define('PATH_TO_VIEW_PROFILE_IMAGE', '/uploads/profile-image/');
+define('PATH_TO_VIEW_ISSUES_IMAGES', '/uploads/issues-images/');
+define('PATH_TO_VIEW_ISSUES_FILES', '/uploads/issues-files/');
 // Categories
 define('CATEGORY_ISSUE_STATUS_OPEN_NAME', 'open');
 define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');

@@ -138,21 +138,20 @@ document.addEventListener('alpine:init', () => {
 		},
 	}));
 
-	Alpine.data('manageFile', () => ({
-		file: '',
-		async deleteFile(file, element) {
+	Alpine.data('deleteItem', () => ({
+		item: '',
+		url: '',
+		key: '',
+		async deleteItem(element) {
 			const payload = {
-				url: `/issue/deleteIssueFile`,
-				file: file,
+				url: this.url,
+				[this.key]: this.item,
 			};
 
 			const [response, error] = await useFetch(payload);
-
-			if (response.status === 0) element.remove();
+console.log(response);
+			// if (response.status === 0) element.remove();
 		},
-		viewFile() {
-			//TODO - view file with fancybox
-		}
 	}));
 
 	async function useFetch(payload) {

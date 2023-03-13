@@ -21,8 +21,11 @@
     <div class="card-body p-0">
       <?php if(!empty($issues)): ?>
         <?php foreach($issues as $key => $issue): ?>
-        <div
-          class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
+        <div 
+          class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>"
+          x-data
+          x-ref="issue"
+        >
           <div>
             <a class="text-accent text-decoration-none fw-bold d-block" href="<?=site_url('issue/' . $slug . '/issue/' . $issue['id'])?>"><?=esc($issue['title'])?></a>
             <small>
@@ -72,13 +75,21 @@
               </li>
               <?php endif; ?>
               <li>
-                <a class="dropdown-item text-white"
-                  href="#" role="button">
+                <button 
+                  class="dropdown-item text-white" 
+                  x-data="deleteItem"
+                  x-init='
+                    item = <?=json_encode($issue)?>; 
+                    url = "/issue/deleteIssue"; 
+                    key = "issue"
+                  '
+                  @click="deleteItem($refs.issue)"
+                >
                   <div class="d-inline-block">
                     <i class="bi bi-trash"></i>
                   </div>
                   <span>Delete</span>
-                </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -93,3 +104,4 @@
     </div>
   </div>
 </div>
+<input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />

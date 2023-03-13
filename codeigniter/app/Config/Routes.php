@@ -64,6 +64,7 @@ $routes->group('issue', static function ($routes) {
     $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
     $routes->post('deleteIssueImage', 'Issue::deleteIssueImage');
     $routes->post('deleteIssueFile', 'Issue::deleteIssueFile');
+    $routes->post('deleteIssue', 'Issue::deleteIssue');
 });
 
 /*
