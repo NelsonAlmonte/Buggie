@@ -220,7 +220,7 @@ class Issue extends BaseController
     public function uploadIssueImage()
     {
         $response = [];
-        $directory = "/uploads/issues-images/";
+        $directory = PATH_TO_VIEW_ISSUES_IMAGES;
         $protocol = 'http://';
 
         $file = $this->request->getFile('file');
@@ -234,58 +234,60 @@ class Issue extends BaseController
         return $this->response->setJSON($response);
     }
 
-    public function deleteIssueImage($image, $isAjax = true)
+    public function deleteIssueImage($image = '', $isAjax = true)
     {
+        $json = [];
+        $response = [];
         $directory = ROOTPATH . PATH_UPLOAD_ISSUES_IMAGES;
 
         if ($isAjax) {
-            $json = [];
-            $response = [];
-            $image = '';
-
             $json = $this->request->getJSON(true);
-            $json['image'] = explode('/', $json['image']);
-
+            $image = $json['image'];
             $response['token'] = csrf_hash();
             $response['status'] = EXIT_DATABASE;
-
-            $image = end($json['image']);
-    
-            if (unlink($directory . $image)) $response['status'] = EXIT_SUCCESS;
-    
-            return $this->response->setJSON($response);
-        } else {
-            return unlink($directory . $image);
         }
+
+        $image = explode('/', $image);
+        $image = end($image);
+        if (unlink($directory . $image)) $response['status'] = EXIT_SUCCESS;
+        if ($isAjax) $response = $this->response->setJSON($response);
+
+        return $response;
     }
 
-    public function deleteIssueFile()
+    public function deleteIssueFile($file = [], $isAjax = true)
     {
         $fileModel = model(FileModel::class);
         $json = [];
-        $file = [];
         $response = [];
         $directory = ROOTPATH . PATH_UPLOAD_ISSUES_FILES;
         $operationsToValidate = 2;
         $successfulOperations = 0;
 
-        $json = $this->request->getJSON(true);
-        $file = $json['file'];
-
-        $response['token'] = csrf_hash();
-        $response['status'] = EXIT_DATABASE;
+        if ($isAjax) {
+            $json = $this->request->getJSON(true);
+            $file = $json['file'];
+            $response['token'] = csrf_hash();
+            $response['status'] = EXIT_DATABASE;
+        }
 
         if (unlink($directory . $file['name'])) $successfulOperations ++;
         if ($fileModel->deleteFile($file['id'])) $successfulOperations ++;
         if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
+        if ($isAjax) $response = $this->response->setJSON($response);
 
-        return $this->response->setJSON($response);
+        return $response;
     }
 
     public function deleteIssue()
     {
+        $issueModel = model(IssueModel::class);
+        $fileModel = model(FileModel::class);
         $json = [];
         $imagesFromDescription = [];
+        $files = [];
+        $deletionResponse = [];
+        $response = [];
         $operationsToValidate = 1;
         $successfulOperations = 0;
 
@@ -295,16 +297,25 @@ class Issue extends BaseController
         if (!empty($imagesFromDescription)) {
             $operationsToValidate += count($imagesFromDescription);
             foreach ($imagesFromDescription as $image) {
-                $image = explode('/', $image);
-                $image = end($image);
-                if ($this->deleteIssueImage($image, false)) $successfulOperations ++;
+                $deletionResponse = $this->deleteIssueImage($image, false);
+                if ($deletionResponse['status'] == EXIT_SUCCESS) $successfulOperations ++;
             }
         }
 
-        //TODO - Eliminar los archivos y el issue
+        $files = $fileModel->getIssueFiles($json['issue']['id']);
+        if (!empty($files)) {
+            $operationsToValidate += count($files);
+            foreach ($files as $file) {
+                $deletionResponse = $this->deleteIssueFile($file, false);
+                if ($deletionResponse['status'] == EXIT_SUCCESS) $successfulOperations ++;
+            }
+        }
+
+        if ($issueModel->deleteIssue($json['issue']['id'])) $successfulOperations ++;
+
+        if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
 
         $response['token'] = csrf_hash();
-        $response['data'] = ['imagesfromdescription' => $imagesFromDescription, 'operations' => $operationsToValidate, 'success' => $successfulOperations];
         return $this->response->setJSON($response);
     }
 
@@ -312,6 +323,8 @@ class Issue extends BaseController
     {
         $images = [];
         $imagesFromDescription = [];
+
+        if (empty($description)) return;
 
         $document = new DOMDocument();
         $document->loadHTML($description);

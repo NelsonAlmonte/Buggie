@@ -73,4 +73,12 @@ class IssueModel extends Model
             ->where(['id' => $data['id']])
             ->update($data);
     }
+
+    public function deleteIssue($id)
+    {
+        return $this->db
+            ->table('issues')
+            ->where('id', $id)
+            ->delete();
+    }
 }

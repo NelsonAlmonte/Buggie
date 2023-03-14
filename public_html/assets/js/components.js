@@ -149,8 +149,8 @@ document.addEventListener('alpine:init', () => {
 			};
 
 			const [response, error] = await useFetch(payload);
-console.log(response);
-			// if (response.status === 0) element.remove();
+			console.log(response);
+			if (response.status === 0) element.remove();
 		},
 	}));
 
