@@ -14,9 +14,28 @@
     </div>
   </div>
   <?php endif; ?>
-  <div class="card bg-complementary border border-0 mt-4">
+  <div class="card bg-complementary border mt-4">
     <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-      <span class="fs-5 text-white">Latest issues</span>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="input-group w-50">
+          <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search" aria-label="Search" aria-describedby="search">
+          <button class="btn bg-dominant border-secondary " type="button" id="search"><i class="bi bi-search text-white"></i></button>
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="me-4">
+            <?= view_cell('App\Cells\Issue\IssueFilter\IssueFilter::render', ['options' => ['name' => 'reporter', 'controller' => 'collaborator', 'method' => 'searchCollaborators']]); ?>
+          </div>
+          <div class="me-4">
+            <?= view_cell('App\Cells\Issue\IssueFilter\IssueFilter::render', ['options' => ['name' => 'assignee', 'controller' => 'collaborator', 'method' => 'searchCollaborators']]); ?>
+          </div>
+          <div class="me-4">
+            <?= view_cell('App\Cells\Issue\IssueFilter\IssueFilter::render', ['options' => ['name' => 'status', 'controller' => 'category', 'method' => 'searchCategories']]); ?>
+          </div>
+          <div class="me-4">
+            <?= view_cell('App\Cells\Issue\IssueSort\IssueSort::render'); ?>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="card-body p-0">
       <?php if(!empty($issues)): ?>

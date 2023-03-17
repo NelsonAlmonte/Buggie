@@ -91,6 +91,7 @@ class CollaboratorModel extends Model
         return $this->db
             ->table('collaborators')
             ->like('name', $query)
+            ->limit(5)
             ->get()
             ->getResultArray();
     }

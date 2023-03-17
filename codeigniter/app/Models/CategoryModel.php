@@ -20,4 +20,14 @@ class CategoryModel extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function searchCategories($query)
+    {
+        return $this->db
+            ->table('categories')
+            ->like('name', $query)
+            ->limit(5)
+            ->get()
+            ->getResultArray();
+    }
 }

@@ -238,27 +238,27 @@ class Collaborator extends BaseController
 
     public function searchCollaborators()
 	{
-        if ($this->request->isAJAX()) {
-			$collaboratorModel = model(CollaboratorModel::class);
-            $json = [];
-            $response = [];
-            $collaborators = [];
+        $collaboratorModel = model(CollaboratorModel::class);
+        $json = [];
+        $response = [];
+        $collaborators = [];
 
-			$json = $this->request->getJSON(true);
+        $json = $this->request->getJSON(true);
 
-			$response['token'] = csrf_hash();
+        $response['token'] = csrf_hash();
 
-            $response['data'] = [];
-            if (!empty($json['query'])) {
-		        $collaborators = $collaboratorModel->searchCollaborators($json['query']);
-                $response['data'] = array_udiff(
-                    $collaborators, $json['unwanted'], 
-                    fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
-                );
-            }
+        $response['data'] = [];
+        if (!empty($json['query'])) {
+            $collaborators = $collaboratorModel->searchCollaborators($json['query']);
+            $response['data'] = array_udiff(
+                $collaborators, $json['unwanted'], 
+                fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
+            );
+        } else {
+            $response['data'] = $collaboratorModel->searchCollaborators('');
+        }
 
-			echo json_encode($response);
-		}
+        return $this->response->setJSON($response);
 	}
 
     public function assignProjects()

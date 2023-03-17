@@ -67,6 +67,9 @@ $routes->group('issue', static function ($routes) {
     $routes->post('deleteIssue', 'Issue::deleteIssue');
 });
 
+$routes->post('category/searchCategories', 'Category::searchCategories');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

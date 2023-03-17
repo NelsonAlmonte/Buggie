@@ -13,7 +13,6 @@
   border-radius: 0.5rem;
   color: #fff;
   padding: 4px 8px;
-  transition: all 0.2s ease 0s;
 }
 
 .issues-card {
@@ -34,6 +33,25 @@
 .issues-card::-webkit-scrollbar-track {
   background: var(--color-complementary);
   border-bottom-right-radius: 1rem;
+}
+
+.issue-item {
+  background-color: var(--color-complementary);
+}
+
+.issue-item:hover {
+  background-color: var(--color-dominant);
+}
+
+.issue-card-filter {
+  font-size: 14px;
+  color: var(--bs-body-color);
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.issue-card-filter:hover {
+  color: #fff;
 }
 
 .info-card-icon {
