@@ -16,25 +16,12 @@
   <?php endif; ?>
   <div class="card bg-complementary border mt-4">
     <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="input-group w-50">
-          <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search" aria-label="Search" aria-describedby="search">
-          <button class="btn bg-dominant border-secondary " type="button" id="search"><i class="bi bi-search text-white"></i></button>
-        </div>
-        <div class="d-flex align-items-center">
-          <div class="me-4">
-            <?= view_cell('App\Cells\Issue\IssueFilter\IssueFilter::render', ['options' => ['name' => 'reporter', 'controller' => 'collaborator', 'method' => 'searchCollaborators']]); ?>
-          </div>
-          <div class="me-4">
-            <?= view_cell('App\Cells\Issue\IssueFilter\IssueFilter::render', ['options' => ['name' => 'assignee', 'controller' => 'collaborator', 'method' => 'searchCollaborators']]); ?>
-          </div>
-          <div class="me-4">
-            <?= view_cell('App\Cells\Issue\IssueFilter\IssueFilter::render', ['options' => ['name' => 'status', 'controller' => 'category', 'method' => 'searchCategories']]); ?>
-          </div>
-          <div class="me-4">
-            <?= view_cell('App\Cells\Issue\IssueSort\IssueSort::render'); ?>
-          </div>
-        </div>
+      <div class="input-group w-50">
+        <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="title" aria-label="Search" aria-describedby="search">
+        <a class="btn bg-dominant border-secondary <?=!isset($_GET) ? 'd-none' : '' ;?>" href="<?=site_url('issue/' . $slug)?>"><i class="bi bi-x-lg text-white"></i></a>
+        <button class="btn bg-dominant border-secondary" type="submit"><i class="bi bi-search text-white"></i></button>
+        <button class="btn bg-dominant border-secondary" data-bs-toggle="modal"
+        data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
       </div>
     </div>
     <div class="card-body p-0">
@@ -124,3 +111,4 @@
   </div>
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+<?= view_cell('App\Cells\Issue\IssueFilterModal\IssueFilterModal::render', ['slug' => $slug]); ?>
