@@ -16,13 +16,15 @@
   <?php endif; ?>
   <div class="card bg-complementary border mt-4">
     <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-      <div class="input-group w-50">
-        <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="title" aria-label="Search" aria-describedby="search">
-        <a class="btn bg-dominant border-secondary <?=!isset($_GET) ? 'd-none' : '' ;?>" href="<?=site_url('issue/' . $slug)?>"><i class="bi bi-x-lg text-white"></i></a>
-        <button class="btn bg-dominant border-secondary" type="submit"><i class="bi bi-search text-white"></i></button>
-        <button class="btn bg-dominant border-secondary" data-bs-toggle="modal"
-        data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
-      </div>
+      <form action="<?=site_url('issue/' . $slug)?>" method="get">
+        <div class="input-group">
+          <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="reporter" aria-label="Search" aria-describedby="search" autocomplete="off">
+          <a class="btn bg-dominant border-secondary <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
+          <button class="btn bg-dominant border-secondary" type="submit"><i class="bi bi-search text-white"></i></button>
+          <button class="btn bg-dominant border-secondary" type="button" data-bs-toggle="modal"
+          data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
+        </div>
+      </form>
     </div>
     <div class="card-body p-0">
       <?php if(!empty($issues)): ?>
@@ -37,10 +39,10 @@
             <small>
               <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('issue/' . $slug . '/issue/' . $issue['id'])?>"> #<?=esc($issue['id'])?></a>
               opened on <span class="text-accent text-decoration-none fw-bold"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></span>
-              by <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('collaborator/view/' . $issue['reporter'])?>"><?=esc($issue['reporter_name'])?></a>
+              by <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('collaborator/view/' . $issue['reporter_id'])?>"><?=esc($issue['reporter_name'])?></a>
               <?php if(!empty($issue['assignee'])): ?>
               assigned to <a class="text-accent text-decoration-none fw-bold"
-                href="<?=site_url('collaborator/view/' . $issue['assignee'])?>"><?=esc($issue['assignee_name'])?></a>
+                href="<?=site_url('collaborator/view/' . $issue['assignee_id'])?>"><?=esc($issue['assignee_name'])?></a>
               <?php endif; ?>
             </small>
           </div>

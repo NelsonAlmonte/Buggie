@@ -16,11 +16,14 @@ class Issue extends BaseController
         $projectModel = model(ProjectModel::class);
         $issueModel = model(IssueModel::class);
         $data = [];
+        $filters = [];
 
         $data['project'] = $projectModel->getProject('', $slug);
         $data['slug'] = $slug;
 
-        $data['issues'] = $issueModel->getIssues($data['project']['id']);
+        $filters = $this->request->getGet();
+
+        $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
 
         return view('template/header')
         . view('issue/issues', $data)

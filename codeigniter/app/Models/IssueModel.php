@@ -21,11 +21,11 @@ class IssueModel extends Model
         return $this->db->insertID();
     }
 
-    public function getIssues($project)
+    public function getIssues($project, $filters = [])
     {
-        $issues = 'i.*, ';
-        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name,';
-        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name,';
+        $issues = 'i.id, i.title, i.reporter AS reporter_id, i.assignee AS assignee_id, i.start_date,';
+        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.username AS reporter,';
+        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name, c_a.username AS assignee,';
         $classification = 'c_cl.name AS classification_name, c_cl.color AS classification_color,';
         $severity = 'c_se.name AS severity_name, c_se.color AS severity_color,';
         $status = 'c_st.name AS status_name, c_st.color AS status_color';
@@ -39,6 +39,7 @@ class IssueModel extends Model
             ->join('categories c_se', 'c_se.id = i.severity')
             ->join('categories c_st', 'c_st.id = i.status')
             ->where('i.project', $project)
+            ->like($filters)
             ->orderBy('i.id DESC')
             ->get()
             ->getResultArray();
