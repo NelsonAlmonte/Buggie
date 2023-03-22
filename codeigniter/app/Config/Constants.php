@@ -111,8 +111,3 @@ define('PATH_TO_VIEW_ISSUES_FILES', '/uploads/issues-files/');
 // Categories
 define('CATEGORY_ISSUE_STATUS_OPEN_NAME', 'open');
 define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');
-// Categories types
-define('CATEGORY_PROJECT_TYPE_NAME', 'project_status');
-define('CATEGORY_ISSUE_STATUS_TYPE_NAME', 'issue_status');
-define('CATEGORY_ISSUE_CLASSIFICATION_TYPE_NAME', 'classification');
-define('CATEGORY_ISSUE_SEVERITY_TYPE_NAME', 'severity');

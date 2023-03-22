@@ -18,7 +18,7 @@
     <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
       <form action="<?=site_url('issue/' . $slug)?>" method="get">
         <div class="input-group">
-          <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="reporter" aria-label="Search" aria-describedby="search" autocomplete="off">
+          <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="title" aria-label="Search" aria-describedby="search" autocomplete="off">
           <a class="btn bg-dominant border-secondary <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
           <button class="btn bg-dominant border-secondary" type="submit"><i class="bi bi-search text-white"></i></button>
           <button class="btn bg-dominant border-secondary" type="button" data-bs-toggle="modal"

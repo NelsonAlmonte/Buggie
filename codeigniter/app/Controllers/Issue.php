@@ -21,7 +21,7 @@ class Issue extends BaseController
         $data['project'] = $projectModel->getProject('', $slug);
         $data['slug'] = $slug;
 
-        $filters = $this->request->getGet();
+        $filters = array_filter($this->request->getGet());
 
         $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
 
