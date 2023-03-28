@@ -78,7 +78,39 @@
       <span class="fs-5 text-white">Files</span>
     </div>
     <div class="card-body">
-
+      <div class="row">
+        <?php if(!empty($files)): ?>
+          <?php foreach($files as $file): ?>
+          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
+            <div class="bg-dominant rounded-3 p-3 h-100">
+              <div class="d-flex justify-content-start align-items-center">
+                <i class="bi bi-filetype-<?=esc($file['type'])?> me-2 text-white"></i>
+                <div class="d-flex align-items-center text-white">
+                  <span class="d-inline-block text-truncate" style="max-width: 150px;"><?=esc($file['name'])?></span>
+                  <span><?=esc($file['type'])?></span>
+                </div>
+              </div>
+              <?php if(in_array($file['type'], ACCEPTED_IMAGES_TYPES)): ?>
+              <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
+                <img class="img-fluid object-fit-cover rounded-2 mt-3" src="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" alt="<?=esc($file['name'])?>">
+              </a>
+              <?php else: ?>
+              <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
+                <div class="d-flex h-100 justify-content-center align-items-center">
+                  <i class="bi bi-filetype-<?=esc($file['type'])?> fs-1 text-white"></i>
+                </div>
+              </a>
+              <?php endif; ?>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+        <div class="text-center m-5 p-4">
+          <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
+          <h5 class="mt-5">There is nothing here...</h5>
+        </div>
+        <?php endif; ?>
+      </div>
     </div>
   </div>
 </div>

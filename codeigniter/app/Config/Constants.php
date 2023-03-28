@@ -111,3 +111,5 @@ define('PATH_TO_VIEW_ISSUES_FILES', '/uploads/issues-files/');
 // Categories
 define('CATEGORY_ISSUE_STATUS_OPEN_NAME', 'open');
 define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');
+// Files types
+define('ACCEPTED_IMAGES_TYPES', ['jpg', 'jpeg', 'png', 'svg', 'gif']);

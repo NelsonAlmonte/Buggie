@@ -39,7 +39,8 @@ class IssueModel extends Model
             ->join('categories c_se', 'c_se.id = i.severity')
             ->join('categories c_st', 'c_st.id = i.status')
             ->where('i.project', $project)
-            ->havingLike($filters)
+            ->havingLike($filters['fields'])
+            ->limit(5, $filters['offset'])
             ->orderBy('i.id DESC')
             ->get()
             ->getResultArray();

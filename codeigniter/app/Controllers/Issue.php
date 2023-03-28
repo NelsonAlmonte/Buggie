@@ -17,11 +17,19 @@ class Issue extends BaseController
         $issueModel = model(IssueModel::class);
         $data = [];
         $filters = [];
+        $page = 1;
+        $recordsPerPage = 5;
 
         $data['project'] = $projectModel->getProject('', $slug);
         $data['slug'] = $slug;
 
-        $filters = array_filter($this->request->getGet());
+        $filters = $this->request->getGet();
+
+        $filters['fields'] = array_filter($filters);
+        unset($filters['fields']['page']);
+
+        if (isset($filters['page']) && $filters['page'] != '') $page = $filters['page'];
+        $filters['offset'] = ($page - 1) * $recordsPerPage;
 
         $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
 
@@ -210,9 +218,18 @@ class Issue extends BaseController
     public function issue($slug, $id)
     {
         $issueModel = model(IssueModel::class);
+        $fileModel = model(FileModel::class);
         $data = [];
+        $fileExploded = [];
+        $fileType = '';
 
         $data['issue'] = $issueModel->getIssue($id);
+        $data['files'] = $fileModel->getIssueFiles($id);
+        foreach ($data['files'] as $key => $file) {
+            $fileExploded = explode('.', $file['name']);
+            $fileType = end($fileExploded);
+            $data['files'][$key]['type'] = $fileType;
+        }
         $data['slug'] = $slug;
         
         return view('template/header')
