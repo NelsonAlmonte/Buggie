@@ -17,11 +17,24 @@ class Issue extends BaseController
         $issueModel = model(IssueModel::class);
         $data = [];
         $filters = [];
-        $page = 1;
-        $recordsPerPage = 5;
 
         $data['project'] = $projectModel->getProject('', $slug);
         $data['slug'] = $slug;
+
+        $filters = $this->_getFilters();
+        
+        $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
+
+        return view('template/header')
+        . view('issue/issues', $data)
+        . view('template/footer');
+    }
+
+    private function _getFilters()
+    {
+        $page = 1;
+        $recordsPerPage = 5;
+        $filters = [];
 
         $filters = $this->request->getGet();
 
@@ -31,11 +44,7 @@ class Issue extends BaseController
         if (isset($filters['page']) && $filters['page'] != '') $page = $filters['page'];
         $filters['offset'] = ($page - 1) * $recordsPerPage;
 
-        $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
-
-        return view('template/header')
-        . view('issue/issues', $data)
-        . view('template/footer');
+        return $filters;
     }
 
     public function add($slug)

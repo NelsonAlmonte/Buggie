@@ -6,21 +6,21 @@ use CodeIgniter\View\Cells\Cell;
 
 class Pagination extends Cell
 {
-    protected $url = '';
+    protected $url = ['previousPage' => '', 'nextPage' => ''];
     protected $page = 1;
-    protected $recordsPerPage = 5;
     protected $previousPage = 0;
     protected $nextPage = 2;
 
     public function mount()
     {
-        helper('url');
-
         if (isset($_GET['page']) && $_GET['page'] != '') $this->page = $_GET['page'];
         $this->previousPage = $this->page - 1;
         $this->nextPage = $this->page + 1;
 
-        $this->url = $this->_addQueryParamsToUrl(['page' => $this->page]);
+        $this->url = [
+            'previousPage' => $this->_addQueryParamsToUrl(['page' => $this->previousPage]),
+            'nextPage' => $this->_addQueryParamsToUrl(['page' => $this->nextPage]),
+        ];
     }
 
     private function _addQueryParamsToUrl($params)
@@ -37,7 +37,11 @@ class Pagination extends Cell
 
     public function render(): string
     {
-        $data['url'] = $this->url;
+        $data = [
+            'url' => $this->url,
+            'previousPage' => $this->previousPage,
+            'nextPage' => $this->nextPage,
+        ];
         return $this->view('pagination_cell', $data);
     }
 }
