@@ -113,3 +113,5 @@ define('CATEGORY_ISSUE_STATUS_OPEN_NAME', 'open');
 define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');
 // Files types
 define('ACCEPTED_IMAGES_TYPES', ['jpg', 'jpeg', 'png', 'svg', 'gif']);
+// Pagination
+define('PAGINATION_RECORDS_PER_PAGE', 10);

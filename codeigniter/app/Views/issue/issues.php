@@ -114,4 +114,4 @@
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 <?= view_cell('App\Cells\Issue\IssueFilterModal\IssueFilterModal::render', ['slug' => $slug]); ?>
-<?= view_cell('App\Cells\Shared\Pagination\Pagination::render'); ?>
+<?= view_cell('App\Cells\Shared\Pagination\Pagination::render', ['totalRecords' => count($projectIssues)]); ?>

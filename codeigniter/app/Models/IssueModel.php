@@ -21,7 +21,7 @@ class IssueModel extends Model
         return $this->db->insertID();
     }
 
-    public function getIssues($project, $filters = [])
+    public function getIssues($project, $filters = ['fields' => [], 'limit' => 0, 'offset' => 0])
     {
         $issues = 'i.id, i.title, i.reporter AS reporter_id, i.assignee AS assignee_id, i.start_date,';
         $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.username AS reporter,';
@@ -40,7 +40,7 @@ class IssueModel extends Model
             ->join('categories c_st', 'c_st.id = i.status')
             ->where('i.project', $project)
             ->havingLike($filters['fields'])
-            ->limit(5, $filters['offset'])
+            ->limit($filters['limit'], $filters['offset'])
             ->orderBy('i.id DESC')
             ->get()
             ->getResultArray();

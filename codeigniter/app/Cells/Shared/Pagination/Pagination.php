@@ -10,12 +10,14 @@ class Pagination extends Cell
     protected $page = 1;
     protected $previousPage = 0;
     protected $nextPage = 2;
+    protected $totalPages = 0;
 
-    public function mount()
+    public function mount($totalRecords)
     {
         if (isset($_GET['page']) && $_GET['page'] != '') $this->page = $_GET['page'];
         $this->previousPage = $this->page - 1;
         $this->nextPage = $this->page + 1;
+        $this->totalPages = ceil($totalRecords / PAGINATION_RECORDS_PER_PAGE);
 
         $this->url = [
             'previousPage' => $this->_addQueryParamsToUrl(['page' => $this->previousPage]),
@@ -41,7 +43,9 @@ class Pagination extends Cell
             'url' => $this->url,
             'previousPage' => $this->previousPage,
             'nextPage' => $this->nextPage,
+            'totalPages' => $this->totalPages,
         ];
+        
         return $this->view('pagination_cell', $data);
     }
 }

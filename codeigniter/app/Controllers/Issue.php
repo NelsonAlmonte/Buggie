@@ -24,6 +24,7 @@ class Issue extends BaseController
         $filters = $this->_getFilters();
         
         $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
+        $data['projectIssues'] = $issueModel->getIssues($data['project']['id']);
 
         return view('template/header')
         . view('issue/issues', $data)
@@ -33,7 +34,6 @@ class Issue extends BaseController
     private function _getFilters()
     {
         $page = 1;
-        $recordsPerPage = 5;
         $filters = [];
 
         $filters = $this->request->getGet();
@@ -42,7 +42,9 @@ class Issue extends BaseController
         unset($filters['fields']['page']);
 
         if (isset($filters['page']) && $filters['page'] != '') $page = $filters['page'];
-        $filters['offset'] = ($page - 1) * $recordsPerPage;
+        $filters['offset'] = ($page - 1) * PAGINATION_RECORDS_PER_PAGE;
+
+        $filters['limit'] = PAGINATION_RECORDS_PER_PAGE;
 
         return $filters;
     }
