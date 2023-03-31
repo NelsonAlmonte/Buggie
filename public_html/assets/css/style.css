@@ -43,15 +43,17 @@
   background-color: var(--color-dominant);
 }
 
-.issue-card-filter {
-  font-size: 14px;
+.issue-filter {
   color: var(--bs-body-color);
-  text-decoration: none;
-  transition: 0.2s;
 }
 
-.issue-card-filter:hover {
+.issue-filter:hover {
   color: #fff;
+}
+
+.issue-filter.active {
+  color: #fff;
+  font-weight: 500;
 }
 
 .info-card-icon {

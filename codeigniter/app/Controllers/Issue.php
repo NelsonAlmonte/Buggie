@@ -17,14 +17,25 @@ class Issue extends BaseController
         $issueModel = model(IssueModel::class);
         $data = [];
         $filters = [];
+        $projectId = '';
 
         $data['project'] = $projectModel->getProject('', $slug);
         $data['slug'] = $slug;
 
+        $projectId = $data['project']['id'];
+
         $filters = $this->_getFilters();
         
-        $data['issues'] = $issueModel->getIssues($data['project']['id'], $filters);
-        $data['projectIssues'] = $issueModel->getIssues($data['project']['id']);
+        $data['issues'] = $issueModel->getIssues(['project' => $projectId], $filters);
+        $data['projectIssues'] = $issueModel->getIssues(['project' => $projectId]);
+        $data['openIssues'] = array_filter(
+            $data['projectIssues'],
+            fn ($issue) => $issue['status_name'] != CATEGORY_ISSUE_STATUS_CLOSED_NAME
+          );
+          $data['closedIssues'] = array_filter(
+            $data['projectIssues'],
+            fn ($issue) => $issue['status_name'] == CATEGORY_ISSUE_STATUS_CLOSED_NAME
+          );
 
         return view('template/header')
         . view('issue/issues', $data)

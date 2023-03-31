@@ -6,7 +6,7 @@
         <span>Prev</span>
       </a>
     </li>
-    <li class="page-item <?=$nextPage > $totalPages ? 'disabled' : '' ;?>">
+    <li class="page-item <?=$currentRecords < PAGINATION_RECORDS_PER_PAGE ? 'disabled' : '' ;?>">
       <a class="page-link" href="<?=$url['nextPage']?>">
         <span>Next</span>
         <i class="bi bi-arrow-right ms-1"></i>

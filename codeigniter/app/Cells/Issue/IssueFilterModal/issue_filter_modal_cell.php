@@ -8,7 +8,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="<?=site_url('issue/' . $slug)?>" method="get">
+        <form 
+          action="<?=site_url('issue/' . $slug)?>" 
+          method="get" 
+          x-data 
+          @submit="disableEmptyInputs($el)"
+        >
           <div class="form-floating auto-complete mb-3">
             <input 
               class="form-control bg-dominant border-0" 
@@ -66,3 +71,11 @@
     </div>
   </div>
 </div>
+<script>
+  function disableEmptyInputs(el) {
+    const inputs = Array.from(el.elements);
+    inputs.forEach((element) => {
+      if (element.value === '') element.disabled = true;
+    });
+  }
+</script>

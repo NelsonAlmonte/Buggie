@@ -15,8 +15,28 @@
   </div>
   <?php endif; ?>
   <div class="card bg-complementary border mt-4">
-    <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-      <form action="<?=site_url('issue/' . $slug)?>" method="get">
+    <div class="card-header d-flex justify-content-start align-items-center bg-complementary rounded-top-4 px-4 py-3">
+      <ul class="nav">
+        <li class="nav-item me-2">
+          <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=isset($_GET['status']) && $_GET['status'] == 'open' ? 'active' : '' ;?>" href="?status=open">
+            <span class="me-1">Open</span> 
+            <span class="badge rounded-pill text-bg-secondary"><?=count($openIssues)?></span>
+          </a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=isset($_GET['status']) && $_GET['status'] == 'closed' ? 'active' : '' ;?>" href="?status=closed">
+            <span class="me-1 ">Closed</span> 
+            <span class="badge rounded-pill text-bg-secondary"><?=count($closedIssues)?></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=!isset($_GET['status']) ? 'active' : '' ;?>" href="<?=site_url('issue/' . $slug)?>">
+            <span class="me-1 ">All</span> 
+            <span class="badge rounded-pill text-bg-secondary"><?=count($projectIssues)?></span>
+          </a>
+        </li>
+      </ul>
+      <form class="flex-grow-1" action="<?=site_url('issue/' . $slug)?>" method="get">
         <div class="input-group">
           <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="title" value="<?=isset($_GET['title']) ? $_GET['title'] : '' ;?>" aria-label="Search" aria-describedby="search" autocomplete="off">
           <a class="btn bg-dominant border-secondary <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
@@ -114,4 +134,4 @@
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 <?= view_cell('App\Cells\Issue\IssueFilterModal\IssueFilterModal::render', ['slug' => $slug]); ?>
-<?= view_cell('App\Cells\Shared\Pagination\Pagination::render', ['totalRecords' => count($projectIssues)]); ?>
+<?= view_cell('App\Cells\Shared\Pagination\Pagination::render', ['currentRecords' => count($issues)]); ?>
