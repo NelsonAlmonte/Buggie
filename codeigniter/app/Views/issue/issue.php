@@ -15,16 +15,16 @@
     </div>
   </div>
   <?php endif; ?>
-  <div class="row">
+  <div class="row my-4">
     <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
-      <div class="card bg-complementary border border-0 mt-4">
+      <div class="card bg-complementary border border-0 h-100">
         <div class="card-body">
           <?=$issue['description']?>
         </div>
       </div>
     </div>
     <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12">
-      <div class="card bg-complementary border border-0 mt-4">
+      <div class="card bg-complementary border border-0">
         <div class="card-body">
           <h6 class="text-white">Reporter</h6>
           <span><?=esc($issue['reporter_name'])?></span>
@@ -73,7 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="card bg-complementary border border-0 mt-4">
+  <div class="card bg-complementary border border-0">
     <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
       <span class="fs-5 text-white">Files</span>
     </div>
@@ -81,8 +81,8 @@
       <div class="row">
         <?php if(!empty($files)): ?>
           <?php foreach($files as $file): ?>
-          <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
-            <div class="bg-dominant rounded-3 p-3 h-100">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="bg-dominant rounded-3 p-3" style="height: 250px;">
               <div class="d-flex justify-content-start align-items-center">
                 <i class="bi bi-filetype-<?=esc($file['type'])?> me-2 text-white"></i>
                 <div class="d-flex align-items-center text-white">
@@ -92,7 +92,7 @@
               </div>
               <?php if(in_array($file['type'], ACCEPTED_IMAGES_TYPES)): ?>
               <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
-                <img class="img-fluid object-fit-cover rounded-2 mt-3" src="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" alt="<?=esc($file['name'])?>">
+                <img class="w-100 object-fit-cover rounded-2 mt-3" src="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" alt="<?=esc($file['name'])?>" style="height: 180px;">
               </a>
               <?php else: ?>
               <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">

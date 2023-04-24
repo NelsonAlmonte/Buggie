@@ -35,16 +35,6 @@ class InsertCategories extends Seeder
                 'color' => '0d6efd',
             ],
             [
-                'name' => 'in progress',
-                'type' => 'issue_status',
-                'color' => 'ffc107',
-            ],
-            [
-                'name' => 'to be tested',
-                'type' => 'issue_status',
-                'color' => '0dcaf0',
-            ],
-            [
                 'name' => 'closed',
                 'type' => 'issue_status',
                 'color' => '198754',
