@@ -67,6 +67,13 @@ $routes->group('issue', static function ($routes) {
     $routes->post('deleteIssue', 'Issue::deleteIssue');
 });
 
+$routes->group('auth', static function ($routes) {
+    $routes->get('/', 'Auth::login');
+    $routes->get('login', 'Auth::login');
+    $routes->post('authenticate', 'Auth::authenticate');
+    $routes->get('logout', 'Auth::logout');
+});
+
 $routes->post('category/searchCategories', 'Category::searchCategories');
 
 

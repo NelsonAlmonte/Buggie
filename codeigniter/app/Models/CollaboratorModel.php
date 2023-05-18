@@ -37,11 +37,11 @@ class CollaboratorModel extends Model
             ->deleteBatch();
     }
 
-    public function getCollaborator($id)
+    public function getCollaborator($value, $field = 'id')
     {
         return $this->db
             ->table('collaborators')
-            ->where('id', $id)
+            ->where($field, $value)
             ->get()
             ->getRowArray();
     }

@@ -82,7 +82,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('auth/logout')?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Log Out</span>
               </a>
@@ -154,7 +154,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item d-flex align-items-center text-white" href="#">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('auth/logout')?>">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Log Out</span>
               </a>
@@ -204,26 +204,15 @@
 
       <li class="nav-heading mt-4">Your projects</li>
 
+      <?php foreach(session()->get('projects') as $project): ?>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="<?=site_url('project/' . $project['slug'] . '/dashboard')?>">
           <i class="bi bi-briefcase"></i>
-          <span>Project 1</span>
+          <span><?=$project['name']?></span>
         </a>
       </li>
+      <?php endforeach; ?>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-briefcase"></i>
-          <span>Project 2</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi bi-briefcase"></i>
-          <span>Lorem Ipsum</span>
-        </a>
-      </li>
     </ul>
   </aside>
 
