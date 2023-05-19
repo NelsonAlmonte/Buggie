@@ -33,21 +33,11 @@ $routes->get('home', 'Home::home');
 
 $routes->group('project', static function ($routes) {
     $routes->get('/', 'Project::projects');
-    $routes->get('add', 'Project::add');
-    $routes->post('save', 'Project::save');
-    $routes->get('(:segment)/edit/(:num)', 'Project::edit/$1/$2');
-    $routes->post('(:segment)/update/(:num)', 'Project::update/$1/$2');
     $routes->get('(:segment)/dashboard', 'Project::dashboard/$1');
     $routes->post('searchProjects', 'Project::searchProjects');
 });
 
 $routes->group('collaborator', static function ($routes) {
-    $routes->get('/', 'Collaborator::collaborators');
-    $routes->get('add', 'Collaborator::add');
-    $routes->get('(:segment)', 'Collaborator::collaborators/$1');
-    $routes->post('save', 'Collaborator::save');
-    $routes->get('edit/(:num)', 'Collaborator::edit/$1');
-    $routes->post('update/(:num)', 'Collaborator::update/$1');
     $routes->get('view/(:num)', 'Collaborator::view/$1');
     $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
     $routes->post('assignProjects', 'Collaborator::assignProjects');
@@ -72,6 +62,32 @@ $routes->group('auth', static function ($routes) {
     $routes->get('login', 'Auth::login');
     $routes->post('authenticate', 'Auth::authenticate');
     $routes->get('logout', 'Auth::logout');
+});
+
+$routes->group('admin', static function ($routes) {
+    $routes->group('project', static function ($routes) {
+        $routes->get('add', 'Project::add');
+        $routes->post('save', 'Project::save');
+        $routes->get('(:segment)/edit/(:num)', 'Project::edit/$1/$2');
+        $routes->post('(:segment)/update/(:num)', 'Project::update/$1/$2');
+    });
+
+    $routes->group('collaborator', static function ($routes) {
+        $routes->get('/', 'Collaborator::collaborators');
+        $routes->get('add', 'Collaborator::add');
+        $routes->get('(:segment)', 'Collaborator::collaborators/$1');
+        $routes->post('save', 'Collaborator::save');
+        $routes->get('edit/(:num)', 'Collaborator::edit/$1');
+        $routes->post('update/(:num)', 'Collaborator::update/$1');
+    });
+
+    $routes->group('role', static function ($routes) {
+        $routes->get('/', 'Role::roles');
+        $routes->get('add', 'Role::add');
+        $routes->post('save', 'Role::save');
+        $routes->get('edit/(:num)', 'Role::edit/$1');
+        $routes->post('update/(:num)', 'Role::update/$1');
+    });
 });
 
 $routes->post('category/searchCategories', 'Category::searchCategories');
