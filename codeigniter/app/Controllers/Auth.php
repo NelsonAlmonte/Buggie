@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CollaboratorModel;
+use App\Models\PermissionModel;
 
 class Auth extends BaseController
 {
@@ -17,9 +18,11 @@ class Auth extends BaseController
 
     public function authenticate()
     {
-        $collaboratorModel = Model(CollaboratorModel::class);
+        $collaboratorModel = model(CollaboratorModel::class);
+        $permissionModel = model(PermissionModel::class);
         $collaborator = [];
         $projects = [];
+        $permissions = [];
         $sessionData = [];
         $collaboratorPassword = '';
         $username = $_POST['username'];
@@ -42,6 +45,8 @@ class Auth extends BaseController
         }
 
         $projects = $collaboratorModel->getCollaboratorProjects($collaborator['id']);
+        $permissions = $permissionModel->getRolePermissions($collaborator['role']);
+        $permissions = array_map(fn($permission) => $permission['name'], $permissions);
 
         $sessionData = [
             'id' => $collaborator['id'],
@@ -49,11 +54,18 @@ class Auth extends BaseController
             'name' => $collaborator['name'],
             'last' => $collaborator['last'],
             'projects' => $projects,
+            'auth' => [
+                'role' => [
+                    'id' => $collaborator['roleId'],
+                    'name' => $collaborator['roleName'],
+                ],
+                'permissions' => $permissions,
+            ],
             'isLoggedIn' => TRUE,
         ];
 
         session()->set($sessionData);
-        return redirect()->to('project');            
+        return redirect()->to('project');
     }
 
     public function logout()

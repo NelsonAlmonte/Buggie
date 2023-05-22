@@ -66,17 +66,17 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6><?=session()->get('name') . ' ' . session()->get('last')?></h6>
+              <span><?=session()->get('auth')['role']['name']?></span>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/view/') . session()->get('id')?>">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/edit/') . session()->get('id')?>">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -138,17 +138,17 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6><?=session()->get('name') . ' ' . session()->get('last')?></h6>
+              <span><?=session()->get('auth')['role']['name']?></span>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/view/') . session()->get('id')?>">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="users-profile.html">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/edit/') . session()->get('id')?>">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -173,14 +173,15 @@
           <span>Home</span>
         </a>
       </li>
-
+      <?php if(in_array('project', session()->get('auth')['permissions'])): ?>
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=site_url('project')?>">
           <i class="bi bi-briefcase"></i>
           <span>Projects</span>
         </a>
       </li>
-
+      <?php endif; ?>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
           <i class="bi bi-calendar3"></i>
@@ -194,13 +195,23 @@
           <span>Reports</span>
         </a>
       </li>
-
+      <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=site_url('collaborator')?>">
           <i class="bi bi-people"></i>
           <span>Collaborators</span>
         </a>
       </li>
+      <?php endif; ?>
+
+      <?php if(in_array('role', session()->get('auth')['permissions'])): ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?=site_url('role')?>">
+          <i class="bi bi-gear"></i>
+          <span>Roles</span>
+        </a>
+      </li>
+      <?php endif; ?>
 
       <li class="nav-heading mt-4">Your projects</li>
 

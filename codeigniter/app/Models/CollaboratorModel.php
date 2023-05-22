@@ -37,10 +37,12 @@ class CollaboratorModel extends Model
             ->deleteBatch();
     }
 
-    public function getCollaborator($value, $field = 'id')
+    public function getCollaborator($value, $field = 'c.id')
     {
         return $this->db
-            ->table('collaborators')
+            ->table('collaborators c')
+            ->select('c.*, r.id AS roleId, r.name AS roleName')
+            ->join('roles r', 'r.id = c.role')
             ->where($field, $value)
             ->get()
             ->getRowArray();

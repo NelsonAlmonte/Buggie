@@ -93,7 +93,7 @@ define('EVENT_PRIORITY_NORMAL', 100);
  */
 define('EVENT_PRIORITY_HIGH', 10);
 
-// Custom constants
+// Messages
 define('MESSAGE_SUCCESS', 'Action done successfully');
 define('MESSAGE_SUCCESS_COLOR', 'success');
 define('MESSAGE_SUCCESS_ICON', 'bi bi-check-circle');
@@ -115,3 +115,6 @@ define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');
 define('ACCEPTED_IMAGES_TYPES', ['jpg', 'jpeg', 'png', 'svg', 'gif']);
 // Pagination
 define('PAGINATION_RECORDS_PER_PAGE', 10);
+// Auth
+define('SYSTEM_ADMIN_ROLE', ['id' => 1, 'name' => 'Administrator']);
+define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role']);
