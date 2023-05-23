@@ -10,7 +10,7 @@
         </div>
       </div>
       <?php endif; ?>
-      <form class="row gx-5" action="<?=site_url('collaborator/update/' . $collaborator['id'])?>" method="post" enctype="multipart/form-data">
+      <form class="row gx-5" action="<?=site_url('manage/collaborator/update/' . $collaborator['id'])?>" method="post" enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <div 
           x-data="{ selectedProjects: [] }" 
@@ -63,6 +63,17 @@
             <label for="password">Password*</label>
           </div>
         </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
+          <div class="form-floating">
+            <select class="form-select bg-dominant border-0 text-capitalize" id="role" name="role"
+              aria-label="role">
+              <?php foreach($roles as $role): ?>
+              <option <?=$collaborator['role'] == $role['id'] ? 'checked' : '' ?> value="<?=esc($role['id'])?>"><?=esc($role['name'])?></option>
+              <?php endforeach; ?>
+            </select>
+            <label for="role">Role</label>
+          </div>
+        </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-images text-primary me-3"></i>Multimedia</h4>
         </div>
@@ -73,7 +84,9 @@
               <span>Add picture*</span>
             </button>
             <template x-if="imageUrl === ''">
-              <img class="d-block w-25 rounded-4 mt-4" src="<?='/uploads/profile-image/' . $collaborator['image']?>" alt="profile picture">
+              <?php if($collaborator['image'] != DEFAULT_PROFILE_IMAGE): ?>
+              <img class="d-block w-25 rounded-4 mt-4" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $collaborator['image']?>" alt="profile picture">
+              <?php endif; ?>
             </template>
             <template x-if="imageUrl !== ''">
               <img class="d-block w-25 rounded-4 mt-4" :src="imageUrl" alt="Profile picture">

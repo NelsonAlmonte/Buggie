@@ -108,6 +108,7 @@ define('PATH_UPLOAD_ISSUES_FILES', '../public_html/uploads/issues-files/');
 define('PATH_TO_VIEW_PROFILE_IMAGE', '/uploads/profile-image/');
 define('PATH_TO_VIEW_ISSUES_IMAGES', '/uploads/issues-images/');
 define('PATH_TO_VIEW_ISSUES_FILES', '/uploads/issues-files/');
+define('PATH_TO_VIEW_ASSETS_IMAGE', '/assets/img/');
 // Categories
 define('CATEGORY_ISSUE_STATUS_OPEN_NAME', 'open');
 define('CATEGORY_ISSUE_STATUS_CLOSED_NAME', 'closed');
@@ -118,3 +119,5 @@ define('PAGINATION_RECORDS_PER_PAGE', 10);
 // Auth
 define('SYSTEM_ADMIN_ROLE', ['id' => 1, 'name' => 'Administrator']);
 define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role']);
+// Assets
+define('DEFAULT_PROFILE_IMAGE', 'default-profile-image.png');

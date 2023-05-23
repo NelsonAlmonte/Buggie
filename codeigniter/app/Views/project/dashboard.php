@@ -20,15 +20,17 @@
       <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false"><i
           class="bi bi-three-dots"></i></a>
       <ul class="dropdown-menu p-2">
+        <?php if(in_array('project', session()->get('auth')['permissions'])): ?>
         <li>
           <a class="dropdown-item text-white"
-            href="<?=site_url('project/' . $project['slug'] .'/edit/'. $project['id'])?>">
+            href="<?=site_url('manage/project/' . $project['slug'] .'/edit/'. $project['id'])?>">
             <div class="d-inline-block">
               <i class="bi bi-pencil"></i>
             </div>
             <span>Edit</span>
           </a>
         </li>
+        <?php endif; ?>
         <li>
           <a class="dropdown-item text-white" href="<?=site_url('issue/' . $project['slug'])?>">
             <div class="d-inline-block">

@@ -19,8 +19,10 @@ class Project extends BaseController
     $color = '';
     $backgroundColor = '';
     $border = '';
-
-    $data['projects'] = $projectModel->getProjects();
+    
+    $data['projects'] = session()->get('projects');
+    if (in_array('project', session()->get('auth')['permissions']))
+      $data['projects'] = $projectModel->getProjects();
 
     foreach ($data['projects'] as $key => $project) {
       $color = 'color: #' . $project['color'] . ';';
@@ -82,7 +84,7 @@ class Project extends BaseController
         'color' => MESSAGE_ERROR_COLOR, 
         'icon' => MESSAGE_ERROR_ICON
       ]);
-      return redirect()->to('project/add');
+      return redirect()->to('manage/project/add');
     }
   }
 
@@ -138,7 +140,7 @@ class Project extends BaseController
         'color' => MESSAGE_ERROR_COLOR, 
         'icon' => MESSAGE_ERROR_ICON
       ]);
-      return redirect()->to('project/edit/' . $id);
+      return redirect()->to('manage/project/edit/' . $id);
     }
   }
 

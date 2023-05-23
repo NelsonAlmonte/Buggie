@@ -88,7 +88,7 @@
             <template x-for="item in items">
               <div class="collaborator-item d-inline-block rounded-5 px-2 py-2 m-1" @click="selectItem(item)">
                 <div class="d-flex align-items-center">
-                  <img class="collaborator-item-image" :src="'/uploads/profile-image/' + item.image">
+                  <img class="collaborator-item-image" :src="'<?=PATH_TO_VIEW_PROFILE_IMAGE?>' + item.image">
                   <span class="text-white fw-bold mx-2" x-text="item.name"></span>
                 </div>
               </div>
@@ -99,7 +99,7 @@
             <template x-for="selectedItem in selectedItems">
               <div class="collaborator-item d-inline-block border-0 bg-primary rounded-5 px-2 py-2 m-1" @click="removeItem(selectedItem)">
                 <div class="d-flex align-items-center">
-                  <img class="collaborator-item-image" :src="'/uploads/profile-image/' + selectedItem.image">
+                  <img class="collaborator-item-image" :src="'<?=PATH_TO_VIEW_PROFILE_IMAGE?>' + selectedItem.image">
                   <span class="text-white fw-bold mx-2" x-text="selectedItem.name"></span>
                 </div>
               </div>
@@ -126,7 +126,7 @@
           <template x-for="collaborator in payload.collaborators">
             <div class="collaborator-item d-inline-block border-0 bg-primary rounded-5 px-2 py-2 m-1">
               <div class="d-flex align-items-center">
-                <img class="collaborator-item-image" :src="'/uploads/profile-image/' + collaborator.image">
+                <img class="collaborator-item-image" :src="'<?=PATH_TO_VIEW_PROFILE_IMAGE?>' + collaborator.image">
                 <span class="text-white fw-bold mx-2" x-text="collaborator.name"></span>
               </div>
             </div>

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="d-flex align-items-center justify-content-between">
     <h2>Projects you are working on</h2>
-    <a class="btn btn-rounded btn-primary" href="<?=site_url('project/add')?>">Add project</a>
+    <a class="btn btn-rounded btn-primary" href="<?=site_url('manage/project/add')?>">Add project</a>
   </div>
   <?php if(session()->getFlashdata('message') !== null): ?>
   <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
@@ -17,20 +17,23 @@
       <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="card-body px-4 pt-3 pb-4">
           <div class="d-flex justify-content-between align-items-center mb-1">
-            <div class="status-badge text-capitalize" style="<?=esc($project['statusStyle'])?>"><?=esc($project['status'])?></div>
+            <div class="status-badge text-capitalize" style="<?=esc($project['statusStyle'])?>">
+              <?=esc($project['status'])?></div>
             <div>
               <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false"><i
                   class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu p-2">
+                <?php if(in_array('project', session()->get('auth')['permissions'])): ?>
                 <li>
                   <a class="dropdown-item text-white"
-                    href="<?=site_url('project/' . $project['slug'] .'/edit/'. $project['id'])?>">
+                    href="<?=site_url('manage/project/' . $project['slug'] .'/edit/'. $project['id'])?>">
                     <div class="d-inline-block">
                       <i class="bi bi-pencil"></i>
                     </div>
                     <span>Edit</span>
                   </a>
                 </li>
+                <?php endif; ?>
                 <li>
                   <a class="dropdown-item text-white" href="<?=site_url('project/' . $project['slug'] .'/dashboard')?>">
                     <div class="d-inline-block">
@@ -80,16 +83,18 @@
                 <h4 class="card-title text-white mb-3"><?=esc(character_limiter($project['name'], 50, '...'))?></h4>
               </a>
               <?php if($project['end_date'] != '0000-00-00'): ?>
-                <?php $endDate = new DateTime($project['end_date']);?>
-                <?php $startDate = new DateTime($project['start_date']);?>
-                <p><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></p>
+              <?php $endDate = new DateTime($project['end_date']);?>
+              <?php $startDate = new DateTime($project['start_date']);?>
+              <p><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></p>
               <?php endif; ?>
             </div>
             <?= view_cell('App\Cells\Project\IssuesCount\IssuesCount::render', ['project' => $project]); ?>
           </div>
         </div>
-        <a class="text-decoration-none text-white mt-5" href="<?=site_url('project/' . $project['slug'] .'/dashboard')?>">
-          <div class="card-footer d-flex justify-content-center bg-complementary rounded-bottom-4 py-3 project-card-footer">
+        <a class="text-decoration-none text-white mt-5"
+          href="<?=site_url('project/' . $project['slug'] .'/dashboard')?>">
+          <div
+            class="card-footer d-flex justify-content-center bg-complementary rounded-bottom-4 py-3 project-card-footer">
             Dashboard
           </div>
         </a>

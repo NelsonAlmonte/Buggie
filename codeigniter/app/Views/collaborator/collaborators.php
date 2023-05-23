@@ -2,6 +2,7 @@
   <div class="d-flex align-items-center justify-content-between">
     <h2>Collaborators <span class="text-primary"><?=!empty($slug) ? 'on ' . $project['name'] : '' ; ?></span>
     </h2>
+    <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
     <button type="button" class="btn btn-rounded btn-primary dropdown-toggle px-3" data-bs-toggle="dropdown"
       aria-expanded="false">
       Add collaborator
@@ -9,7 +10,7 @@
     </button>
     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
       <li class="mb-2">
-        <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/add')?>">
+        <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('manage/collaborator/add')?>">
           <i class="bi bi-person-plus"></i>
           <span>New collaborator</span>
         </a>
@@ -22,6 +23,7 @@
         </a>
       </li>
     </ul>
+    <?php endif; ?>
   </div>
   <?php if(session()->getFlashdata('message') !== null): ?>
   <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
@@ -48,8 +50,10 @@
                   <span>View</span>
                 </a>
               </li>
+              <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
               <li>
-                <a class="dropdown-item text-white" href="<?=site_url('collaborator/edit/'. $collaborator['id'])?>">
+                <a class="dropdown-item text-white"
+                  href="<?=site_url('manage/collaborator/edit/'. $collaborator['id'])?>">
                   <div class="d-inline-block">
                     <i class="bi bi-pencil"></i>
                   </div>
@@ -64,12 +68,18 @@
                   <span>Delete</span>
                 </a>
               </li>
+              <?php endif; ?>
             </ul>
           </div>
         </div>
         <div class="card-body text-center p-5">
+          <?php if($collaborator['image'] != DEFAULT_PROFILE_IMAGE): ?>
           <img class="collaborator-image" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $collaborator['image']?>"
             alt="<?=$collaborator['image']?>">
+          <?php else: ?>
+          <img class="collaborator-image" src="/assets/img/<?=DEFAULT_PROFILE_IMAGE?>"
+            alt="<?=$collaborator['image']?>">
+          <?php endif; ?>
           <a class="text-decoration-none" href="<?=site_url('collaborator/view/'. $collaborator['id'])?>">
             <h4 class="card-title text-white mt-3 mb-0">
               <?=esc($collaborator['name'])?>

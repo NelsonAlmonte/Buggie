@@ -14,7 +14,7 @@ class InsertAdminUser extends Seeder
             'name' => 'Admin',
             'last' => 'Admin',
             'email' => 'admin@foo.com',
-            'image' => 'default.jpg',
+            'image' => 'default-profile-image.png',
             'role' => 1,
         ];
 

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CollaboratorModel;
 use App\Models\ProjectModel;
+use App\Models\RoleModel;
 
 class Collaborator extends BaseController
 {
@@ -49,10 +50,12 @@ class Collaborator extends BaseController
     public function add()
     {
         $projectModel = model(ProjectModel::class);
+        $roleModel = model(RoleModel::class);
         $data = [];
+        $data['collaboratorProjects'] = [];
         
         $data['projects'] = $projectModel->getProjects();
-        $data['collaboratorProjects'] = [];
+        $data['roles'] = $roleModel->getRoles();
 
         return view('template/header')
         . view('collaborator/add', $data)
@@ -76,6 +79,7 @@ class Collaborator extends BaseController
             'username' => $this->request->getPost('username'),
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'image' => $file->getName(),
+            'role' => $this->request->getPost('role'),
         ];
 
         $selectedProjects = json_decode($_POST['projects'], true);
@@ -92,14 +96,14 @@ class Collaborator extends BaseController
                 'color' => MESSAGE_SUCCESS_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
-            return redirect()->to('collaborator');
+            return redirect()->to('manage/collaborator');
         } else {
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
-            return redirect()->to('collaborator/add');
+            return redirect()->to('manage/collaborator/add');
         }
     }
 
@@ -107,11 +111,13 @@ class Collaborator extends BaseController
     {
         $collaboratorModel = model(CollaboratorModel::class);
         $projectModel = model(ProjectModel::class);
+        $roleModel = model(RoleModel::class);
         $data = [];
 
         $data['collaborator'] = $collaboratorModel->getCollaborator($id);
         $data['projects'] = $projectModel->getProjects();
         $data['collaboratorProjects'] = $collaboratorModel->getCollaboratorProjects($id);
+        $data['roles'] = $roleModel->getRoles();
 
         return view('template/header')
         . view('collaborator/edit', $data)
@@ -134,6 +140,7 @@ class Collaborator extends BaseController
             'last' => $this->request->getPost('last'),
             'email' => $this->request->getPost('email'),
             'username' => $this->request->getPost('username'),
+            'role' => $this->request->getPost('role'),
         ];
 
         if (!empty($_POST['password'])) 
@@ -158,14 +165,14 @@ class Collaborator extends BaseController
                 'color' => MESSAGE_SUCCESS_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
-            return redirect()->to('collaborator');
+            return redirect()->to('manage/collaborator');
         } else {
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
-            return redirect()->to('collaborator/edit/' . $id);
+            return redirect()->to('manage/collaborator/edit/' . $id);
         }
     }
 
@@ -219,9 +226,11 @@ class Collaborator extends BaseController
         $successfulOperations = 0;
 
         if (!empty($collaborator)) {
-            $operationsToValidate = 2;
-            if(unlink(ROOTPATH . PATH_UPLOAD_PROFILE_IMAGE . $collaborator['image'])) 
-                $successfulOperations ++;
+            if ($collaborator['image'] != DEFAULT_PROFILE_IMAGE) {
+                $operationsToValidate = 2;
+                if(unlink(ROOTPATH . PATH_UPLOAD_PROFILE_IMAGE . $collaborator['image'])) 
+                    $successfulOperations ++;
+            }
         }
 
         if ($file->isValid() && !$file->hasMoved()) {

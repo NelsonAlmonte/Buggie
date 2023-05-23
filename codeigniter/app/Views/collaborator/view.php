@@ -6,6 +6,7 @@
         <?=$collaborator['last']?>
       </h2>
     </div>
+    <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
     <div>
       <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false"><i
           class="bi bi-three-dots"></i></a>
@@ -20,6 +21,7 @@
         </li>
       </ul>
     </div>
+    <?php endif; ?>
   </div>
   <div class="row">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
@@ -27,8 +29,13 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
           <div class="card bg-complementary border border-0 rounded-4">
             <div class="card-body text-center p-5">
-              <img class="collaborator-image" src="<?='/uploads/profile-image/' . $collaborator['image']?>"
+              <?php if($collaborator['image'] != DEFAULT_PROFILE_IMAGE): ?>
+              <img class="collaborator-image" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $collaborator['image']?>"
                 alt="<?=$collaborator['image']?>">
+              <?php else: ?>
+              <img class="collaborator-image" src="/assets/img/<?=DEFAULT_PROFILE_IMAGE?>"
+                alt="<?=$collaborator['image']?>">
+              <?php endif; ?>
               <h4 class="card-title text-white mt-3 mb-0">
                 <?=esc($collaborator['name'])?>
                 <?=esc($collaborator['last'])?>
@@ -41,13 +48,15 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
           <div class="card bg-complementary border border-0 rounded-4">
             <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-              <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['name'])?> projects</span>
+              <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['name'])?>
+                projects</span>
             </div>
             <div class="card-body text-center p-4">
               <?php foreach($collaboratorProjects as $project): ?>
-                <a class="project-item d-inline-block bg-primary border-0 rounded-5 text-white fw-bold text-decoration-none px-3 py-2 m-1" href="<?=site_url('project/' . $project['slug'] . '/dashboard')?>">
-                  <?=esc($project['name'])?>
-                </a>
+              <a class="project-item d-inline-block bg-primary border-0 rounded-5 text-white fw-bold text-decoration-none px-3 py-2 m-1"
+                href="<?=site_url('project/' . $project['slug'] . '/dashboard')?>">
+                <?=esc($project['name'])?>
+              </a>
               <?php endforeach; ?>
             </div>
           </div>

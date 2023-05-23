@@ -52,9 +52,10 @@ class CollaboratorModel extends Model
     {
         return $this->db
             ->table('projects p')
-            ->select('p.*')
+            ->select('p.*, ca.name AS status, ca.color')
             ->join('collaborators_projects cp', 'cp.project = p.id')
             ->join('collaborators c', 'c.id = cp.collaborator')
+            ->join('categories ca', 'ca.id = p.status')
             ->where('c.id', $collaborator)
             ->get()
             ->getResultArray();
@@ -93,6 +94,8 @@ class CollaboratorModel extends Model
         return $this->db
             ->table('collaborators')
             ->like('name', $query)
+            ->orLike('last', $query)
+            ->orLike('username', $query)
             ->limit(5)
             ->get()
             ->getResultArray();

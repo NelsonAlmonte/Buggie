@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\IsLoggedIn;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -21,6 +22,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'isloggedin'    => IsLoggedIn::class,
     ];
 
     /**
@@ -29,6 +31,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
+            'isloggedin' => ['except' => 'auth/*'],
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',

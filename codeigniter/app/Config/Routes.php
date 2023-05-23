@@ -39,6 +39,7 @@ $routes->group('project', static function ($routes) {
 
 $routes->group('collaborator', static function ($routes) {
     $routes->get('view/(:num)', 'Collaborator::view/$1');
+    $routes->get('(:segment)', 'Collaborator::collaborators/$1');
     $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
     $routes->post('assignProjects', 'Collaborator::assignProjects');
 });
@@ -64,7 +65,7 @@ $routes->group('auth', static function ($routes) {
     $routes->get('logout', 'Auth::logout');
 });
 
-$routes->group('admin', static function ($routes) {
+$routes->group('manage', static function ($routes) {
     $routes->group('project', static function ($routes) {
         $routes->get('add', 'Project::add');
         $routes->post('save', 'Project::save');

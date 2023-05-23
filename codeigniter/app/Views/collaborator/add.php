@@ -10,7 +10,7 @@
         </div>
       </div>
       <?php endif; ?>
-      <form class="row gx-5" action="<?=site_url('collaborator/save')?>" method="post" enctype="multipart/form-data">
+      <form class="row gx-5" action="<?=site_url('manage/collaborator/save')?>" method="post" enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <div 
           x-data="{ selectedProjects: [] }"
@@ -61,6 +61,17 @@
             <input type="password" class="form-control bg-dominant border-0" id="password" name="password" required
               placeholder="Password" autocomplete="off">
             <label for="password">Password*</label>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
+          <div class="form-floating">
+            <select class="form-select bg-dominant border-0 text-capitalize" id="role" name="role"
+              aria-label="role">
+              <?php foreach($roles as $role): ?>
+              <option value="<?=esc($role['id'])?>"><?=esc($role['name'])?></option>
+              <?php endforeach; ?>
+            </select>
+            <label for="role">Role</label>
           </div>
         </div>
         <div class="col-12 my-4">

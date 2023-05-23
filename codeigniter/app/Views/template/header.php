@@ -62,7 +62,7 @@
       <ul class="d-flex align-items-center">
         <li class="nav-item dropdown d-none d-md-block pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <span class="dropdown-toggle ps-2">Logged user</span>
+            <span class="dropdown-toggle ps-2"><?=session()->get('name') . ' ' . session()->get('last')?></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
             <li class="dropdown-header">
@@ -76,7 +76,7 @@
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/edit/') . session()->get('id')?>">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('manage/collaborator/edit/') . session()->get('id')?>">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -148,7 +148,7 @@
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/edit/') . session()->get('id')?>">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('manage/collaborator/edit/') . session()->get('id')?>">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -173,14 +173,13 @@
           <span>Home</span>
         </a>
       </li>
-      <?php if(in_array('project', session()->get('auth')['permissions'])): ?>
+
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=site_url('project')?>">
           <i class="bi bi-briefcase"></i>
           <span>Projects</span>
         </a>
       </li>
-      <?php endif; ?>
       
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
@@ -197,7 +196,7 @@
       </li>
       <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="<?=site_url('collaborator')?>">
+        <a class="nav-link collapsed" href="<?=site_url('manage/collaborator')?>">
           <i class="bi bi-people"></i>
           <span>Collaborators</span>
         </a>
@@ -206,7 +205,7 @@
 
       <?php if(in_array('role', session()->get('auth')['permissions'])): ?>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="<?=site_url('role')?>">
+        <a class="nav-link collapsed" href="<?=site_url('manage/role')?>">
           <i class="bi bi-gear"></i>
           <span>Roles</span>
         </a>
