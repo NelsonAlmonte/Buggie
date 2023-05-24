@@ -38,9 +38,26 @@ class Collaborator extends BaseController
         helper('text');
         $collaboratorModel = model(CollaboratorModel::class);
         $data = [];
+        $collaboratorProjects = [];
 
         $data['collaborator'] = $collaboratorModel->getCollaborator($id);
-        $data['collaboratorProjects'] = $collaboratorModel->getCollaboratorProjects($id);
+        $collaboratorProjects = $collaboratorModel->getCollaboratorProjects($id);
+
+        if (in_array('project', session()->get('auth')['permissions'])) {
+            $data['collaboratorProjects'] = $collaboratorProjects;
+            $data['projectsWithoutAccess'] = [];
+        } else{
+            $loggedCollaboratorProjects = session()->get('projects');
+            $loggedCollaboratorProjects = array_map(fn ($project) => $project['id'], $loggedCollaboratorProjects);
+
+            foreach ($collaboratorProjects as $project) {
+                if (in_array($project['id'], $loggedCollaboratorProjects)) {
+                    $data['collaboratorProjects'][] = $project;
+                } else {
+                    $data['projectsWithoutAccess'][] = $project;
+                }
+            }
+        }
 
         return view('template/header')
         . view('collaborator/view', $data)

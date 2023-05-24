@@ -1,7 +1,9 @@
 <div class="container-fluid">
   <div class="d-flex align-items-center justify-content-between">
     <h2>Projects you are working on</h2>
+    <?php if(in_array('project', session()->get('auth')['permissions'])): ?>
     <a class="btn btn-rounded btn-primary" href="<?=site_url('manage/project/add')?>">Add project</a>
+    <?php endif; ?>
   </div>
   <?php if(session()->getFlashdata('message') !== null): ?>
   <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">

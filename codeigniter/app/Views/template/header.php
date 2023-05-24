@@ -76,7 +76,7 @@
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('manage/collaborator/edit/') . session()->get('id')?>">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/edit/') . session()->get('id')?>">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>
@@ -148,7 +148,7 @@
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('manage/collaborator/edit/') . session()->get('id')?>">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/edit/') . session()->get('id')?>">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
               </a>

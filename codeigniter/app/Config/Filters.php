@@ -2,7 +2,10 @@
 
 namespace Config;
 
+use App\Filters\CheckOwnership;
+use App\Filters\CheckPermissions;
 use App\Filters\IsLoggedIn;
+use App\Filters\ProjectAccess;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -17,12 +20,15 @@ class Filters extends BaseConfig
      * make reading things nicer and simpler.
      */
     public array $aliases = [
-        'csrf'          => CSRF::class,
-        'toolbar'       => DebugToolbar::class,
-        'honeypot'      => Honeypot::class,
-        'invalidchars'  => InvalidChars::class,
-        'secureheaders' => SecureHeaders::class,
-        'isloggedin'    => IsLoggedIn::class,
+        'csrf'             => CSRF::class,
+        'toolbar'          => DebugToolbar::class,
+        'honeypot'         => Honeypot::class,
+        'invalidchars'     => InvalidChars::class,
+        'secureheaders'    => SecureHeaders::class,
+        'isloggedin'       => IsLoggedIn::class,
+        'checkpermissions' => CheckPermissions::class,
+        'checkownership'   => CheckOwnership::class,
+        'projectaccess'    => ProjectAccess::class,
     ];
 
     /**

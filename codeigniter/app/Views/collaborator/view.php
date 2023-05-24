@@ -48,7 +48,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">
           <div class="card bg-complementary border border-0 rounded-4">
             <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-              <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['name'])?>
+              <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['last'])?>
                 projects</span>
             </div>
             <div class="card-body text-center p-4">
@@ -58,6 +58,11 @@
                 <?=esc($project['name'])?>
               </a>
               <?php endforeach; ?>
+              <?php if(count($projectsWithoutAccess) > 0): ?>
+              <span class="project-item d-inline-block bg-secondary border-0 rounded-5 text-white fw-bold text-decoration-none px-3 py-2 m-1" title="You don't have access to these projects">
+                <?=esc(count($projectsWithoutAccess))?> more
+              </span>
+              <?php endif; ?>
             </div>
           </div>
         </div>
@@ -117,7 +122,7 @@
       <div>
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
-            <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['name'])?> issues</span>
+            <span class="fs-5 text-white"><?=esc($collaborator['name'])?> <?=esc($collaborator['last'])?> issues</span>
           </div>
           <div class="issues-card card-body overflow-y-auto p-4">
             <?php for ($i=0; $i < 7; $i++): ?>
