@@ -79,6 +79,7 @@
               style="color: #<?=esc($issue['status_color'])?>; background-color: #<?=esc($issue['status_color'])?>1a; border: 1px solid #<?=esc($issue['status_color'])?>;">
               <?=esc($issue['status_name'])?>
             </div>
+            <?php if (session()->get('id') == $issue['reporter_id'] || in_array('issue', session()->get('auth')['permissions'])): ?>
             <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots"></i>
             </a>
@@ -120,6 +121,7 @@
                 </button>
               </li>
             </ul>
+            <?php endif; ?>
           </div>
         </div>
         <?php endforeach; ?>

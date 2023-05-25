@@ -52,8 +52,8 @@ $routes->group('issue', static function ($routes) {
     $routes->get('(:segment)/issue/(:num)', 'Issue::issue/$1/$2');
     $routes->get('(:segment)/add', 'Issue::add/$1');
     $routes->post('(:segment)/save', 'Issue::save/$1');
-    $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2');
-    $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2');
+    $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2', ['filter' => 'issueownership']);
+    $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2', ['filter' => 'issueownership']);
     $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
     $routes->post('deleteIssueImage', 'Issue::deleteIssueImage');
     $routes->post('deleteIssueFile', 'Issue::deleteIssueFile');

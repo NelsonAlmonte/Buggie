@@ -2,11 +2,12 @@
 
 namespace App\Filters;
 
+use App\Models\IssueModel;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class CheckOwnership implements FilterInterface
+class IssueOwnership implements FilterInterface
 {
     /**
      * Do whatever processing this filter needs to do.
@@ -26,17 +27,19 @@ class CheckOwnership implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $uri = service('uri');
-        $userId = $uri->getSegment(3);
+        $issueModel = model(IssueModel::class);
+        $issueId = $uri->getSegment(4);
         $loggedUserId = session()->get('id');
+        $issue = $issueModel->getIssue($issueId);
         $loggedUserPermissions = session()->get('auth')['permissions'];
 
-        if (in_array('collaborator', $loggedUserPermissions)) return;
+        if (in_array('issue', $loggedUserPermissions)) return;
 
-        if ($userId != $loggedUserId) {
+        if ($loggedUserId != $issue['reporter']) {
             session()->setFlashdata([
-              'message' => MESSAGE_ERROR, 
-              'color' => MESSAGE_ERROR_COLOR, 
-              'icon' => MESSAGE_ERROR_ICON
+                'message' => MESSAGE_ERROR, 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('project');
         }

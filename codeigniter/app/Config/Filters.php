@@ -5,6 +5,7 @@ namespace Config;
 use App\Filters\CheckOwnership;
 use App\Filters\CheckPermissions;
 use App\Filters\IsLoggedIn;
+use App\Filters\IssueOwnership;
 use App\Filters\ProjectAccess;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
@@ -29,6 +30,7 @@ class Filters extends BaseConfig
         'checkpermissions' => CheckPermissions::class,
         'checkownership'   => CheckOwnership::class,
         'projectaccess'    => ProjectAccess::class,
+        'issueownership'   => IssueOwnership::class,
     ];
 
     /**

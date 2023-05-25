@@ -21,6 +21,10 @@ class InsertStartingPermissions extends Seeder
                 'name' => 'role',
                 'description' => 'Access to roles.',
             ],
+            [
+                'name' => 'issue',
+                'description' => 'Access to issues.',
+            ],
         ];
 
         foreach ($permissions as $permission) {

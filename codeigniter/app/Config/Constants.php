@@ -118,6 +118,6 @@ define('ACCEPTED_IMAGES_TYPES', ['jpg', 'jpeg', 'png', 'svg', 'gif']);
 define('PAGINATION_RECORDS_PER_PAGE', 10);
 // Auth
 define('SYSTEM_ADMIN_ROLE', ['id' => 1, 'name' => 'Administrator']);
-define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role']);
+define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role', 'issue']);
 // Assets
 define('DEFAULT_PROFILE_IMAGE', 'default-profile-image.png');

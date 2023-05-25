@@ -2,10 +2,12 @@
   <div class="d-flex align-items-center justify-content-between">
     <h2><?=esc($issue['title'])?><span class="text-primary"> #<?=esc($issue['id'])?></span>
     </h2>
+    <?php if (session()->get('id') == $issue['reporter'] || in_array('issue', session()->get('auth')['permissions'])): ?>
     <a class="btn btn-rounded btn-primary px-3" type="button"
       href="<?=site_url('issue/' . $slug . '/edit/' . $issue['id'])?>">
       Edit issue
     </a>
+    <?php endif; ?>
   </div>
   <?php if(session()->getFlashdata('message') !== null): ?>
   <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
