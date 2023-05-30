@@ -31,13 +31,13 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('home', 'Home::home');
 
-$routes->group('project', static function ($routes) {
+$routes->group('project', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('/', 'Project::projects');
     $routes->get('(:segment)/dashboard', 'Project::dashboard/$1', ['filter' => 'projectaccess']);
     $routes->post('searchProjects', 'Project::searchProjects');
 });
 
-$routes->group('collaborator', static function ($routes) {
+$routes->group('collaborator', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('view/(:num)', 'Collaborator::view/$1');
     $routes->get('(:segment)', 'Collaborator::collaborators/$1', ['filter' => 'projectaccess']);
     $routes->get('edit/(:num)', 'Collaborator::edit/$1', ['filter' => 'checkownership']);
@@ -46,7 +46,7 @@ $routes->group('collaborator', static function ($routes) {
     $routes->post('assignProjects', 'Collaborator::assignProjects');
 });
 
-$routes->group('issue', static function ($routes) {
+$routes->group('issue', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('(:segment)', 'Issue::issues/$1');
     $routes->get('(:segment)/issues', 'Issue::issues/$1');
     $routes->get('(:segment)/issue/(:num)', 'Issue::issue/$1/$2');
@@ -67,7 +67,7 @@ $routes->group('auth', static function ($routes) {
     $routes->get('logout', 'Auth::logout');
 });
 
-$routes->group('manage', ['filter' => 'checkpermissions'], static function ($routes) {
+$routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], static function ($routes) {
     $routes->group('project', static function ($routes) {
         $routes->get('add', 'Project::add');
         $routes->post('save', 'Project::save');

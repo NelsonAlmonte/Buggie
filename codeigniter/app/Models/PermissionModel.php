@@ -58,13 +58,15 @@ class PermissionModel extends Model
     {
         return $this->db
             ->table('permission_role')
-            ->insert($data);
+            ->insertBatch($data);
     }
 
-    public function deleteRolePermissions($role)
+    public function deleteRolePermissions($data)
     {
         return $this->db
             ->table('permission_role')
-            ->delete(['role' => $role]);
+            ->setData($data)
+            ->onConstraint('role, permission')
+            ->deleteBatch();
     }
 }
