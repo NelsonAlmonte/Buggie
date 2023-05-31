@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CollaboratorModel;
+use App\Models\IssueModel;
 use App\Models\ProjectModel;
 use App\Models\RoleModel;
 
@@ -37,15 +38,23 @@ class Collaborator extends BaseController
     {
         helper('text');
         $collaboratorModel = model(CollaboratorModel::class);
+        $issueModel = model(IssueModel::class);
         $data = [];
         $collaboratorProjects = [];
 
         $data['collaborator'] = $collaboratorModel->getCollaborator($id);
         $collaboratorProjects = $collaboratorModel->getCollaboratorProjects($id);
+        $data['collaboratorIssues'] = $issueModel->getCollaboratorIssues($id);
+        $data['closedCollaboratorIssues'] = array_filter(
+            $data['collaboratorIssues'],
+            fn ($issue) => $issue['status_name'] == CATEGORY_ISSUE_STATUS_CLOSED_NAME 
+        );
 
+        $data['projectsWithoutAccess'] = [];
+        $data['collaboratorProjects'] = [];
+        
         if (in_array('project', session()->get('auth')['permissions'])) {
             $data['collaboratorProjects'] = $collaboratorProjects;
-            $data['projectsWithoutAccess'] = [];
         } else{
             $loggedCollaboratorProjects = session()->get('projects');
             $loggedCollaboratorProjects = array_map(fn ($project) => $project['id'], $loggedCollaboratorProjects);

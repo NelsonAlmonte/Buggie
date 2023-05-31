@@ -35,6 +35,9 @@ class ProjectAccess implements FilterInterface
         $collaboratorProjects = session()->get('projects');
         $collaboratorProjects = array_map(fn ($project) => $project['slug'], $collaboratorProjects);
 
+        $loggedUserPermissions = session()->get('auth')['permissions'];
+        if (in_array('project', $loggedUserPermissions)) return;
+
         if (!in_array($projectToBeAccessed, $collaboratorProjects)) {
             session()->setFlashdata([
               'message' => MESSAGE_ERROR, 

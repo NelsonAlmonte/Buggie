@@ -71,6 +71,7 @@ body {
 }
 
 .header {
+  background-color: var(--color-dominant);
   transition: all 0.5s;
   z-index: 997;
   height: 60px;

@@ -89,14 +89,19 @@ class CollaboratorModel extends Model
             ->getResultArray();
     }
 
-    public function searchCollaborators($query)
+    public function searchCollaborators($query, $project = '')
     {
         return $this->db
-            ->table('collaborators')
-            ->like('name', $query)
-            ->orLike('last', $query)
-            ->orLike('username', $query)
+            ->table('collaborators c')
+            ->select('c.*')
+            ->join('collaborators_projects cp', 'cp.collaborator = c.id')
+            ->join('projects p', 'p.id = cp.project')
+            ->where('p.id', $project)
+            ->like('c.name', $query)
+            ->orLike('c.last', $query)
+            ->orLike('c.username', $query)
             ->limit(5)
+            ->groupBy('c.id')
             ->get()
             ->getResultArray();
     }

@@ -8,6 +8,11 @@ class AssignProjectModal extends Cell
 {
     protected $collaboratorProjects = [];
 
+    public function mount($collaboratorProjects)
+    {
+        $this->collaboratorProjects = $collaboratorProjects;
+    }
+
     public function render(): string
     {
         $data = [];

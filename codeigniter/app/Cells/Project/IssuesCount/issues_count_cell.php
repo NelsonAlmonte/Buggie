@@ -5,7 +5,7 @@
         <?=esc($issuesCount['totalIssues'])?> total issues
       </div>
     </a>
-    <a class="text-decoration-none text-warning" href="<?=site_url('issue/' . $slug)?>"><?=esc($issuesCount['openIssues'])?> open issues</a>
+    <a class="text-decoration-none text-warning" href="<?=site_url('issue/' . $slug . '?status=open')?>"><?=esc($issuesCount['openIssues'])?> open issues</a>
   </div>
   <div>
     <small class="text-white">Progress</small>

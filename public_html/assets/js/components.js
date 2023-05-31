@@ -10,9 +10,10 @@ document.addEventListener('alpine:init', () => {
 				unwanted: this.selectedItems,
 			};
 
-			const [response, error] = await useFetch(payload);
-
-			this.items = response.data;
+			if (this.query.length > 0) {
+				const [response, error] = await useFetch(payload);
+				this.items = response.data;
+			}
 		},
 		selectItem(selectedItem) {
 			if (this.selectedItems.includes(selectedItem)) return;

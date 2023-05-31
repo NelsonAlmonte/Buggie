@@ -20,14 +20,16 @@ class IssuesCount extends Cell
         $totalIssues = $issueModel->getIssues($project['id']);
         $openIssues = array_filter(
             $totalIssues,
-            fn ($issue) => $issue['status_name'] != CATEGORY_ISSUE_STATUS_CLOSED_NAME
+            fn ($issue) => $issue['status_name'] == CATEGORY_ISSUE_STATUS_OPEN_NAME
         );
         $this->issuesCount = [
             'totalIssues' => count($totalIssues),
             'openIssues' => count($openIssues),
         ];
         $this->project = $project;
-        if (count($totalIssues) > 0) {
+        if (count($openIssues) == 0 && count($totalIssues) != 0) {
+            $this->progress = $PROGRESS_BAR_MAX;
+        } elseif(count($totalIssues) != count($openIssues)) {
             $this->progress = (count($openIssues) / count($totalIssues)) * $PROGRESS_BAR_MAX;
         } else {
             $this->progress = 0;

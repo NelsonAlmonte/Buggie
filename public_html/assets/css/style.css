@@ -1,3 +1,18 @@
+:root::-webkit-scrollbar {
+  width: 16px;
+}
+
+:root::-webkit-scrollbar-thumb {
+  background-color: var(--color-complementary);
+  border-radius: 10px;
+  border: 3px solid var(--color-dominant);
+}
+
+:root::-webkit-scrollbar-track {
+  background: var(--color-dominant);
+  border-bottom-right-radius: 1rem;
+}
+
 .project-card-footer {
   transition: 0.3s;
 }

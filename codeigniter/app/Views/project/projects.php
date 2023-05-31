@@ -15,7 +15,7 @@
   <?php endif; ?>
   <div class="row mt-4">
     <?php foreach ($projects as $project): ?>
-    <div class="col-lg-3 col-md-4 col-sm-12 mb-4">
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="card-body px-4 pt-3 pb-4">
           <div class="d-flex justify-content-between align-items-center mb-1">

@@ -11,7 +11,7 @@
       </div>
       <?php endif; ?>
       <form class="row gx-5"
-        action="<?=site_url('project/' . esc($project['slug']) . '/update/' . esc($project['id']))?>" method="post">
+        action="<?=site_url('manage/project/' . esc($project['slug']) . '/update/' . esc($project['id']))?>" method="post">
         <?= csrf_field() ?>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">

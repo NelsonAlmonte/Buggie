@@ -87,23 +87,7 @@
             </h4>
           </a>
           <p class="mb-4"><?=esc($collaborator['username'])?></p>
-          <div class="d-flex justify-content-between">
-            <div class="text-center">
-              <i class="bi bi-briefcase text-white fs-4"></i>
-              <small class="d-block">Projects</small>
-              <h5 class="fw-bold mb-0"><?=esc(count($collaborator['projects']))?></h5>
-            </div>
-            <div class="text-center">
-              <i class="bi bi-bug text-white fs-4"></i>
-              <small class="d-block">Issues</small>
-              <h5 class="fw-bold mb-0">42</h5>
-            </div>
-            <div class="text-center">
-              <i class="bi bi-bug-fill text-white fs-4"></i>
-              <small class="d-block">Closed</small>
-              <h5 class="fw-bold mb-0">42</h5>
-            </div>
-          </div>
+          <?= view_cell('App\Cells\Collaborator\CollaboratorSummary\CollaboratorSummary::render', ['collaborator' => $collaborator['id']]); ?>
         </div>
       </div>
     </div>
