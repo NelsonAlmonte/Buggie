@@ -25,14 +25,23 @@
           </div>
         </div>
         <div class="col-12 mb-4">
-          <textarea x-data="froalaEditor" x-init="initFroala($el)" id="description" name="description"></textarea>
+          <textarea 
+            x-data="froalaEditor" 
+            x-init="initFroala($el)" 
+            id="description" 
+            name="description"
+          ></textarea>
         </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-file-earmark-text text-primary me-3"></i>Files</h4>
         </div>
         <div class="col-12 mb-4">
           <div x-data="filesPreview">
-            <button type="button" class="btn btn-rounded btn-dark bg-dominant p-3" @click="$refs.files.click()">
+            <button 
+              type="button" 
+              class="btn btn-rounded btn-dark bg-dominant p-3" 
+              @click="$refs.files.click()"
+            >
               <i class="bi bi-image me-2"></i>
               <span>Add files*</span>
             </button>
@@ -48,8 +57,11 @@
                         <span x-text="file.name"></span>
                       </div>
                       <div class="d-flex justify-content-start align-items-center">
-                        <button class="btn btn-rounded btn-danger" type="button"
-                          @click="removeFile(index, $refs.files, file)">
+                        <button 
+                          class="btn btn-rounded btn-danger" 
+                          type="button"
+                          @click="removeFile(index, $refs.files, file)"
+                        >
                           <i class="bi bi-trash"></i>
                         </button>
                       </div>
@@ -66,32 +78,79 @@
           <h4><i class="bi bi-people text-primary me-3"></i>Collaborators</h4>
         </div>
         <div class="col-6 mb-4">
-          <div class="form-floating">
-            <input type="text" class="form-control bg-dominant border-0" id="reporter" name="reporter" required
-              placeholder="Reporter" autocomplete="off" value="1">
-            <label for="reporter">Reporter*</label>
-          </div>
-        </div>
-        <div class="col-6 mb-4">
-          <div x-data="searchSelect" class="form-floating auto-complete">
-            <input type="text" class="form-control bg-dominant border-0" id="assignee-search" name="assignee-search"
-              placeholder="Assign to" autocomplete="off" x-model="query"
-              @input="getItems('collaborator', 'searchCollaborators')">
+          <div 
+            x-data="searchSelect" 
+            x-init='query = <?=json_encode($auth["fullname"])?>' 
+            class="form-floating auto-complete"
+          >
+            <input 
+              type="text" 
+              class="form-control bg-dominant border-0" 
+              id="reporter-search" 
+              name="reporter-search" 
+              required
+              placeholder="Reporter" 
+              autocomplete="off" 
+              x-model="query"
+              @input="getItems('collaborator', 'searchCollaborators')"
+            >
             <ul x-show="items.length > 0">
               <template x-for="item in items">
                 <li 
-                  x-text="`${item.name} ${item.last}`" 
+                  x-text="`${item.name} ${item.last} - ${item.username}`" 
                   @click="
                     query = `${item.name} ${item.last}`; 
                     items = []; 
-                    $dispatch('get-item', { item: item })"
+                    $refs.reporter.value = item.id;"
+                  @click.outside="items = []">
+                </li>
+              </template>
+            </ul>
+            <label for="reporter-search">Reporter*</label>
+            <input 
+              type="hidden" 
+              id="reporter" 
+              name="reporter" 
+              x-ref="reporter" 
+              value="<?=esc($auth["id"])?>"
+            >
+          </div>
+        </div>
+        <div class="col-6 mb-4">
+          <div 
+            x-data="searchSelect" 
+            class="form-floating auto-complete"
+          >
+            <input 
+              type="text" 
+              class="form-control bg-dominant border-0" 
+              id="assignee-search" 
+              name="assignee-search"
+              placeholder="Assign to" 
+              autocomplete="off" 
+              x-model="query"
+              @input="getItems('collaborator', 'searchCollaborators')"
+            >
+            <ul x-show="items.length > 0">
+              <template x-for="item in items">
+                <li 
+                  x-text="`${item.name} ${item.last} - ${item.username}`" 
+                  @click="
+                    query = `${item.name} ${item.last}`; 
+                    items = []; 
+                    $refs.assignee.value = item.id;"
                   @click.outside="items = []">
                 </li>
               </template>
             </ul>
             <label for="assign to">Assign to</label>
+            <input 
+              type="hidden" 
+              id="assignee" 
+              name="assignee" 
+              x-ref="assignee"
+            >
           </div>
-          <input type="hidden" id="assignee" name="assignee" x-data="{ itemId: '' }" @get-item.window="itemId = $event.detail.item.id" x-model="itemId">
         </div>
         <div class="col-12 my-4">
           <h4><i class="bi bi-info-circle text-primary me-3"></i>Status</h4>

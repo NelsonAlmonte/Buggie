@@ -69,6 +69,10 @@ class Issue extends BaseController
         $categoryTypes = ['classification', 'severity', 'issue_status'];
 
         $data['project'] = $projectModel->getProject('', $slug);
+        $data['auth'] = [
+            'id' => session()->get('id'),
+            'fullname' => session()->get('name') . ' ' . session()->get('last'),
+        ];
 
         $categories = $categoryModel->getCategories();
 
