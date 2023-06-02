@@ -169,6 +169,8 @@ class Collaborator extends BaseController
             'role' => $this->request->getPost('role'),
         ];
 
+        $data = array_filter($data);
+
         if (!empty($_POST['password'])) 
             $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
@@ -191,14 +193,14 @@ class Collaborator extends BaseController
                 'color' => MESSAGE_SUCCESS_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
-            return redirect()->to('manage/collaborator');
+            return redirect()->to('collaborator/view/' . $id);
         } else {
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
-            return redirect()->to('manage/collaborator/edit/' . $id);
+            return redirect()->to('collaborator/edit/' . $id);
         }
     }
 

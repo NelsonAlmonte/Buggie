@@ -10,7 +10,7 @@
         </div>
       </div>
       <?php endif; ?>
-      <form class="row gx-5" action="<?=site_url('manage/collaborator/update/' . $collaborator['id'])?>" method="post" enctype="multipart/form-data">
+      <form class="row gx-5" action="<?=site_url('collaborator/update/' . $collaborator['id'])?>" method="post" enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
         <div 
           x-data="{ selectedProjects: [] }" 
@@ -49,6 +49,7 @@
         <div class="col-12 my-4">
           <h4><i class="bi bi-box-arrow-in-right text-primary me-3"></i>Login credentials</h4>
         </div>
+        <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <input type="text" class="form-control bg-dominant border-0" id="username" name="username" required
@@ -56,6 +57,7 @@
             <label for="username">Username*</label>
           </div>
         </div>
+        <?php endif; ?>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <input type="password" class="form-control bg-dominant border-0" id="password" name="password"
@@ -63,17 +65,19 @@
             <label for="password">Password*</label>
           </div>
         </div>
+        <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <select class="form-select bg-dominant border-0 text-capitalize" id="role" name="role"
               aria-label="role">
               <?php foreach($roles as $role): ?>
-              <option <?=$collaborator['role'] == $role['id'] ? 'checked' : '' ?> value="<?=esc($role['id'])?>"><?=esc($role['name'])?></option>
+              <option <?=$collaborator['role'] == $role['id'] ? 'selected' : '' ?> value="<?=esc($role['id'])?>"><?=esc($role['name'])?></option>
               <?php endforeach; ?>
             </select>
             <label for="role">Role</label>
           </div>
         </div>
+        <?php endif; ?>
         <div class="col-12 my-4">
           <h4><i class="bi bi-images text-primary me-3"></i>Multimedia</h4>
         </div>
@@ -94,6 +98,7 @@
             <input class="d-none" type="file" name="image" id="image" x-ref="image" @change="renderImage($event)" accept="image/*">
           </div>
         </div>
+        <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
         <div class="col-12 my-4">
           <h4><i class="bi bi-briefcase text-primary me-3"></i>Projects</h4>
         </div>
@@ -122,6 +127,7 @@
             </template>
           </div>
         </div>
+        <?php endif; ?>
         <div class="col-12 mb-4">
           <small>Fields with * are required.</small>
         </div>

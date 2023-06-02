@@ -53,7 +53,7 @@
               <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
               <li>
                 <a class="dropdown-item text-white"
-                  href="<?=site_url('manage/collaborator/edit/'. $collaborator['id'])?>">
+                  href="<?=site_url('collaborator/edit/'. $collaborator['id'])?>">
                   <div class="d-inline-block">
                     <i class="bi bi-pencil"></i>
                   </div>

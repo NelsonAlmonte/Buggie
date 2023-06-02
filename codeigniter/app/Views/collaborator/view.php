@@ -81,7 +81,7 @@
                   <i class="bi bi-briefcase fs-2" style="color: #6f42c1;"></i>
                 </div>
                 <div>
-                  <h4 class="mb-1"><?=esc(count($collaboratorProjects))?></h4>
+                  <h4 class="mb-1"><?=esc(count($collaboratorProjects) + count($projectsWithoutAccess))?></h4>
                   <h5 class="text-white-50">Assigned projects</h5>
                 </div>
               </div>
@@ -133,10 +133,10 @@
               class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
               <div>
                 <a class="text-accent text-decoration-none fw-bold d-block"
-                  href="<?=site_url('issue/' . $project['slug'] . '/issue/' . $issue['id'])?>"><?=esc($issue['title'])?></a>
+                  href="<?=site_url('issue/' . $issue['project_slug'] . '/issue/' . $issue['id'])?>"><?=esc($issue['title'])?></a>
                 <small>
                   <a class="text-accent text-decoration-none fw-bold"
-                    href="<?=site_url('issue/' . $project['slug'] . '/issue/' . $issue['id'])?>">
+                    href="<?=site_url('issue/' . $issue['project_slug'] . '/issue/' . $issue['id'])?>">
                     #<?=esc($issue['id'])?></a>
                   opened on <a class="text-accent text-decoration-none fw-bold"
                     href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a>

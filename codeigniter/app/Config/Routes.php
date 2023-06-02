@@ -33,14 +33,14 @@ $routes->get('home', 'Home::home');
 
 $routes->group('project', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('/', 'Project::projects');
-    $routes->get('(:segment)/dashboard', 'Project::dashboard/$1', ['filter' => 'projectaccess']);
+    $routes->get('(:segment)/dashboard', 'Project::dashboard/$1', ['filter' => ['isloggedin', 'projectaccess']]);
     $routes->post('searchProjects', 'Project::searchProjects');
 });
 
 $routes->group('collaborator', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('view/(:num)', 'Collaborator::view/$1');
-    $routes->get('(:segment)', 'Collaborator::collaborators/$1', ['filter' => 'projectaccess']);
-    $routes->get('edit/(:num)', 'Collaborator::edit/$1', ['filter' => 'checkownership']);
+    $routes->get('(:segment)', 'Collaborator::collaborators/$1', ['filter' => ['isloggedin', 'projectaccess']]);
+    $routes->get('edit/(:num)', 'Collaborator::edit/$1', ['filter' => ['isloggedin', 'checkownership']]);
     $routes->post('update/(:num)', 'Collaborator::update/$1', ['filter' => 'checkownership']);
     $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
     $routes->post('assignProjects', 'Collaborator::assignProjects');
@@ -52,8 +52,8 @@ $routes->group('issue', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('(:segment)/issue/(:num)', 'Issue::issue/$1/$2');
     $routes->get('(:segment)/add', 'Issue::add/$1');
     $routes->post('(:segment)/save', 'Issue::save/$1');
-    $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2', ['filter' => 'issueownership']);
-    $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2', ['filter' => 'issueownership']);
+    $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2', ['filter' => ['isloggedin', 'issueownership']]);
+    $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2', ['filter' => ['isloggedin', 'issueownership']]);
     $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
     $routes->post('deleteIssueImage', 'Issue::deleteIssueImage');
     $routes->post('deleteIssueFile', 'Issue::deleteIssueFile');
@@ -80,8 +80,6 @@ $routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], stati
         $routes->get('add', 'Collaborator::add');
         $routes->get('(:segment)', 'Collaborator::collaborators/$1');
         $routes->post('save', 'Collaborator::save');
-        $routes->get('edit/(:num)', 'Collaborator::edit/$1');
-        $routes->post('update/(:num)', 'Collaborator::update/$1');
     });
 
     $routes->group('role', static function ($routes) {

@@ -91,8 +91,9 @@ class IssueModel extends Model
         $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name,';
         $classification = 'c_cl.name AS classification_name, c_cl.color AS classification_color,';
         $severity = 'c_se.name AS severity_name, c_se.color AS severity_color,';
-        $status = 'c_st.name AS status_name, c_st.color AS status_color, c_st.name AS status';
-        $query = $issues . $reporter . $assignee . $classification . $severity . $status;
+        $status = 'c_st.name AS status_name, c_st.color AS status_color, c_st.name AS status,';
+        $project = 'p.slug AS project_slug';
+        $query = $issues . $reporter . $assignee . $classification . $severity . $status . $project;
         return $this->db
             ->table('issues i')
             ->select($query)
@@ -101,6 +102,7 @@ class IssueModel extends Model
             ->join('categories c_cl', 'c_cl.id = i.classification')
             ->join('categories c_se', 'c_se.id = i.severity')
             ->join('categories c_st', 'c_st.id = i.status')
+            ->join('projects p', 'p.id = i.project')
             ->where('i.assignee', $collaborator)
             ->orderBy('i.id DESC')
             ->get()
