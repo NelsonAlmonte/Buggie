@@ -383,4 +383,26 @@ class Issue extends BaseController
         }
         return $imagesFromDescription;
     }
+
+    public function assignIssue()
+    {
+        $issueModel = model(IssueModel::class);
+        $json = [];
+        $response = [];
+
+        $json = $this->request->getJSON(true);
+
+        $response['status'] = EXIT_DATABASE;
+        $response['token'] = csrf_hash();
+        $response['data'] = [];
+
+        $data = [
+            'id' => $json['issue'], 
+            'assignee' => $json['collaborator']
+        ];
+
+        if ($issueModel->updateIssue($data)) $response['status'] = EXIT_SUCCESS;
+
+        return $this->response->setJSON($response);
+    }
 }

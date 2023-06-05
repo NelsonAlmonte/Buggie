@@ -121,3 +121,4 @@ define('SYSTEM_ADMIN_ROLE', ['id' => 1, 'name' => 'Administrator']);
 define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role', 'issue']);
 // Assets
 define('DEFAULT_PROFILE_IMAGE', 'default-profile-image.png');
+define('EMPTY_IMAGE', 'empty.svg');

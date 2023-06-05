@@ -20,7 +20,7 @@
   <div class="row my-4">
     <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
       <div class="card bg-complementary border border-0 h-100">
-        <div class="card-body">
+        <div class="card-body text-light">
           <?=$issue['description']?>
         </div>
       </div>
@@ -29,13 +29,13 @@
       <div class="card bg-complementary border border-0">
         <div class="card-body">
           <h6 class="text-white">Reporter</h6>
-          <span><?=esc($issue['reporter_name'])?></span>
+          <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['reporter']?>"><?=esc($issue['reporter_name'])?></a>
           <hr>
           <h6 class="text-white">Assignee</h6>
           <?php if(!empty($issue['assignee'])): ?>
-            <span><?=esc($issue['assignee_name'])?></span>
+            <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['assignee']?>"><?=esc($issue['assignee_name'])?></a>
           <?php else: ?>
-            <span>None</span>
+            <span class="text-light">None</span>
           <?php endif; ?>
           <hr>
           <h6 class="text-white">Status</h6>
@@ -53,23 +53,23 @@
           </div>
           <hr>
           <h6 class="text-white">Project</h6>
-          <span class="text-capitalize"><?=esc($slug)?></span>
+          <span class="text-light text-capitalize"><?=esc($slug)?></span>
           <hr>
           <h6 class="text-white">Opened on</h6>
-          <span><?=date_format(date_create($issue['start_date']), 'M j, Y')?></span>
+          <span class="text-light"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></span>
           <hr>
           <h6 class="text-white">Due date</h6>
           <?php if($issue['end_date'] != '0000-00-00'): ?>
-            <span><?=date_format(date_create($issue['end_date']), 'M j, Y')?></span>
+            <span class="text-light"><?=date_format(date_create($issue['end_date']), 'M j, Y')?></span>
           <?php else: ?>
-            <span>None</span>
+            <span class="text-light">None</span>
           <?php endif; ?>
           <hr>
           <h6 class="text-white">Completion date</h6>
           <?php if(!empty($issue['completed_date'])): ?>
-            <span><?=date_format(date_create($issue['completed_date']), 'M j, Y')?></span>
+            <span class="text-light"><?=date_format(date_create($issue['completed_date']), 'M j, Y')?></span>
           <?php else: ?>
-            <span>None</span>
+            <span class="text-light">None</span>
           <?php endif; ?>
         </div>
       </div>
@@ -107,8 +107,8 @@
           </div>
           <?php endforeach; ?>
         <?php else: ?>
-        <div class="text-center m-5 p-4">
-          <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
+        <div class="text-center p-5">
+          <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
           <h5 class="mt-5">There is nothing here...</h5>
         </div>
         <?php endif; ?>

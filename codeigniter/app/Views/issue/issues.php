@@ -95,12 +95,18 @@
               </li>
               <?php if(empty($issue['assignee'])): ?>
               <li>
-                <a class="dropdown-item text-white" href="#" role="button">
+                <button 
+                  class="dropdown-item text-white" 
+                  type="button" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#assign-issue-modal"
+                  @click="$dispatch('get-issue-id', { issue: <?=$issue['id']?> })"
+                >
                   <div class="d-inline-block">
                     <i class="bi bi-person-plus"></i>
                   </div>
                   <span>Assign</span>
-                </a>
+                </button>
               </li>
               <?php endif; ?>
               <li>
@@ -127,7 +133,7 @@
         <?php endforeach; ?>
       <?php else: ?>
       <div class="text-center m-5 p-4">
-        <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
+        <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
         <h5 class="mt-5">There is nothing here...</h5>
       </div>
       <?php endif; ?>
@@ -137,3 +143,4 @@
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
 <?= view_cell('App\Cells\Issue\IssueFilterModal\IssueFilterModal::render', ['slug' => $slug]); ?>
 <?= view_cell('App\Cells\Shared\Pagination\Pagination::render', ['currentRecords' => count($issues)]); ?>
+<?= view_cell('App\Cells\Issue\AssignIssue\AssignIssue::render'); ?>

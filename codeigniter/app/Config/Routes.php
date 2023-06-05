@@ -58,6 +58,7 @@ $routes->group('issue', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->post('deleteIssueImage', 'Issue::deleteIssueImage');
     $routes->post('deleteIssueFile', 'Issue::deleteIssueFile');
     $routes->post('deleteIssue', 'Issue::deleteIssue');
+    $routes->post('assignIssue', 'Issue::assignIssue');
 });
 
 $routes->group('auth', static function ($routes) {

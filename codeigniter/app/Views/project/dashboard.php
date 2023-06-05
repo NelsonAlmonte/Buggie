@@ -189,7 +189,7 @@
           <?php endforeach; ?>
           <?php else: ?>
           <div class="text-center m-5 p-4">
-            <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
+            <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
             <h5 class="mt-5">There is nothing here...</h5>
           </div>
           <?php endif; ?>
@@ -201,7 +201,7 @@
         <div class="card-header bg-complementary fs-5 text-white rounded-top-4 px-4 py-3">Issues graph</div>
         <div class="issues-card card-body p-4">
           <div class="text-center m-5">
-            <img class="card-empty-icon" src="/assets/img/empty.svg" alt="empty">
+            <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
             <h5 class="mt-5">There is nothing here...</h5>
           </div>
         </div>
