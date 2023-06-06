@@ -247,6 +247,7 @@ class Issue extends BaseController
         $fileModel = model(FileModel::class);
         $data = [];
         $fileExploded = [];
+        $segments = [];
         $fileType = '';
 
         $data['issue'] = $issueModel->getIssue($id);
@@ -257,6 +258,8 @@ class Issue extends BaseController
             $data['files'][$key]['type'] = $fileType;
         }
         $data['slug'] = $slug;
+        $segments = explode('-', $slug);
+        $data['projectName'] = implode(' ', $segments);
         
         return view('template/header')
         . view('issue/issue', $data)

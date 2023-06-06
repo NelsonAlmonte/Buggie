@@ -27,7 +27,7 @@
       </div>
 
       <?php $uri = service('uri')?>
-      <nav class="header-nav ms-3 <?=empty($uri->getSegment(2)) ? 'd-none' : 'd-none d-sm-block' ;?>">
+      <nav class="header-nav ms-3 <?=in_array($uri->getSegment(2), NON_PROJECT_ROUTES) ? 'd-none' : 'd-none d-sm-block' ;?>">
         <ul class="d-flex align-items-center">
           <li class="nav-item me-4">
             <a class="nav-link" href="<?=site_url('project/' . $uri->getSegment(2) . '/dashboard')?>">
@@ -90,13 +90,17 @@
           </ul>
         </li>
 
-        <li class="nav-item dropdown pe-3 <?=empty($uri->getSegment(2)) ? 'd-none' : 'd-block d-md-none' ;?>">
+        <li class="nav-item dropdown pe-3 <?=in_array($uri->getSegment(2), NON_PROJECT_ROUTES) ? 'd-none' : 'd-block d-md-none' ;?>">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <span class="ps-2"><i class="bi bi-briefcase"></i></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile p-2">
             <li class="dropdown-header">
-              <h6>Projec 1 name</h6>
+              <?php
+                $segments = explode('-', $uri->getSegment(2));
+                $projectName = implode(' ', $segments);
+              ?>
+              <h6 class="text-capitalize"><?=$projectName?></h6>
               <span>Project menu</span>
             </li>
             <li class="mb-2">

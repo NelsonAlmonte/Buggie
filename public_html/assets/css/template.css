@@ -224,6 +224,7 @@ body {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-complementary) transparent;
+  background-color: var(--color-dominant);
 }
 
 @media (max-width: 1199px) {

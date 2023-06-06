@@ -53,7 +53,7 @@
           </div>
           <hr>
           <h6 class="text-white">Project</h6>
-          <span class="text-light text-capitalize"><?=esc($slug)?></span>
+          <span class="text-light text-capitalize"><?=esc($projectName)?></span>
           <hr>
           <h6 class="text-white">Opened on</h6>
           <span class="text-light"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></span>

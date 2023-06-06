@@ -122,3 +122,5 @@ define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role', 'issue']);
 // Assets
 define('DEFAULT_PROFILE_IMAGE', 'default-profile-image.png');
 define('EMPTY_IMAGE', 'empty.svg');
+// Routes
+define('NON_PROJECT_ROUTES', ['manage', 'project', 'collaborator', 'role', 'view', 'edit', '']);
