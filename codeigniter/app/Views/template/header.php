@@ -45,7 +45,7 @@
             </a>
           </li>
           <li class="nav-item me-4">
-            <a class="nav-link" href="<?=site_url('document/' . $uri->getSegment(2))?>">
+            <a class="nav-link" href="<?=site_url('file/' . $uri->getSegment(2))?>">
               Files
             </a>
           </li>
@@ -122,7 +122,7 @@
               </a>
             </li>
             <li class="mb-2">
-              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('document/' . $uri->getSegment(2))?>">
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('file/' . $uri->getSegment(2))?>">
                 <i class="bi bi-file-earmark-text"></i>
                 <span>Files</span>
               </a>

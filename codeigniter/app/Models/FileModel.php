@@ -36,4 +36,16 @@ class FileModel extends Model
             ->where('id', $id)
             ->delete();
     }
+
+    public function getProjectFiles($projectSlug)
+    {
+        return $this->db
+            ->table('files f')
+            ->select('f.*, i.title, i.id AS issue_id')
+            ->join('issues i', 'i.id = f.issue')
+            ->join('projects p', 'p.id = i.project')
+            ->where('p.id', $projectSlug)
+            ->get()
+            ->getResultArray();
+    }
 }

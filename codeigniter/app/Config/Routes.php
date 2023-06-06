@@ -68,6 +68,11 @@ $routes->group('auth', static function ($routes) {
     $routes->get('logout', 'Auth::logout');
 });
 
+$routes->group('file', ['filter' => 'isloggedin'], static function ($routes) {
+    $routes->get('(:segment)', 'File::files/$1');
+    $routes->get('(:segment)/files', 'File::files/$1');
+});
+
 $routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], static function ($routes) {
     $routes->group('project', static function ($routes) {
         $routes->get('add', 'Project::add');

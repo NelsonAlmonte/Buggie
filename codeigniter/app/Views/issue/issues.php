@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="d-flex align-items-center justify-content-between">
-    <h2>Issues on <span class="text-primary"><?=esc($project['name'])?></span>
+    <h2>Issues <span class="text-primary">on <?=esc($project['name'])?></span>
     </h2>
     <a class="btn btn-rounded btn-primary px-3" type="button" href="<?=site_url('issue/' . $slug . '/add')?>">
       Add issue
