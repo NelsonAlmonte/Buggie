@@ -73,6 +73,12 @@ $routes->group('file', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('(:segment)/files', 'File::files/$1');
 });
 
+$routes->group('report', ['filter' => 'isloggedin'], static function ($routes) {
+    $routes->get('/', 'Report::report');
+    $routes->get('(:segment)/report', 'Report::report/$1');
+    $routes->get('(:segment)', 'Report::report/$1');
+});
+
 $routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], static function ($routes) {
     $routes->group('project', static function ($routes) {
         $routes->get('add', 'Project::add');

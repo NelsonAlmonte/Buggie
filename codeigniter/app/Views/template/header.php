@@ -193,7 +193,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="<?=site_url('report')?>">
           <i class="bi bi-file-earmark-bar-graph"></i>
           <span>Reports</span>
         </a>
