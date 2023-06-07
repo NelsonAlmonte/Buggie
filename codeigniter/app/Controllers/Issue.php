@@ -155,6 +155,7 @@ class Issue extends BaseController
             $data = [
                 'name' => $randomFileName,
                 'issue' => $issue,
+                'collaborator' => session()->get('id'),
             ];
 
             if ($fileModel->saveFile($data)) $filesSaved ++;

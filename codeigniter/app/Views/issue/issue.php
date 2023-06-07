@@ -80,39 +80,69 @@
       <span class="fs-5 text-white">Files</span>
     </div>
     <div class="card-body">
-      <div class="row">
-        <?php if(!empty($files)): ?>
-          <?php foreach($files as $file): ?>
-          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="bg-dominant rounded-3 p-3" style="height: 250px;">
+    <div class="row mt-4">
+      <?php if(!empty($files)): ?>
+      <?php foreach($files as $file): ?>
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="bg-dominant rounded-3 p-3">
+          <div class="d-flex flex-column justify-content-between h-100">
+            <div class="d-flex justify-content-between align-items-center">
               <div class="d-flex justify-content-start align-items-center">
                 <i class="bi bi-filetype-<?=esc($file['type'])?> me-2 text-white"></i>
-                <div class="d-flex align-items-center text-white">
-                  <span class="d-inline-block text-truncate" style="max-width: 150px;"><?=esc($file['name'])?></span>
+                <div class="d-flex align-items-center text-white fw-medium">
+                  <span class="d-inline-block text-truncate" title="<?=esc($file['name'])?>" style="max-width: 150px;"><?=esc($file['name'])?></span>
                   <span><?=esc($file['type'])?></span>
                 </div>
               </div>
-              <?php if(in_array($file['type'], ACCEPTED_IMAGES_TYPES)): ?>
-              <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
-                <img class="w-100 object-fit-cover rounded-2 mt-3" src="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" alt="<?=esc($file['name'])?>" style="height: 180px;">
+              <div>
+                <a role="button" class="btn btn-rounded" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0px 4px;">
+                  <i class="bi bi-three-dots"></i>
+                </a>
+                <ul class="dropdown-menu p-2">
+                  <li>
+                    <a class="dropdown-item text-white" href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" download>
+                      <div class="d-inline-block">
+                        <i class="bi bi-download"></i>
+                      </div>
+                      <span>Download</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <?php if(in_array($file['type'], ACCEPTED_IMAGES_TYPES)): ?>
+            <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
+              <img class="w-100 object-fit-cover rounded-2 mt-3" src="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>"
+                alt="<?=esc($file['name'])?>" style="height: 180px;">
+            </a>
+            <?php else: ?>
+            <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
+              <div class="d-flex justify-content-center align-items-center bg-complementary rounded-2 mt-3" style="height: 180px;">
+                <i class="bi bi-filetype-<?=esc($file['type'])?> fs-1 text-white"></i>
+              </div>
+            </a>
+            <?php endif; ?>
+            <div class="d-flex align-items-center mt-3" style="font-size: 14px;">
+              <a class="text-decoration-none" href="<?=site_url('collaborator/view/' . $file['collaborator'])?>" target="_blank" title="Added by <?=esc($file['collaborator_name'] . ' ' . $file['last'])?>">
+                <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $file['image']?>" alt="collaborator image" style="width: 24px; height: 24px;">
               </a>
-              <?php else: ?>
-              <a href="<?=PATH_TO_VIEW_ISSUES_FILES . $file['name']?>" class="glightbox">
-                <div class="d-flex h-100 justify-content-center align-items-center">
-                  <i class="bi bi-filetype-<?=esc($file['type'])?> fs-1 text-white"></i>
-                </div>
-              </a>
-              <?php endif; ?>
+              <span class="text-white" title="<?=esc($issue['title'])?>">On this issue</span>
+              <span class="text-white mx-2">•</span>
+              <span class="text-white" title="Added on <?=esc($file['created_at'])?>">
+                <?=date_format(date_create($file['created_at']), 'd M Y')?>
+              </span>
             </div>
           </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-        <div class="text-center p-5">
-          <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
-          <h5 class="mt-5">There is nothing here...</h5>
         </div>
-        <?php endif; ?>
       </div>
+      <?php endforeach; ?>
+      <?php else: ?>
+      <div class="text-center p-5">
+        <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
+        <h5 class="mt-5">There is nothing here...</h5>
+      </div>
+      <?php endif; ?>
+    </div>
     </div>
   </div>
 </div>

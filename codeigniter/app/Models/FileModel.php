@@ -23,8 +23,10 @@ class FileModel extends Model
     public function getIssueFiles($issue)
     {
         return $this->db
-            ->table('files')
-            ->where('issue', $issue)
+            ->table('files f')
+            ->select('f.*, c.name AS collaborator_name, c.last, c.image')
+            ->join('collaborators c', 'c.id = f.collaborator')
+            ->where('f.issue', $issue)
             ->get()
             ->getResultArray();
     }
@@ -37,14 +39,15 @@ class FileModel extends Model
             ->delete();
     }
 
-    public function getProjectFiles($projectSlug)
+    public function getProjectFiles($id)
     {
         return $this->db
             ->table('files f')
-            ->select('f.*, i.title, i.id AS issue_id')
+            ->select('f.*, i.title, i.id AS issue_id, c.name AS collaborator_name, c.last, c.image')
             ->join('issues i', 'i.id = f.issue')
             ->join('projects p', 'p.id = i.project')
-            ->where('p.id', $projectSlug)
+            ->join('collaborators c', 'c.id = f.collaborator')
+            ->where('p.id', $id)
             ->get()
             ->getResultArray();
     }
