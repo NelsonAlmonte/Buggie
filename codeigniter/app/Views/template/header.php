@@ -19,7 +19,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="<?=site_url('home')?>" class="logo d-flex align-items-center">
+        <a href="<?=site_url('/')?>" class="logo d-flex align-items-center">
           <i class="bi bi-bug me-2"></i>
           <span class="d-none d-lg-block">Buggie</span>
         </a>

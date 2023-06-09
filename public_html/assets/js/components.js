@@ -89,7 +89,7 @@ document.addEventListener('alpine:init', () => {
 	Alpine.data('froalaEditor', () => ({
 		initFroala(el) {
 			let { csrfName, csrfHash } = getCsrf();
-			const editor = new FroalaEditor(`#${el.getAttribute('id')}`, {
+			const editor = new FroalaEditor(el, {
 				toolbarButtons: {
 					moreText: {
 						buttons: ['bold', 'italic', 'underline', 'strikeThrough', 'quote'],
@@ -153,6 +153,39 @@ document.addEventListener('alpine:init', () => {
 			console.log(response);
 			if (response.status === 0) element.remove();
 		},
+	}));
+
+	Alpine.data('reportChart', () => ({
+		initChart(el) {
+			new Chart(el, {
+				type: 'doughnut',
+				data: {
+					labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+					datasets: [{
+						label: '# of Votes',
+						data: [12, 19, 3, 5, 2, 3],
+						borderWidth: 1
+					}]
+				},
+				// options: {
+				// 	scales: {
+				// 		y: {
+				// 			beginAtZero: true
+				// 		}
+				// 	}
+				// }
+			});
+		},
+		getChart(el) {
+			const chart = Chart.getChart(el);
+			const response = {
+				labels: ['Moquito', 'Sheira', 'Dengue', 'Batea'],
+				data: [1, 4, 9, 3]
+			};
+			chart.data.labels = response.labels;
+			chart.data.datasets[0].data = response.data;
+			chart.update();
+		}
 	}));
 
 	async function useFetch(payload) {
