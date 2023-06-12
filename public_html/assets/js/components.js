@@ -156,35 +156,57 @@ document.addEventListener('alpine:init', () => {
 	}));
 
 	Alpine.data('reportChart', () => ({
-		initChart(el) {
+		url: '/report/getReport',
+		type: 'assignee',
+		project: '1',
+		async initChart(el) {
+			const payload = {
+				url: this.url,
+				type: this.type,
+				project: this.project,
+			};
+
+			const [response, error] = await useFetch(payload);
+			const colors = this.generateHexColor(response.data.data.length);
+
 			new Chart(el, {
 				type: 'doughnut',
 				data: {
-					labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+					labels: response.data.labels,
 					datasets: [{
-						label: '# of Votes',
-						data: [12, 19, 3, 5, 2, 3],
+						label: 'Issues',
+						data: response.data.data,
+						backgroundColor: colors,
 						borderWidth: 1
 					}]
 				},
-				// options: {
-				// 	scales: {
-				// 		y: {
-				// 			beginAtZero: true
-				// 		}
-				// 	}
-				// }
 			});
 		},
-		getChart(el) {
+		async getChart(el) {
 			const chart = Chart.getChart(el);
-			const response = {
-				labels: ['Moquito', 'Sheira', 'Dengue', 'Batea'],
-				data: [1, 4, 9, 3]
+
+			const payload = {
+				url: this.url,
+				type: this.type,
+				project: this.project,
 			};
-			chart.data.labels = response.labels;
-			chart.data.datasets[0].data = response.data;
+
+			const [response, error] = await useFetch(payload);
+			const colors = this.generateHexColor(response.data.data.length);
+
+			chart.data.labels = response.data.labels;
+			chart.data.datasets[0].data = response.data.data;
+			chart.data.datasets[0].backgroundColor = colors;
 			chart.update();
+		},
+		generateHexColor(size) {
+			const colors = [];
+			for (let index = 0; index < size; index ++) {
+				let code = (Math.random() * 0xfffff * 1000000).toString(16);
+				let color = `#${code.slice(0, 6)}`;
+				colors.push(color);
+			}
+			return colors;
 		}
 	}));
 

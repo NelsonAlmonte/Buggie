@@ -78,6 +78,7 @@ $routes->group('report', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('/', 'Report::report');
     $routes->get('(:segment)/report', 'Report::report/$1');
     $routes->get('(:segment)', 'Report::report/$1');
+    $routes->post('getReport', 'Report::getReport');
 });
 
 $routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], static function ($routes) {

@@ -53,7 +53,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white" href="#">
+                  <a class="dropdown-item text-white" href="<?=site_url('report/' . $project['slug'])?>">
                     <div class="d-inline-block">
                       <i class="bi bi-file-earmark-bar-graph"></i>
                     </div>
@@ -61,7 +61,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item text-white" href="#">
+                  <a class="dropdown-item text-white" href="<?=site_url('file/' . $project['slug'])?>">
                     <div class="d-inline-block">
                       <i class="bi bi-file-earmark-text"></i>
                     </div>
