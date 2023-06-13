@@ -158,19 +158,27 @@ document.addEventListener('alpine:init', () => {
 	Alpine.data('reportChart', () => ({
 		url: '/report/getReport',
 		type: 'assignee',
-		project: '1',
+		project: '',
+		chartType: 'pie',
+		chartIcon: 'bi-pie-chart',
 		async initChart(el) {
 			const payload = {
 				url: this.url,
 				type: this.type,
 				project: this.project,
 			};
-
+			
 			const [response, error] = await useFetch(payload);
+
+			if (!response.data.labels.length)
+				this.$refs.empty.classList.remove('d-none');
+			else
+				this.$refs.empty.classList.add('d-none');
+
 			const colors = this.generateHexColor(response.data.data.length);
 
 			new Chart(el, {
-				type: 'doughnut',
+				type: this.chartType,
 				data: {
 					labels: response.data.labels,
 					datasets: [{
@@ -192,12 +200,22 @@ document.addEventListener('alpine:init', () => {
 			};
 
 			const [response, error] = await useFetch(payload);
-			const colors = this.generateHexColor(response.data.data.length);
 
+			if (!response.data.labels.length)
+				this.$refs.empty.classList.remove('d-none');
+			else
+				this.$refs.empty.classList.add('d-none');
+			
+			const colors = this.generateHexColor(response.data.data.length);
 			chart.data.labels = response.data.labels;
 			chart.data.datasets[0].data = response.data.data;
 			chart.data.datasets[0].backgroundColor = colors;
 			chart.update();
+		},
+		async changeChart(el) {
+			const chart = Chart.getChart(el);
+			chart.destroy();
+			this.initChart(el);
 		},
 		generateHexColor(size) {
 			const colors = [];
