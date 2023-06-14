@@ -97,7 +97,11 @@
 
       <div 
         class="dropdown"
-        x-data
+        x-data="reportChart"
+        @get-chart-options.window='
+          type = $event.detail.type;
+          chartType = $event.detail.chartType;
+        '
       >
         <button 
           class="btn btn-primary rounded-3 dropdown-toggle" 
@@ -113,6 +117,7 @@
             <a 
               class="dropdown-item text-white" 
               role="button"
+              @click="downloadAsImage()"
             >
               <i class="bi bi-image me-1"></i>
               <span>Image</span>
@@ -122,6 +127,7 @@
             <a 
               class="dropdown-item text-white" 
               role="button"
+              @click="downloadAsPdf()"
             >
               <i class="bi bi-file-pdf me-1"></i>
               <span>PDF</span>
@@ -154,6 +160,7 @@
           @click='
             type = "assignee"
             getChart($refs.chart)
+            $dispatch("get-chart-options", { type: type, chartType: chartType })
           '
         >Assignee</button>
         <button 
@@ -163,6 +170,7 @@
           @click='
             type = "reporter"
             getChart($refs.chart)
+            $dispatch("get-chart-options", { type: type, chartType: chartType })
           '
         >Reporter</button>
         <button 
@@ -172,6 +180,7 @@
           @click='
             type = "status"
             getChart($refs.chart)
+            $dispatch("get-chart-options", { type: type, chartType: chartType })
           '
         >Status</button>
         <button 
@@ -181,6 +190,7 @@
           @click='
             type = "classification"
             getChart($refs.chart)
+            $dispatch("get-chart-options", { type: type, chartType: chartType })
           '
         >Classification</button>
         <button 
@@ -190,6 +200,7 @@
           @click='
             type = "severity"
             getChart($refs.chart)
+            $dispatch("get-chart-options", { type: type, chartType: chartType })
           '
         >Severity</button>
       </div>

@@ -188,6 +188,9 @@ document.addEventListener('alpine:init', () => {
 						borderWidth: 1
 					}]
 				},
+				options: {
+					color: '#fff',
+				}
 			});
 		},
 		async getChart(el) {
@@ -216,6 +219,30 @@ document.addEventListener('alpine:init', () => {
 			const chart = Chart.getChart(el);
 			chart.destroy();
 			this.initChart(el);
+		},
+		downloadAsImage() {
+			const imageAnchor = document.createElement('a');
+			const chart = document.querySelector('canvas');
+			imageAnchor.download = `${this.generateFileName()}.jpg`;
+			imageAnchor.href = chart.toDataURL('image/jpeg', 1);
+			imageAnchor.click();
+		},
+		downloadAsPdf() {
+			window.jsPDF = window.jspdf.jsPDF;
+			const chart = document.querySelector('canvas');
+      const img = chart.toDataURL("image/png", chart.width, chart.height);
+      const heightRatio = chart.height / chart.width;
+      const pdf = new jsPDF('p','pt','a4');
+      const width = pdf.internal.pageSize.width;    
+      const height = width * heightRatio;
+      pdf.addImage(img, 'PNG', 10, 10, width, height);
+      pdf.save(`${this.generateFileName()}.pdf`);
+		},
+		generateFileName() {
+			const date = new Date();
+			const currentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+			const currentTime = `${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+			return `${this.chartType}_${this.type}_${currentDate}-${currentTime}`;
 		},
 		generateHexColor(size) {
 			const colors = [];
