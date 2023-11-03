@@ -126,9 +126,9 @@ document.addEventListener('alpine:init', () => {
 							url: `/issue/deleteIssueImage`,
 							image: image[0].src,
 						};
-			
+
 						const [response, error] = await useFetch(payload);
-						
+
 						getCsrf(response.token);
 						editor.opts.imageUploadParams[csrfName] = response.token;
 						console.log(response);
@@ -167,13 +167,12 @@ document.addEventListener('alpine:init', () => {
 				type: this.type,
 				project: this.project,
 			};
-			
+
 			const [response, error] = await useFetch(payload);
 
 			if (!response.data.labels.length)
 				this.$refs.empty.classList.remove('d-none');
-			else
-				this.$refs.empty.classList.add('d-none');
+			else this.$refs.empty.classList.add('d-none');
 
 			const colors = this.generateHexColor(response.data.data.length);
 
@@ -181,16 +180,18 @@ document.addEventListener('alpine:init', () => {
 				type: this.chartType,
 				data: {
 					labels: response.data.labels,
-					datasets: [{
-						label: 'Issues',
-						data: response.data.data,
-						backgroundColor: colors,
-						borderWidth: 1
-					}]
+					datasets: [
+						{
+							label: 'Issues',
+							data: response.data.data,
+							backgroundColor: colors,
+							borderWidth: 1,
+						},
+					],
 				},
 				options: {
 					color: '#fff',
-				}
+				},
 			});
 		},
 		async getChart(el) {
@@ -206,9 +207,8 @@ document.addEventListener('alpine:init', () => {
 
 			if (!response.data.labels.length)
 				this.$refs.empty.classList.remove('d-none');
-			else
-				this.$refs.empty.classList.add('d-none');
-			
+			else this.$refs.empty.classList.add('d-none');
+
 			const colors = this.generateHexColor(response.data.data.length);
 			chart.data.labels = response.data.labels;
 			chart.data.datasets[0].data = response.data.data;
@@ -230,13 +230,13 @@ document.addEventListener('alpine:init', () => {
 		downloadAsPdf() {
 			window.jsPDF = window.jspdf.jsPDF;
 			const chart = document.querySelector('canvas');
-      const img = chart.toDataURL("image/png", chart.width, chart.height);
-      const heightRatio = chart.height / chart.width;
-      const pdf = new jsPDF('p','pt','a4');
-      const width = pdf.internal.pageSize.width;    
-      const height = width * heightRatio;
-      pdf.addImage(img, 'PNG', 10, 10, width, height);
-      pdf.save(`${this.generateFileName()}.pdf`);
+			const img = chart.toDataURL('image/png', chart.width, chart.height);
+			const heightRatio = chart.height / chart.width;
+			const pdf = new jsPDF('p', 'pt', 'a4');
+			const width = pdf.internal.pageSize.width;
+			const height = width * heightRatio;
+			pdf.addImage(img, 'PNG', 10, 10, width, height);
+			pdf.save(`${this.generateFileName()}.pdf`);
 		},
 		generateFileName() {
 			const date = new Date();
@@ -246,15 +246,62 @@ document.addEventListener('alpine:init', () => {
 		},
 		generateHexColor(size) {
 			const colors = [];
-			for (let index = 0; index < size; index ++) {
+			for (let index = 0; index < size; index++) {
 				let code = (Math.random() * 0xfffff * 1000000).toString(16);
 				let color = `#${code.slice(0, 6)}`;
 				colors.push(color);
 			}
 			return colors;
-		}
+		},
 	}));
 
+	Alpine.data('calendar', () => ({
+		url: '/calendar/getIssues',
+		project: '',
+		async initCalendar(el) {
+			const response = await this.getIssues();
+			const events = response.events;
+			const calendar = new FullCalendar.Calendar(el, {
+				initialDate: events[events.length - 1].start,
+				initialView: 'dayGridMonth',
+				headerToolbar: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek,listWeek',
+				},
+				height: 'auto',
+				navLinks: true, // can click day/week names to navigate views
+				selectable: true,
+				selectMirror: true,
+				nowIndicator: true,
+				events: events,
+				eventClick: function () {
+					const issueDropdownRef = document.getElementById('issue-dropdown');
+					console.log(document.getElementById('issue-dropdown'));
+					const issueDropdown =
+						bootstrap.Dropdown.getOrCreateInstance(issueDropdownRef);
+					issueDropdown.show();
+				},
+			});
+			calendar.render();
+		},
+		async getIssues() {
+			const payload = {
+				url: this.url,
+				type: this.type,
+				project: this.project,
+			};
+
+			const [response, error] = await useFetch(payload);
+			//TODO: Mostrar error si no hay issues
+			console.log(response, error);
+
+			return response;
+		},
+		showIssueDropdown() {},
+	}));
+
+	// TODO: Usar el fetch que hice en snap-issue
 	async function useFetch(payload) {
 		try {
 			const { csrfName, csrfHash } = getCsrf();

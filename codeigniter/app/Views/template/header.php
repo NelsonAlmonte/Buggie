@@ -186,7 +186,7 @@
       </li>
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" href="<?=site_url('calendar')?>">
           <i class="bi bi-calendar3"></i>
           <span>Calendar</span>
         </a>

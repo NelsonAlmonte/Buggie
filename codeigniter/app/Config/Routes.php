@@ -81,6 +81,14 @@ $routes->group('report', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->post('getReport', 'Report::getReport');
 });
 
+
+$routes->group('calendar', ['filter' => 'isloggedin'], static function ($routes) {
+    $routes->get('/', 'Calendar::calendar');
+    $routes->get('(:segment)/calendar', 'Calendar::calendar/$1');
+    $routes->get('(:segment)', 'Calendar::calendar/$1');
+    $routes->post('getIssues', 'Calendar::getIssues');
+});
+
 $routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], static function ($routes) {
     $routes->group('project', static function ($routes) {
         $routes->get('add', 'Project::add');
