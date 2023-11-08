@@ -201,7 +201,7 @@
         <div class="col-6 mb-4">
           <div class="form-floating">
             <input type="date" class="form-control bg-dominant border-0" id="end_date" name="end_date">
-            <label for="end_date">End date*</label>
+            <label for="end_date">End date</label>
           </div>
         </div>
         <div class="col-12 mb-4">

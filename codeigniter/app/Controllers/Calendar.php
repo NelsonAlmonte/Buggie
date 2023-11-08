@@ -42,15 +42,16 @@ class Calendar extends BaseController
         $json = $this->request->getJSON(true);
 
         $response['token'] = csrf_hash();
+        $response['events'] = $issues;
         
-        $issues = $issueModel->getIssues($json['project']);
+        $issues = $issueModel->getIssues($json['projectId']);
 
         foreach ($issues as $key => $issue) {
             $response['events'][$key]['start'] = $issue['start_date'];
             $response['events'][$key]['title'] = $issue['title'];
-            $response['events'][$key]['backgroundColor'] = '#' . $issue['status_color'] . '1a';
+            $response['events'][$key]['url'] = '/issue/' . $json['projectSlug'] . '/issue/' . $issue['id'];
+            $response['events'][$key]['backgroundColor'] = '#' . $issue['status_color'];
             $response['events'][$key]['borderColor'] = '#' . $issue['status_color'];
-            $response['events'][$key]['textColor'] = '#' . $issue['status_color'];
         }
 
         return $this->response->setJSON($response);

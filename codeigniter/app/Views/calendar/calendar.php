@@ -23,7 +23,7 @@
                 role="button"
                 @click='
                   selectedProject = <?=json_encode($project['name'])?>;
-                  $dispatch("get-project", <?=json_encode($project['id'])?>)
+                  $dispatch("get-project", { id: <?=json_encode($project['id'])?>, slug: <?=json_encode($project['slug'])?> })
                 '
               ><?=$project['name']?></a>
             </li>
@@ -37,34 +37,17 @@
   <div
     x-data="calendar" 
     x-init='
-      project = <?=json_encode($projects[0]['id'])?>;
-      $watch("project", value => initCalendar($refs.calendar));
+      projectId = <?=json_encode($projects[0]['id'])?>;
+      projectSlug = <?=json_encode($projects[0]['slug'])?>;
+      $watch("projectId", value => initCalendar($refs.calendar));
       initCalendar($el);
     '
-    @get-project.window='project = $event.detail'
+    @get-project.window='
+      projectId = $event.detail.id
+      projectSlug = $event.detail.slug
+    '
     x-ref="calendar"
   >
-    <ul class="dropdown-menu p-2" x-ref="issueDropdown" id="issue-dropdown">
-      <li>
-        <a class="dropdown-item text-white"
-          href="#">
-          <div class="d-inline-block">
-            <i class="bi bi-pencil"></i>
-          </div>
-          <span>Edit</span>
-        </a>
-      </li>
-      <li>
-        <button 
-          class="dropdown-item text-white" 
-        >
-          <div class="d-inline-block">
-            <i class="bi bi-trash"></i>
-          </div>
-          <span>Delete</span>
-        </button>
-      </li>
-    </ul>
   </div>
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />

@@ -76,6 +76,14 @@
                     <span>Collaborators</span>
                   </a>
                 </li>
+                <li>
+                  <a class="dropdown-item text-white" href="<?=site_url('calendar/' . $project['slug'])?>">
+                    <div class="d-inline-block">
+                      <i class="bi bi-calendar3"></i>
+                    </div>
+                    <span>Calendar</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

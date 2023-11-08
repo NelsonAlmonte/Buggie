@@ -257,13 +257,17 @@ document.addEventListener('alpine:init', () => {
 
 	Alpine.data('calendar', () => ({
 		url: '/calendar/getIssues',
-		project: '',
+		projectId: '',
+		projectSlug: '',
 		async initCalendar(el) {
 			const response = await this.getIssues();
 			const events = response.events;
+			const initialDate =
+				events.length > 0 ? events[events.length - 1].start : new Date();
 			const calendar = new FullCalendar.Calendar(el, {
-				initialDate: events[events.length - 1].start,
+				initialDate: initialDate,
 				initialView: 'dayGridMonth',
+				themeSystem: 'bootstrap5',
 				headerToolbar: {
 					left: 'prev,next today',
 					center: 'title',
@@ -275,12 +279,9 @@ document.addEventListener('alpine:init', () => {
 				selectMirror: true,
 				nowIndicator: true,
 				events: events,
-				eventClick: function () {
-					const issueDropdownRef = document.getElementById('issue-dropdown');
-					console.log(document.getElementById('issue-dropdown'));
-					const issueDropdown =
-						bootstrap.Dropdown.getOrCreateInstance(issueDropdownRef);
-					issueDropdown.show();
+				eventClick: function (info) {
+					info.jsEvent.preventDefault();
+					window.open(info.event.url);
 				},
 			});
 			calendar.render();
@@ -288,8 +289,8 @@ document.addEventListener('alpine:init', () => {
 		async getIssues() {
 			const payload = {
 				url: this.url,
-				type: this.type,
-				project: this.project,
+				projectId: this.projectId,
+				projectSlug: this.projectSlug,
 			};
 
 			const [response, error] = await useFetch(payload);
@@ -298,7 +299,6 @@ document.addEventListener('alpine:init', () => {
 
 			return response;
 		},
-		showIssueDropdown() {},
 	}));
 
 	// TODO: Usar el fetch que hice en snap-issue

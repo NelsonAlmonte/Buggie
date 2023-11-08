@@ -19,7 +19,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="<?=site_url('/')?>" class="logo d-flex align-items-center">
+        <a href="<?=site_url('home')?>" class="logo d-flex align-items-center">
           <i class="bi bi-bug me-2"></i>
           <span class="d-none d-lg-block">Buggie</span>
         </a>
@@ -52,6 +52,11 @@
           <li class="nav-item me-4">
             <a class="nav-link" href="<?=site_url('collaborator/' . $uri->getSegment(2))?>">
               Collaborators
+            </a>
+          </li>
+          <li class="nav-item me-4">
+            <a class="nav-link" href="<?=site_url('calendar/' . $uri->getSegment(2))?>">
+              Calendar
             </a>
           </li>
         </ul>
@@ -127,10 +132,16 @@
                 <span>Files</span>
               </a>
             </li>
-            <li>
+            <li class="mb-2">
               <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('collaborator/' . $uri->getSegment(2))?>">
                 <i class="bi bi-people"></i>
                 <span>Collaborators</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center text-white" href="<?=site_url('calendar/' . $uri->getSegment(2))?>">
+                <i class="bi bi-calendar3"></i>
+                <span>Calendar</span>
               </a>
             </li>
           </ul>
@@ -184,13 +195,6 @@
           <span>Projects</span>
         </a>
       </li>
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="<?=site_url('calendar')?>">
-          <i class="bi bi-calendar3"></i>
-          <span>Calendar</span>
-        </a>
-      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=site_url('report')?>">
@@ -206,6 +210,13 @@
         </a>
       </li>
       <?php endif; ?>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?=site_url('calendar')?>">
+          <i class="bi bi-calendar3"></i>
+          <span>Calendar</span>
+        </a>
+      </li>
 
       <?php if(in_array('role', session()->get('auth')['permissions'])): ?>
       <li class="nav-item">
