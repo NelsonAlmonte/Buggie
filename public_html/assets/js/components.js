@@ -157,14 +157,31 @@ document.addEventListener('alpine:init', () => {
 
 	Alpine.data('reportChart', () => ({
 		url: '/report/getReport',
-		type: 'assignee',
+		selectedType: 'assignee',
+		types: ['assignee', 'reporter', 'status', 'classification', 'severity'],
 		project: '',
-		chartType: 'pie',
-		chartIcon: 'bi-pie-chart',
+		chartTypes: [
+			{
+				name: 'pie',
+				icon: 'bi-pie-chart',
+			},
+			{
+				name: 'doughnut',
+				icon: 'bi-pie-chart-fill',
+			},
+			{
+				name: 'bar',
+				icon: 'bi-bar-chart',
+			},
+		],
+		selectedChartType: {
+			name: 'pie',
+			icon: 'bi-pie-chart',
+		},
 		async initChart(el) {
 			const payload = {
 				url: this.url,
-				type: this.type,
+				type: this.selectedType,
 				project: this.project,
 			};
 
@@ -177,7 +194,7 @@ document.addEventListener('alpine:init', () => {
 			const colors = this.generateHexColor(response.data.data.length);
 
 			new Chart(el, {
-				type: this.chartType,
+				type: this.selectedChartType.name,
 				data: {
 					labels: response.data.labels,
 					datasets: [
@@ -199,7 +216,7 @@ document.addEventListener('alpine:init', () => {
 
 			const payload = {
 				url: this.url,
-				type: this.type,
+				type: this.selectedType,
 				project: this.project,
 			};
 
@@ -242,7 +259,7 @@ document.addEventListener('alpine:init', () => {
 			const date = new Date();
 			const currentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
 			const currentTime = `${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
-			return `${this.chartType}_${this.type}_${currentDate}-${currentTime}`;
+			return `${this.selectedChartType.name}_${this.selectedType}_${currentDate}-${currentTime}`;
 		},
 		generateHexColor(size) {
 			const colors = [];

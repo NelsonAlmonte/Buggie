@@ -38,7 +38,7 @@
     <div class="d-flex align-items-center justify-content-start">
       <div 
         class="dropdown me-2"
-        x-data='{ chartType: "pie", icon: "bi-pie-chart" }'
+        x-data='reportChart'
       >
         <button 
           class="btn btn-primary rounded-3 dropdown-toggle text-capitalize" 
@@ -46,52 +46,26 @@
           data-bs-toggle="dropdown" 
           aria-expanded="false"
         >
-          <i class="bi me-1" :class="icon"></i>
-          <span x-text="chartType"></span>
+          <i class="bi me-1" :class="selectedChartType.icon"></i>
+          <span x-text="selectedChartType.name"></span>
         </button>
         <ul class="dropdown-menu p-2">
-          <li>
-            <a 
-              class="dropdown-item text-white" 
-              role="button"
-              @click='
-                chartType = "pie";
-                icon = "bi-pie-chart";
-                $dispatch("get-chart-type", { chartType: chartType, icon: icon })
-              '
-            >
-              <i class="bi bi-pie-chart me-1"></i>
-              <span>Pie</span>
-            </a>
-          </li>
-          <li>
-            <a 
-              class="dropdown-item text-white" 
-              role="button"
-              @click='
-                chartType = "doughnut";
-                icon = "bi-pie-chart-fill";
-                $dispatch("get-chart-type", { chartType: chartType, icon: icon })
-              '
-            >
-              <i class="bi bi-pie-chart-fill me-1"></i>
-              <span>Doughnut</span>
-            </a>
-          </li>
-          <li>
-            <a 
-              class="dropdown-item text-white" 
-              role="button"
-              @click='
-                chartType = "bar";
-                icon = "bi-bar-chart";
-                $dispatch("get-chart-type", { chartType: chartType, icon: icon })
-              '
-            >
-              <i class="bi bi-bar-chart me-1"></i>
-              <span>Bar</span>
-            </a>
-          </li>
+          <template x-for="chartType in chartTypes">
+            <li>
+              <a 
+                class="dropdown-item text-white" 
+                role="button"
+                @click='
+                  selectedChartType.name = chartType.name;
+                  selectedChartType.icon = chartType.icon;
+                  $dispatch("get-chart-type", { chartType: selectedChartType.name, icon: selectedChartType.icon });
+                '
+              >
+                <i class="bi me-1" :class="chartType.icon"></i>
+                <span x-text="chartType.name"></span>
+              </a>
+            </li>
+          </template>
         </ul>
       </div>
 
@@ -99,8 +73,8 @@
         class="dropdown"
         x-data="reportChart"
         @get-chart-options.window='
-          type = $event.detail.type;
-          chartType = $event.detail.chartType;
+          selectedType = $event.detail.type;
+          selectedChartType.name = $event.detail.chartType;
         '
       >
         <button 
@@ -143,66 +117,29 @@
     x-init='
       project = <?=json_encode($projects[0]['id'])?>;
       $watch("project", value => getChart($refs.chart));
-      $watch("chartType", value => changeChart($refs.chart));
+      $watch("selectedChartType.name", value => changeChart($refs.chart));
     '
     @get-project.window='project = $event.detail'
     @get-chart-type.window='
-      chartType = $event.detail.chartType; 
-      icon = $event.detail.icon
+      selectedChartType.name = $event.detail.chartType
+      selectedChartType.icon = $event.detail.icon
     '
   >
     <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12">
       <div class="list-group report-types rounded-3 me-5 list-group-flush">
-        <button 
-          type="button" 
-          class="list-group-item list-group-item-action text-white rounded-3 border-0 mb-2" 
-          :class="type == 'assignee' && 'active'"
-          @click='
-            type = "assignee"
-            getChart($refs.chart)
-            $dispatch("get-chart-options", { type: type, chartType: chartType })
-          '
-        >Assignee</button>
-        <button 
-          type="button" 
-          class="list-group-item list-group-item-action text-white rounded-3 border-0 mb-2" 
-          :class="type == 'reporter' && 'active'"
-          @click='
-            type = "reporter"
-            getChart($refs.chart)
-            $dispatch("get-chart-options", { type: type, chartType: chartType })
-          '
-        >Reporter</button>
-        <button 
-          type="button" 
-          class="list-group-item list-group-item-action text-white rounded-3 border-0 mb-2" 
-          :class="type == 'status' && 'active'"
-          @click='
-            type = "status"
-            getChart($refs.chart)
-            $dispatch("get-chart-options", { type: type, chartType: chartType })
-          '
-        >Status</button>
-        <button 
-          type="button" 
-          class="list-group-item list-group-item-action text-white rounded-3 border-0 mb-2" 
-          :class="type == 'classification' && 'active'"
-          @click='
-            type = "classification"
-            getChart($refs.chart)
-            $dispatch("get-chart-options", { type: type, chartType: chartType })
-          '
-        >Classification</button>
-        <button 
-          type="button" 
-          class="list-group-item list-group-item-action text-white rounded-3 border-0 mb-2" 
-          :class="type == 'severity' && 'active'"
-          @click='
-            type = "severity"
-            getChart($refs.chart)
-            $dispatch("get-chart-options", { type: type, chartType: chartType })
-          '
-        >Severity</button>
+        <template x-for="type in types">
+          <button 
+            type="button" 
+            class="list-group-item list-group-item-action text-white rounded-3 border-0 mb-2 text-capitalize"
+            x-text="type" 
+            :class="selectedType == type && 'active'"
+            @click='
+              selectedType = type
+              getChart($refs.chart)
+              $dispatch("get-chart-options", { type: selectedType, chartType: selectedChartType.name })
+            '
+          ></button>  
+        </template>
       </div>
     </div>
     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
