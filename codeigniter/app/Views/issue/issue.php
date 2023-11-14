@@ -59,7 +59,7 @@
           <span class="text-light"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></span>
           <hr>
           <h6 class="text-white">Due date</h6>
-          <?php if($issue['end_date'] != '0000-00-00'): ?>
+          <?php if($issue['end_date'] != null): ?>
             <span class="text-light"><?=date_format(date_create($issue['end_date']), 'M j, Y')?></span>
           <?php else: ?>
             <span class="text-light">None</span>

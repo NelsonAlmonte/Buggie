@@ -48,6 +48,7 @@ class Calendar extends BaseController
 
         foreach ($issues as $key => $issue) {
             $response['events'][$key]['start'] = $issue['start_date'];
+            if (isset($issue['end_date']) && $issue['end_date'] != null) $response['events'][$key]['end'] = $issue['end_date'];
             $response['events'][$key]['title'] = $issue['title'];
             $response['events'][$key]['url'] = '/issue/' . $json['projectSlug'] . '/issue/' . $issue['id'];
             $response['events'][$key]['backgroundColor'] = '#' . $issue['status_color'];
