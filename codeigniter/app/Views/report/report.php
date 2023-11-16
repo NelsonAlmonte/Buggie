@@ -147,7 +147,9 @@
         <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
         <h5 class="mt-5">There is nothing here...</h5>
       </div>
-      <canvas x-init="initChart($el)" x-ref="chart"></canvas>
+      <div x-ref="chartContainer">
+        <canvas x-init="initChart($el)" x-ref="chart"></canvas>
+      </div>
     </div>
   </div>
 </div>

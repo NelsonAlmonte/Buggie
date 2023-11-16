@@ -31,8 +31,7 @@
 }
 
 .issues-card {
-  max-height: 350px;
-  min-height: 350px;
+  height: 350px;
 }
 
 .issues-card::-webkit-scrollbar {

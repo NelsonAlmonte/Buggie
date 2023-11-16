@@ -187,9 +187,13 @@ document.addEventListener('alpine:init', () => {
 
 			const [response, error] = await useFetch(payload);
 
-			if (!response.data.labels.length)
+			if (!response.data.labels.length) {
+				this.$refs.chartContainer.classList.add('d-none');
 				this.$refs.empty.classList.remove('d-none');
-			else this.$refs.empty.classList.add('d-none');
+			} else {
+				this.$refs.chartContainer.classList.remove('d-none');
+				this.$refs.empty.classList.add('d-none');
+			}
 
 			const colors = this.generateHexColor(response.data.data.length);
 

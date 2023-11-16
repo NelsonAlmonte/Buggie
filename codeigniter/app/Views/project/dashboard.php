@@ -205,10 +205,47 @@
       </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-4">
-      <div class="card bg-complementary border border-0 rounded-4">
-        <div class="card-header bg-complementary fs-5 text-white rounded-top-4 px-4 py-3">Issues graph</div>
+      <div 
+        class="card bg-complementary border border-0 rounded-4"
+        x-data="reportChart"
+        x-init='
+          project = <?=json_encode($project['id'])?>;
+        '
+      >
+        <div class="card-header d-flex justify-content-between bg-complementary fs-5 text-white rounded-top-4 px-4 py-3">
+          <span>Issues graph</span>
+          <div class="dropdown">
+            <button 
+              class="btn btn-primary rounded-3 dropdown-toggle text-capitalize" 
+              type="button" 
+              data-bs-toggle="dropdown" 
+              aria-expanded="false"
+            >
+              <span class="text-capitalize" x-text="selectedType"></span>
+            </button>
+            <ul class="dropdown-menu p-2">
+              <template x-for="type in types">
+                <li>
+                  <a 
+                    class="dropdown-item text-white" 
+                    role="button"
+                    @click='
+                      selectedType = type
+                      getChart($refs.chart)
+                    '
+                  >
+                    <span class="text-capitalize" x-text="type"></span>
+                  </a>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
         <div class="issues-card card-body p-4">
-          <div class="text-center m-5">
+          <div class="d-flex justify-content-center" x-ref="chartContainer" style="height:300px;">
+            <canvas x-init="initChart($el)" x-ref="chart"></canvas>
+          </div>
+          <div class="text-center m-5 d-none" x-ref="empty">
             <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
             <h5 class="mt-5">There is nothing here...</h5>
           </div>
@@ -217,3 +254,4 @@
     </div>
   </div>
 </div>
+<input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
