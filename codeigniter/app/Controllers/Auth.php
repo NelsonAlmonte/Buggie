@@ -65,7 +65,7 @@ class Auth extends BaseController
         ];
 
         session()->set($sessionData);
-        return redirect()->to('project');
+        return redirect()->to('home');
     }
 
     public function logout()
