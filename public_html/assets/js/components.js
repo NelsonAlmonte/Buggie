@@ -160,6 +160,7 @@ document.addEventListener('alpine:init', () => {
 		selectedType: 'assignee',
 		types: ['assignee', 'reporter', 'status', 'classification', 'severity'],
 		project: '',
+		selectedProject: '',
 		chartTypes: [
 			{
 				name: 'pie',
@@ -226,9 +227,13 @@ document.addEventListener('alpine:init', () => {
 
 			const [response, error] = await useFetch(payload);
 
-			if (!response.data.labels.length)
+			if (!response.data.labels.length) {
+				this.$refs.chartContainer.classList.add('d-none');
 				this.$refs.empty.classList.remove('d-none');
-			else this.$refs.empty.classList.add('d-none');
+			} else {
+				this.$refs.chartContainer.classList.remove('d-none');
+				this.$refs.empty.classList.add('d-none');
+			}
 
 			const colors = this.generateHexColor(response.data.data.length);
 			chart.data.labels = response.data.labels;

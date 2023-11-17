@@ -13,6 +13,7 @@ class Home extends BaseController
         $collaboratorModel = model(CollaboratorModel::class);
         $issueModel = model(IssueModel::class);
         $data = [];
+        $overdueIssues = [];
         $collaboratorId = session()->get('id');
 
         
@@ -21,13 +22,17 @@ class Home extends BaseController
             $data['collaboratorIssues'],
             fn ($issue) => $issue['status_name'] == CATEGORY_ISSUE_STATUS_CLOSED_NAME 
         );
-        $data['overdueIssues'] = array_map(
-            'self::_getIntervalFromNow',
+        $data['collaboratorOpenIssues'] = array_filter(
             $data['collaboratorIssues'],
+            fn ($issue) => $issue['status_name'] == CATEGORY_ISSUE_STATUS_OPEN_NAME 
+        );
+        $overdueIssues = array_map(
+            'self::_getDateDifferenceFromNow',
+            $data['collaboratorOpenIssues'],
         );
         
-        foreach ($data['collaboratorIssues'] as $key => $issue) {
-            $data['collaboratorIssues'][$key]['overdueDays'] = $data['overdueIssues'][$key];
+        foreach ($data['collaboratorOpenIssues'] as $key => $issue) {
+            $data['collaboratorOpenIssues'][$key]['overdueDays'] = $overdueIssues[$key];
         }
 
         $collaboratorProjects = $collaboratorModel->getCollaboratorProjects($collaboratorId);
@@ -54,7 +59,7 @@ class Home extends BaseController
         . view('template/footer');
     }
 
-    private function _getIntervalFromNow($issue)
+    private function _getDateDifferenceFromNow($issue)
     {
         $nowDate = new DateTime();
         $dueDate = new DateTime($issue['end_date']);
