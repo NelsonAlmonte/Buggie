@@ -5,14 +5,6 @@
     <a class="btn btn-rounded btn-primary" href="<?=site_url('manage/project/add')?>">Add project</a>
     <?php endif; ?>
   </div>
-  <?php if(session()->getFlashdata('message') !== null): ?>
-  <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
-    <i class="bi bi-check-circle flex-shrink-0 me-2"></i>
-    <div>
-      <?= session()->getFlashdata('message') ?>
-    </div>
-  </div>
-  <?php endif; ?>
   <div class="row mt-4">
     <?php foreach ($projects as $project): ?>
     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">

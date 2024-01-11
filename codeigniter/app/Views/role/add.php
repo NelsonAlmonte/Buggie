@@ -2,14 +2,6 @@
   <h2>Add a new role</h2>
   <div class="card mt-4">
     <div class="card-body bg-complementary p-4">
-      <?php if(session()->getFlashdata('message') !== null): ?>
-      <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
-        <i class="bi bi-check-circle flex-shrink-0 me-2"></i>
-        <div>
-          <?= session()->getFlashdata('message') ?>
-        </div>
-      </div>
-      <?php endif; ?>
       <form class="row gx-5" action="<?=site_url('manage/role/save')?>" method="post">
         <?= csrf_field() ?>
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-4">

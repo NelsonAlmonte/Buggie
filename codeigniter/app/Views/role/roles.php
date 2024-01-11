@@ -5,14 +5,6 @@
     <a class="btn btn-rounded btn-primary" href="<?=site_url('manage/role/add')?>">Add role</a>
     <?php endif; ?>
   </div>
-  <?php if(session()->getFlashdata('message') !== null): ?>
-  <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
-    <i class="bi bi-check-circle flex-shrink-0 me-2"></i>
-    <div>
-      <?= session()->getFlashdata('message') ?>
-    </div>
-  </div>
-  <?php endif; ?>
   <div class="card bg-complementary border-0 rounded-4 p-4 mt-4">
     <table class="table bg-dominant table-bordered table-responsive text-white">
       <thead>

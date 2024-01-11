@@ -9,14 +9,6 @@
     </a>
     <?php endif; ?>
   </div>
-  <?php if(session()->getFlashdata('message') !== null): ?>
-  <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
-    <i class="bi bi-check-circle flex-shrink-0 me-2"></i>
-    <div>
-      <?= session()->getFlashdata('message') ?>
-    </div>
-  </div>
-  <?php endif; ?>
   <div class="row my-4">
     <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
       <div class="card bg-complementary border border-0 h-100">

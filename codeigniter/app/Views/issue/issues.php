@@ -6,15 +6,7 @@
       Add issue
     </a>
   </div>
-  <?php if(session()->getFlashdata('message') !== null): ?>
-  <div class="alert alert-<?= session()->getFlashdata('color') ?> d-flex align-items-center my-4" role="alert">
-    <i class="bi bi-check-circle flex-shrink-0 me-2"></i>
-    <div>
-      <?= session()->getFlashdata('message') ?>
-    </div>
-  </div>
-  <?php endif; ?>
-  <div class="card bg-complementary border mt-4">
+  <div class="card bg-complementary border border-0 rounded-4 mt-4">
     <div class="card-header d-flex justify-content-start align-items-center bg-complementary rounded-top-4 px-4 py-3">
       <ul class="nav">
         <li class="nav-item me-2">
@@ -38,10 +30,10 @@
       </ul>
       <form class="flex-grow-1" action="<?=site_url('issue/' . $slug)?>" method="get">
         <div class="input-group">
-          <input type="text" class="form-control bg-dominant border-secondary" placeholder="Search by issue title..." name="title" value="<?=isset($_GET['title']) ? $_GET['title'] : '' ;?>" aria-label="Search" aria-describedby="search" autocomplete="off">
+          <input type="text" class="form-control bg-dominant border-0" placeholder="Search by issue title..." name="title" value="<?=isset($_GET['title']) ? $_GET['title'] : '' ;?>" aria-label="Search" aria-describedby="search" autocomplete="off">
           <a class="btn bg-dominant border-secondary <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
-          <button class="btn bg-dominant border-secondary" type="submit"><i class="bi bi-search text-white"></i></button>
-          <button class="btn bg-dominant border-secondary" type="button" data-bs-toggle="modal"
+          <button class="btn bg-dominant border-secondary border-0" type="submit"><i class="bi bi-search text-white"></i></button>
+          <button class="btn bg-dominant border-secondary border-0" type="button" data-bs-toggle="modal"
           data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
         </div>
       </form>
