@@ -4,7 +4,7 @@
     <?php if(!empty($files)): ?>
     <?php foreach($files as $file): ?>
     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4" x-data x-ref="file">
-      <div class="bg-complementary rounded-3 p-3">
+      <div class="bg-complementary rounded-4 p-3">
         <div class="d-flex flex-column justify-content-between h-100">
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-start align-items-center">

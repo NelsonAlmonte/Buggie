@@ -11,14 +11,14 @@
   </div>
   <div class="row my-4">
     <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
-      <div class="card bg-complementary border border-0 h-100">
+      <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="card-body text-light">
           <?=$issue['description']?>
         </div>
       </div>
     </div>
     <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12">
-      <div class="card bg-complementary border border-0">
+      <div class="card bg-complementary border border-0 rounded-4">
         <div class="card-body">
           <h6 class="text-white">Reporter</h6>
           <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['reporter']?>"><?=esc($issue['reporter_name'])?></a>
@@ -67,7 +67,7 @@
       </div>
     </div>
   </div>
-  <div class="card bg-complementary border border-0">
+  <div class="card bg-complementary border border-0 rounded-4">
     <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
       <span class="fs-5 text-white">Files</span>
     </div>
@@ -76,7 +76,7 @@
       <?php if(!empty($files)): ?>
       <?php foreach($files as $file): ?>
       <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="bg-dominant rounded-3 p-3">
+        <div class="bg-dominant rounded-4 p-3">
           <div class="d-flex flex-column justify-content-between h-100">
             <div class="d-flex justify-content-between align-items-center">
               <div class="d-flex justify-content-start align-items-center">

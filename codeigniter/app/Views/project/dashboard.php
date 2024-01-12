@@ -153,7 +153,7 @@
   </div>
   <div class="row">
     <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 mb-4">
-      <div class="card bg-complementary border border-0 rounded-4 z-1">
+      <div class="card bg-complementary border border-0 rounded-4">
         <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
           <span class="fs-5 text-white">Latest issues</span>
         </div>
@@ -161,7 +161,7 @@
           <?php if(!empty($issues)): ?>
           <?php foreach($issues as $key => $issue): ?>
           <div
-            class="z-0 issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
+            class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
             <div>
               <a class="text-accent text-decoration-none fw-bold d-block"
                 href="<?=site_url('issue/' . $project['slug'] . '/issue/' . $issue['id'])?>"><?=esc($issue['title'])?></a>
