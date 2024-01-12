@@ -149,6 +149,16 @@ document.addEventListener('alpine:init', () => {
 				[this.key]: this.item,
 			};
 
+			const confirmationOptions = {
+				title: 'Delete this issue?',
+				text: 'Are you sure you want to delete this issue and all of its files?',
+				icon: 'warning',
+				confirmButtonText: 'Yes, delete it',
+			};
+
+			const confirmationStatus = await showConfirmation(confirmationOptions);
+			if (!confirmationStatus.isConfirmed) return;
+
 			const [response, error] = await useFetch(payload);
 			console.log(response);
 			if (response.status === 0) element.remove();
@@ -356,5 +366,15 @@ document.addEventListener('alpine:init', () => {
 		const csrfName = csrfSelector.attributes.name.value;
 		const csrfHash = csrfSelector.value;
 		return { csrfName: csrfName, csrfHash: csrfHash };
+	}
+
+	function showConfirmation(options) {
+		return Swal.fire({
+			title: options.title,
+			text: options.text,
+			icon: options.icon,
+			showCancelButton: true,
+			confirmButtonText: options.confirmButtonText,
+		});
 	}
 });

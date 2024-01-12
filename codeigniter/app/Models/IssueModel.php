@@ -23,7 +23,7 @@ class IssueModel extends Model
 
     public function getIssues($project, $filters = ['fields' => [], 'limit' => 0, 'offset' => 0])
     {
-        $issues = 'i.id, i.title, i.reporter AS reporter_id, i.assignee AS assignee_id, i.start_date, i.end_date,';
+        $issues = 'i.id, i.title, i.description, i.reporter AS reporter_id, i.assignee AS assignee_id, i.start_date, i.end_date,';
         $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.username AS reporter,';
         $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name, c_a.username AS assignee,';
         $classification = 'c_cl.name AS classification_name, c_cl.color AS classification_color,';
