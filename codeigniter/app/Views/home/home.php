@@ -220,7 +220,7 @@
                 </ul>
               </div>
             <?php else: ?>
-              <h2>Report on <span class="text-primary"><?=$collaboratorProjects[0]['name']?></span></h2>
+              <span>Report on <span class="text-primary"><?=$collaboratorProjects[0]['name']?></span></span>
             <?php endif; ?>
           </div>
           <div class="dropdown">

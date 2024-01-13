@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/assets/third-party/jspdf/jspdf.umd.min.js"></script>
 <script type="text/javascript" src="/assets/third-party/chartjs/chartjs.umd.min.js"></script>
 <script type="text/javascript" src="/assets/third-party/fullcalendar/fullcalendar.global.min.js"></script>
+<script type="text/javascript" src="/assets/third-party/sweetalert2/sweetalert2.all.min.js"></script>
 <script type="text/javascript" src="/assets/js/template.js"></script>
 <script type="text/javascript" src="/assets/js/components.js"></script>
 </body>

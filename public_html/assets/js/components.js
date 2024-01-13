@@ -161,7 +161,20 @@ document.addEventListener('alpine:init', () => {
 
 			const [response, error] = await useFetch(payload);
 			console.log(response);
-			if (response.status === 0) element.remove();
+			if (response.status === 0) {
+				element.remove();
+				showToast({
+					message: 'Issue deleted successfully',
+					bootstrapIcon: 'bi-check-circle',
+					bootstrapColor: 'success',
+				});
+			} else {
+				showToast({
+					message: 'Unexpected error ocurred',
+					bootstrapIcon: 'bi-x-circle',
+					bootstrapColor: 'danger',
+				});
+			}
 		},
 	}));
 
@@ -337,6 +350,20 @@ document.addEventListener('alpine:init', () => {
 		},
 	}));
 
+	Alpine.data('toast', () => ({
+		message: '',
+		bootstrapIcon: 'bi-check-circle',
+		bootstrapColor: 'success',
+		showToast() {
+			const options = {
+				message: this.message,
+				bootstrapIcon: this.bootstrapIcon,
+				bootstrapColor: this.bootstrapColor,
+			};
+			showToast(options);
+		},
+	}));
+
 	// TODO: Usar el fetch que hice en snap-issue
 	async function useFetch(payload) {
 		try {
@@ -376,5 +403,69 @@ document.addEventListener('alpine:init', () => {
 			showCancelButton: true,
 			confirmButtonText: options.confirmButtonText,
 		});
+	}
+
+	function showToast(options) {
+		const toastContainer = document.createElement('div');
+		toastContainer.classList.add(
+			'toast-container',
+			'p-3',
+			'bottom-0',
+			'start-50',
+			'translate-middle-x'
+		);
+
+		const toast = document.createElement('div');
+		toast.classList.add(
+			'toast',
+			'rounded-5',
+			'shadow-none',
+			'py-1',
+			'px-2',
+			`border-${options.bootstrapColor}`
+		);
+		toastContainer.appendChild(toast);
+
+		const toastBody = document.createElement('div');
+		toastBody.classList.add('toast-body');
+		toast.appendChild(toastBody);
+
+		const flexLayout = document.createElement('div');
+		flexLayout.classList.add(
+			'd-flex',
+			'justify-content-start',
+			'align-items-center'
+		);
+		toastBody.appendChild(flexLayout);
+
+		const icon = document.createElement('i');
+		icon.classList.add(
+			'bi',
+			`${options.bootstrapIcon}`,
+			`text-${options.bootstrapColor}`,
+			'flex-shrink-0',
+			'me-3'
+		);
+		icon.style.fontSize = '2rem';
+		flexLayout.appendChild(icon);
+
+		const messageContainer = document.createElement('div');
+		flexLayout.appendChild(messageContainer);
+
+		const title = document.createElement('strong');
+		title.textContent = 'Heads up!';
+		messageContainer.appendChild(title);
+
+		const br = document.createElement('br');
+		messageContainer.appendChild(br);
+
+		const message = document.createElement('strong');
+		message.classList.add(`text-${options.bootstrapColor}`);
+		message.textContent = options.message;
+		messageContainer.appendChild(message);
+		document.body.appendChild(toastContainer);
+
+		const createdToast = new bootstrap.Toast(toast, {});
+		createdToast.show();
 	}
 });
