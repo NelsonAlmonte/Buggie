@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="d-flex justify-content-between align-items-center mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h2><?=$project['name']?></h2>
       <div class="status-badge d-inline-block text-capitalize" style="<?=esc($project['statusStyle'])?>">
@@ -75,7 +75,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
       <a class="text-decoration-none" href="<?=site_url('issue/' . $project['slug'] . '?status=open')?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">
@@ -93,7 +93,7 @@
         </div>
       </a>
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
       <a class="text-decoration-none" href="<?=site_url('issue/' . $project['slug'] . '?status=closed')?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">
@@ -112,7 +112,7 @@
         </div>
       </a>
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
       <a class="text-decoration-none" href="<?=site_url('collaborator/' . $project['slug'])?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">
@@ -131,7 +131,7 @@
         </div>
       </a>
     </div>
-    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-5">
+    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 mb-4">
       <a class="text-decoration-none" href="<?=site_url('file/' . $project['slug'])?>">
         <div class="card bg-complementary border border-0 rounded-4">
           <div class="card-body p-4">

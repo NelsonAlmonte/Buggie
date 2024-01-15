@@ -118,6 +118,12 @@ document.addEventListener('alpine:init', () => {
 					'image.error': (error, response) => {
 						console.log(error);
 						console.log(response);
+						showConformation({
+							type: 'toast',
+							message: 'Unexpected error ocurred',
+							bootstrapIcon: 'bi-x-circle',
+							bootstrapColor: 'danger',
+						});
 					},
 					'image.removed': async (image) => {
 						if (image[0].classList.contains('fr-uploading')) return;
@@ -130,7 +136,17 @@ document.addEventListener('alpine:init', () => {
 						const [response, error] = await useFetch(payload);
 
 						getCsrf(response.token);
-						editor.opts.imageUploadParams[csrfName] = response.token;
+
+						if (response.status === 0) {
+							editor.opts.imageUploadParams[csrfName] = response.token;
+						} else {
+							showConformation({
+								type: 'toast',
+								message: 'Unexpected error ocurred',
+								bootstrapIcon: 'bi-x-circle',
+								bootstrapColor: 'danger',
+							});
+						}
 						console.log(response);
 						console.log(error);
 					},
@@ -150,6 +166,7 @@ document.addEventListener('alpine:init', () => {
 			};
 
 			const confirmationOptions = {
+				type: 'alert',
 				title: 'Delete this issue?',
 				text: 'Are you sure you want to delete this issue and all of its files?',
 				icon: 'warning',
@@ -163,13 +180,15 @@ document.addEventListener('alpine:init', () => {
 			console.log(response);
 			if (response.status === 0) {
 				element.remove();
-				showToast({
+				showConformation({
+					type: 'toast',
 					message: 'Issue deleted successfully',
 					bootstrapIcon: 'bi-check-circle',
 					bootstrapColor: 'success',
 				});
 			} else {
-				showToast({
+				showConformation({
+					type: 'toast',
 					message: 'Unexpected error ocurred',
 					bootstrapIcon: 'bi-x-circle',
 					bootstrapColor: 'danger',
@@ -323,7 +342,7 @@ document.addEventListener('alpine:init', () => {
 					right: 'dayGridMonth,timeGridWeek,listWeek',
 				},
 				height: 'auto',
-				navLinks: true, // can click day/week names to navigate views
+				navLinks: true,
 				selectable: true,
 				selectMirror: true,
 				nowIndicator: true,
@@ -343,7 +362,6 @@ document.addEventListener('alpine:init', () => {
 			};
 
 			const [response, error] = await useFetch(payload);
-			//TODO: Mostrar error si no hay issues
 			console.log(response, error);
 
 			return response;
@@ -356,11 +374,14 @@ document.addEventListener('alpine:init', () => {
 		bootstrapColor: 'success',
 		showToast() {
 			const options = {
-				message: this.message,
+				type: 'toast',
+				title: 'Heads up!',
+				text: this.message,
 				bootstrapIcon: this.bootstrapIcon,
 				bootstrapColor: this.bootstrapColor,
 			};
-			showToast(options);
+			// showToast(options);
+			showConfirmation(options);
 		},
 	}));
 
@@ -396,13 +417,33 @@ document.addEventListener('alpine:init', () => {
 	}
 
 	function showConfirmation(options) {
-		return Swal.fire({
+		const toast = Swal.mixin({
+			toast: true,
+			title: options.title,
+			text: options.text,
+			icon: 'success',
+			showConfirmButton: false,
+			position: 'bottom',
+			// timer: 3000,
+			// timerProgressBar: true,
+			customClass: {
+				popup: `sweet-alert-toast-popup border rounded-5 border-${options.bootstrapColor}`,
+				title: 'sweet-alert-toast-title',
+				htmlContainer: `sweet-alert-toast-html-container text-${options.bootstrapColor}`,
+			},
+		});
+
+		const alert = Swal.mixin({
 			title: options.title,
 			text: options.text,
 			icon: options.icon,
 			showCancelButton: true,
 			confirmButtonText: options.confirmButtonText,
 		});
+
+		const type = options.type === 'toast' ? toast : alert;
+
+		return type.fire();
 	}
 
 	function showToast(options) {

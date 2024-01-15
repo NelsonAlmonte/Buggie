@@ -32,7 +32,12 @@
           </ul>
         </div>
       <?php else: ?>
-        <h2>Reports on <span class="text-primary"><?=$projects[0]['name']?></span></h2>
+        <h2>
+          Reports on 
+          <span class="text-primary">
+            <?=isset($projects[0]['name']) ? json_encode($projects[0]['name']) : '' ?>
+          </span>
+        </h2>
       <?php endif; ?>
     </div>
     <div class="d-flex align-items-center justify-content-start">
@@ -115,7 +120,7 @@
     class="row mt-4" 
     x-data="reportChart" 
     x-init='
-      project = <?=json_encode($projects[0]['id'])?>;
+      project = <?=isset($projects[0]['id']) ? json_encode($projects[0]['id']) : json_encode('') ?>;
       $watch("project", value => getChart($refs.chart));
       $watch("selectedChartType.name", value => changeChart($refs.chart));
     '

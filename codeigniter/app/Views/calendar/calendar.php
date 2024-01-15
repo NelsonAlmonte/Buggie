@@ -31,14 +31,19 @@
         </ul>
       </div>
     <?php else: ?>
-      <h2>Reports on <span class="text-primary"><?=$projects[0]['name']?></span></h2>
+      <h2>
+        Reports on 
+        <span class="text-primary">
+          <?=isset($projects[0]['name']) ? $projects[0]['name'] : '' ?>
+        </span>
+      </h2>
     <?php endif; ?>
   </div>
   <div
     x-data="calendar" 
     x-init='
-      projectId = <?=json_encode($projects[0]['id'])?>;
-      projectSlug = <?=json_encode($projects[0]['slug'])?>;
+      projectId = <?=isset($projects[0]['id']) ? json_encode($projects[0]['id']) : json_encode('') ?>;
+      projectSlug = <?=isset($projects[0]['slug']) ? json_encode($projects[0]['slug']) : json_encode('') ?>;
       $watch("projectId", value => initCalendar($refs.calendar));
       initCalendar($el);
     '

@@ -1,12 +1,10 @@
-<?php if (session()->getFlashdata('message') !== null) : ?>
   <div 
     x-data="toast" 
     x-init='
-      message = <?=json_encode(session()->getFlashdata("message"))?>;
+      message = "Action done successfully";
       bootstrapIcon = <?=json_encode(session()->getFlashdata("icon"))?>;
-      bootstrapColor = <?=json_encode(session()->getFlashdata("color"))?>;
+      bootstrapColor = "success";
       showToast();
     '
   >
   </div>
-<?php endif; ?>

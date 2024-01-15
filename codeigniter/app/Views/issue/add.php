@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Add a new issue</h2>
-  <div class="card mt-4">
-    <div class="card-body bg-complementary p-4">
+  <div class="card border-0 rounded-4 mt-4">
+    <div class="card-body rounded-4 bg-complementary p-4">
       <form class="row gx-5" action="<?=site_url('issue/'. $project['slug'] . '/save')?>" method="post"
         enctype="multipart/form-data">
         <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />

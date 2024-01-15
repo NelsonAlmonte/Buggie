@@ -227,8 +227,10 @@
       </li>
       <?php endif; ?>
 
-      <li class="nav-heading mt-4">Your projects</li>
-
+      <?php if(count(session()->get('projects')) > 0): ?>
+        <li class="nav-heading mt-4">Your projects</li>
+      <?php endif;?>
+      
       <?php foreach(session()->get('projects') as $project): ?>
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?=site_url('project/' . $project['slug'] . '/dashboard')?>">

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Add a new project for your organization</h2>
-  <div class="card mt-4">
-    <div class="card-body bg-complementary p-4">
+  <div class="card border border-0 rounded-4 mt-4">
+    <div class="card-body rounded-4 bg-complementary p-4">
       <form class="row gx-5" action="<?=site_url('manage/project/save')?>" method="post">
         <?= csrf_field() ?>
         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">

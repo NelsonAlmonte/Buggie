@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Edit <?=esc($project['name'])?></h2>
-  <div class="card mt-4">
-    <div class="card-body bg-complementary p-4">
+  <div class="card border border-0 rounded-4 mt-4">
+    <div class="card-body rounded-4 bg-complementary p-4">
       <form class="row gx-5"
         action="<?=site_url('manage/project/' . esc($project['slug']) . '/update/' . esc($project['id']))?>" method="post">
         <?= csrf_field() ?>

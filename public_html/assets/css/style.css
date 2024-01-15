@@ -172,3 +172,21 @@
     width: 18rem;
   }
 }
+
+.sweet-alert-toast-popup {
+  padding: 1.3rem 1.5rem !important;
+  background-color: var(--color-dominant) !important;
+}
+
+.sweet-alert-toast-title {
+  margin: 0em 1em !important;
+  font-size: 0.875rem !important;
+  font-weight: bold !important;
+  color: #f3f3f3;
+}
+
+.sweet-alert-toast-html-container {
+  font-size: 0.875rem !important;
+  font-weight: bold !important;
+  color: var(--bs-success) !important;
+}

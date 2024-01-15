@@ -22,7 +22,8 @@ class Calendar extends BaseController
               $projects = $projectModel->getProjects();
         }
 
-        $issues = $issueModel->getIssues($projects[0]['id']);
+        if (count($projects) > 0)
+            $issues = $issueModel->getIssues($projects[0]['id']);
         
         $data['projects'] = $projects;
         $data['issues'] = $issues;

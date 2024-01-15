@@ -31,9 +31,9 @@
       <form class="flex-grow-1" action="<?=site_url('issue/' . $slug)?>" method="get">
         <div class="input-group">
           <input type="text" class="form-control bg-dominant border-0" placeholder="Search by issue title..." name="title" value="<?=isset($_GET['title']) ? $_GET['title'] : '' ;?>" aria-label="Search" aria-describedby="search" autocomplete="off">
-          <a class="btn bg-dominant border-secondary <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
-          <button class="btn bg-dominant border-secondary border-0" type="submit"><i class="bi bi-search text-white"></i></button>
-          <button class="btn bg-dominant border-secondary border-0" type="button" data-bs-toggle="modal"
+          <a class="btn bg-dominant <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
+          <button class="btn bg-dominant" type="submit"><i class="bi bi-search text-white"></i></button>
+          <button class="btn bg-dominant" type="button" data-bs-toggle="modal"
           data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
         </div>
       </form>

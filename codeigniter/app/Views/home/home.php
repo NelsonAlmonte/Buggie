@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <h2>Welcome <span class="text-primary"><?=session()->get('name') . ' ' . session()->get('last')?></span></h2>
-  <h4 class="text-secondary mb-5">This is your work</h4>
+  <h4 class="text-secondary mb-4">This is your work</h4>
   <div class="row">
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4">
@@ -178,6 +178,12 @@
             <?=esc(count($projectsWithoutAccess))?> more
           </span>
           <?php endif; ?>
+          <?php if(count($collaboratorProjects) == 0): ?>
+          <div class="text-center m-5">
+            <img class="card-empty-icon" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . EMPTY_IMAGE?>" alt="empty">
+            <h5 class="mt-5">There is nothing here...</h5>
+          </div>
+          <?php endif; ?>
         </div>
       </div>
 
@@ -186,8 +192,8 @@
         x-data="reportChart"
         x-init='
           initChart($refs.chart);
-          project = <?=json_encode($collaboratorProjects[0]['id'])?>;
-          selectedProject = <?=json_encode($collaboratorProjects[0]['name'])?>;
+          project = <?=isset($collaboratorProjects[0]['id']) ? json_encode($collaboratorProjects[0]['id']) : json_encode('')?>;
+          selectedProject = <?=isset($collaboratorProjects[0]['name']) ? json_encode($collaboratorProjects[0]['name']) : json_encode('')?>;
         '
       >
         <div class="card-header d-flex justify-content-between align-items-center bg-complementary fs-5 text-white rounded-top-4 px-4 py-3">
@@ -220,7 +226,12 @@
                 </ul>
               </div>
             <?php else: ?>
-              <span>Report on <span class="text-primary"><?=$collaboratorProjects[0]['name']?></span></span>
+              <span>
+                Report on 
+                <span class="text-primary">
+                  <?=isset($collaboratorProjects[0]['name']) ? $collaboratorProjects[0]['name'] : ''?>
+                </span>
+              </span>
             <?php endif; ?>
           </div>
           <div class="dropdown">
