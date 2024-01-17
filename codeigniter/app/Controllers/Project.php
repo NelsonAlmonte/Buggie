@@ -76,6 +76,7 @@ class Project extends BaseController
       session()->setFlashdata([
         'message' => MESSAGE_SUCCESS, 
         'color' => MESSAGE_SUCCESS_COLOR, 
+        'hexColor' => MESSAGE_SUCCESS_HEX_COLOR, 
         'icon' => MESSAGE_SUCCESS_ICON
       ]);
       return redirect()->to('project');
@@ -83,6 +84,7 @@ class Project extends BaseController
       session()->setFlashdata([
         'message' => MESSAGE_ERROR, 
         'color' => MESSAGE_ERROR_COLOR, 
+        'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
         'icon' => MESSAGE_ERROR_ICON
       ]);
       return redirect()->to('manage/project/add');
@@ -132,6 +134,7 @@ class Project extends BaseController
       session()->setFlashdata([
         'message' => MESSAGE_SUCCESS, 
         'color' => MESSAGE_SUCCESS_COLOR, 
+        'hexColor' => MESSAGE_SUCCESS_HEX_COLOR, 
         'icon' => MESSAGE_SUCCESS_ICON
       ]);
       return redirect()->to('project');
@@ -139,6 +142,7 @@ class Project extends BaseController
       session()->setFlashdata([
         'message' => MESSAGE_ERROR, 
         'color' => MESSAGE_ERROR_COLOR, 
+        'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
         'icon' => MESSAGE_ERROR_ICON
       ]);
       return redirect()->to('manage/project/edit/' . $id);

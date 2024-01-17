@@ -96,10 +96,12 @@ define('EVENT_PRIORITY_HIGH', 10);
 // Messages
 define('MESSAGE_SUCCESS', 'Action done successfully');
 define('MESSAGE_SUCCESS_COLOR', 'success');
-define('MESSAGE_SUCCESS_ICON', 'bi-check-circle');
+define('MESSAGE_SUCCESS_HEX_COLOR', '#198754');
+define('MESSAGE_SUCCESS_ICON', 'success');
 define('MESSAGE_ERROR', 'There is appear to be an error');
 define('MESSAGE_ERROR_COLOR', 'danger');
-define('MESSAGE_ERROR_ICON', 'bi-x-circle');
+define('MESSAGE_ERROR_HEX_COLOR', '#dc3545');
+define('MESSAGE_ERROR_ICON', 'error');
 // Uploads
 define('PATH_UPLOAD_PROFILE_IMAGE', '../public_html/uploads/profile-image/');
 define('PATH_UPLOAD_ISSUES_IMAGES', '../public_html/uploads/issues-images/');

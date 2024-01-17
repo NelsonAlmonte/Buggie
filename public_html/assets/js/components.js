@@ -118,11 +118,12 @@ document.addEventListener('alpine:init', () => {
 					'image.error': (error, response) => {
 						console.log(error);
 						console.log(response);
-						showConformation({
-							type: 'toast',
-							message: 'Unexpected error ocurred',
-							bootstrapIcon: 'bi-x-circle',
-							bootstrapColor: 'danger',
+						showAlert({
+							isToast: true,
+							text: 'Unexpected error ocurred',
+							sweetAlertIcon: 'error',
+							bootstrapClassColor: 'danger',
+							bootstrapHexColor: '#dc3545',
 						});
 					},
 					'image.removed': async (image) => {
@@ -140,11 +141,12 @@ document.addEventListener('alpine:init', () => {
 						if (response.status === 0) {
 							editor.opts.imageUploadParams[csrfName] = response.token;
 						} else {
-							showConformation({
-								type: 'toast',
-								message: 'Unexpected error ocurred',
-								bootstrapIcon: 'bi-x-circle',
-								bootstrapColor: 'danger',
+							showAlert({
+								isToast: true,
+								text: 'Unexpected error ocurred',
+								sweetAlertIcon: 'error',
+								bootstrapClassColor: 'danger',
+								bootstrapHexColor: '#dc3545',
 							});
 						}
 						console.log(response);
@@ -173,25 +175,27 @@ document.addEventListener('alpine:init', () => {
 				confirmButtonText: 'Yes, delete it',
 			};
 
-			const confirmationStatus = await showConfirmation(confirmationOptions);
+			const confirmationStatus = await showAlert(confirmationOptions);
 			if (!confirmationStatus.isConfirmed) return;
 
 			const [response, error] = await useFetch(payload);
 			console.log(response);
 			if (response.status === 0) {
 				element.remove();
-				showConformation({
-					type: 'toast',
-					message: 'Issue deleted successfully',
-					bootstrapIcon: 'bi-check-circle',
-					bootstrapColor: 'success',
+				showAlert({
+					isToast: true,
+					text: 'Issue deleted successfully',
+					sweetAlertIcon: 'success',
+					bootstrapClassColor: 'success',
+					bootstrapHexColor: '#198754',
 				});
 			} else {
-				showConformation({
-					type: 'toast',
-					message: 'Unexpected error ocurred',
-					bootstrapIcon: 'bi-x-circle',
-					bootstrapColor: 'danger',
+				showAlert({
+					isToast: true,
+					text: 'Unexpected error ocurred',
+					sweetAlertIcon: 'error',
+					bootstrapClassColor: 'danger',
+					bootstrapHexColor: '#dc3545',
 				});
 			}
 		},
@@ -368,20 +372,19 @@ document.addEventListener('alpine:init', () => {
 		},
 	}));
 
-	Alpine.data('toast', () => ({
-		message: '',
-		bootstrapIcon: 'bi-check-circle',
-		bootstrapColor: 'success',
+	Alpine.data('alert', () => ({
+		text: "You shouldn't be seeing this",
+		sweetAlertIcon: 'warning',
+		bootstrapClassColor: 'warning',
 		showToast() {
 			const options = {
-				type: 'toast',
-				title: 'Heads up!',
-				text: this.message,
-				bootstrapIcon: this.bootstrapIcon,
-				bootstrapColor: this.bootstrapColor,
+				isToast: true,
+				text: this.text,
+				sweetAlertIcon: this.sweetAlertIcon,
+				bootstrapClassColor: this.bootstrapClassColor,
+				bootstrapHexColor: this.bootstrapHexColor,
 			};
-			// showToast(options);
-			showConfirmation(options);
+			showAlert(options);
 		},
 	}));
 
@@ -416,97 +419,39 @@ document.addEventListener('alpine:init', () => {
 		return { csrfName: csrfName, csrfHash: csrfHash };
 	}
 
-	function showConfirmation(options) {
+	function showAlert(options) {
 		const toast = Swal.mixin({
 			toast: true,
-			title: options.title,
+			title: 'Heads up!',
 			text: options.text,
-			icon: 'success',
+			icon: options.sweetAlertIcon,
+			iconColor: options.bootstrapHexColor,
 			showConfirmButton: false,
 			position: 'bottom',
-			// timer: 3000,
-			// timerProgressBar: true,
+			timer: 3000,
 			customClass: {
-				popup: `sweet-alert-toast-popup border rounded-5 border-${options.bootstrapColor}`,
+				popup: `sweet-alert-toast-popup border rounded-5 border-${options.bootstrapClassColor}`,
 				title: 'sweet-alert-toast-title',
-				htmlContainer: `sweet-alert-toast-html-container text-${options.bootstrapColor}`,
+				htmlContainer: `sweet-alert-toast-html-container text-${options.bootstrapClassColor}`,
 			},
 		});
 
-		const alert = Swal.mixin({
+		const confirmation = Swal.mixin({
 			title: options.title,
 			text: options.text,
 			icon: options.icon,
 			showCancelButton: true,
 			confirmButtonText: options.confirmButtonText,
+			confirmButtonColor: '#0d6efd',
+			customClass: {
+				popup: 'sweet-alert-toast-popup rounded-5',
+				title: 'text-white',
+				htmlContainer: 'text-white',
+			},
 		});
 
-		const type = options.type === 'toast' ? toast : alert;
+		const type = options.isToast ? toast : confirmation;
 
 		return type.fire();
-	}
-
-	function showToast(options) {
-		const toastContainer = document.createElement('div');
-		toastContainer.classList.add(
-			'toast-container',
-			'p-3',
-			'bottom-0',
-			'start-50',
-			'translate-middle-x'
-		);
-
-		const toast = document.createElement('div');
-		toast.classList.add(
-			'toast',
-			'rounded-5',
-			'shadow-none',
-			'py-1',
-			'px-2',
-			`border-${options.bootstrapColor}`
-		);
-		toastContainer.appendChild(toast);
-
-		const toastBody = document.createElement('div');
-		toastBody.classList.add('toast-body');
-		toast.appendChild(toastBody);
-
-		const flexLayout = document.createElement('div');
-		flexLayout.classList.add(
-			'd-flex',
-			'justify-content-start',
-			'align-items-center'
-		);
-		toastBody.appendChild(flexLayout);
-
-		const icon = document.createElement('i');
-		icon.classList.add(
-			'bi',
-			`${options.bootstrapIcon}`,
-			`text-${options.bootstrapColor}`,
-			'flex-shrink-0',
-			'me-3'
-		);
-		icon.style.fontSize = '2rem';
-		flexLayout.appendChild(icon);
-
-		const messageContainer = document.createElement('div');
-		flexLayout.appendChild(messageContainer);
-
-		const title = document.createElement('strong');
-		title.textContent = 'Heads up!';
-		messageContainer.appendChild(title);
-
-		const br = document.createElement('br');
-		messageContainer.appendChild(br);
-
-		const message = document.createElement('strong');
-		message.classList.add(`text-${options.bootstrapColor}`);
-		message.textContent = options.message;
-		messageContainer.appendChild(message);
-		document.body.appendChild(toastContainer);
-
-		const createdToast = new bootstrap.Toast(toast, {});
-		createdToast.show();
 	}
 });

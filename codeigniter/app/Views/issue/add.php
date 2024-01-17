@@ -35,7 +35,7 @@
               @click="$refs.files.click()"
             >
               <i class="bi bi-image me-2"></i>
-              <span>Add files*</span>
+              <span>Add files</span>
             </button>
             <div class="row mt-4">
               <template x-for="(file, index) in filesPreview">

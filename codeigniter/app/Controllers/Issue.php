@@ -123,6 +123,7 @@ class Issue extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
+                'hexColor' => MESSAGE_SUCCESS_HEX_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
             return redirect()->to('issue/' . $slug);
@@ -130,6 +131,7 @@ class Issue extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('issue/' . $slug . '/add');
@@ -229,6 +231,7 @@ class Issue extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
+                'hexColor' => MESSAGE_SUCCESS_HEX_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
             return redirect()->to('issue/' . $slug);
@@ -236,6 +239,7 @@ class Issue extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('issue/' . $slug . '/edit/' . $id);

@@ -119,7 +119,8 @@ class Collaborator extends BaseController
         if ($successfulOperations == $operationsToValidate) {
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
-                'color' => MESSAGE_SUCCESS_COLOR, 
+                'color' => MESSAGE_SUCCESS_COLOR,
+                'hexColor' => MESSAGE_SUCCESS_HEX_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
             return redirect()->to('manage/collaborator');
@@ -127,6 +128,7 @@ class Collaborator extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('manage/collaborator/add');
@@ -191,6 +193,7 @@ class Collaborator extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_SUCCESS, 
                 'color' => MESSAGE_SUCCESS_COLOR, 
+                'hexColor' => MESSAGE_SUCCESS_HEX_COLOR, 
                 'icon' => MESSAGE_SUCCESS_ICON
             ]);
             return redirect()->to('collaborator/view/' . $id);
@@ -198,6 +201,7 @@ class Collaborator extends BaseController
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('collaborator/edit/' . $id);
