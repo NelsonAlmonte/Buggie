@@ -43,43 +43,26 @@
           <input type="hidden" x-ref="collaborator">
         </div>
       </div>
-      <div class="px-3 pb-3">
+      <div 
+        class="px-3 pb-3" 
+        x-data="saveItem"
+        x-init="url = '/issue/assignIssue'"
+      >
         <button 
           class="btn btn-rounded btn-primary btn-block w-100 py-3" 
           type="button"
-          @click="assignIssue($refs.issue.value, $refs.collaborator.value)"
-        >Assign issue</button>
+          x-init="status = 'Assign issue'"
+          :disabled="isLoading"
+          @click="
+            item = { issue: $refs.issue.value, collaborator: $refs.collaborator.value };
+            saveItem()
+          "
+        >
+          <span class="spinner-border spinner-border-sm me-1" aria-hidden="true" x-show="isLoading"></span>
+          <span role="status" x-text="status"></span>
+        </button>
       </div>
     </div>
   </div>
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-<script>
-  async function assignIssue(issue, collaborator) {
-    try {
-			const csrfSelector = document.querySelector('.csrf');
-			const csrfName = csrfSelector.attributes.name.value;
-			const csrfHash = csrfSelector.value;
-      const payload = {
-        [csrfName]: csrfHash,
-        url: '/issue/assignIssue',
-        issue: issue,
-        collaborator: collaborator,
-      }
-
-			const source = await fetch(payload.url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-				},
-				body: JSON.stringify(payload),
-			});
-			const response = await source.json();
-			csrfSelector.value = response.token;
-			console.log(response);
-		} catch (error) {
-			console.log(error);
-		}
-  }
-</script>

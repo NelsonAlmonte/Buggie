@@ -6,8 +6,11 @@ document.addEventListener('alpine:init', () => {
 		async getItems(controller, method) {
 			const payload = {
 				url: `/${controller}/${method}`,
-				query: this.query,
-				unwanted: this.selectedItems,
+				method: 'POST',
+				data: {
+					query: this.query,
+					unwanted: this.selectedItems,
+				},
 			};
 
 			if (this.query.length > 0) {
@@ -131,7 +134,10 @@ document.addEventListener('alpine:init', () => {
 
 						const payload = {
 							url: `/issue/deleteIssueImage`,
-							image: image[0].src,
+							method: 'POST',
+							data: {
+								image: image[0].src,
+							},
 						};
 
 						const [response, error] = await useFetch(payload);
@@ -164,7 +170,10 @@ document.addEventListener('alpine:init', () => {
 		async deleteItem(element) {
 			const payload = {
 				url: this.url,
-				[this.key]: this.item,
+				method: 'POST',
+				data: {
+					[this.key]: this.item,
+				},
 			};
 
 			const confirmationOptions = {
@@ -180,6 +189,7 @@ document.addEventListener('alpine:init', () => {
 
 			const [response, error] = await useFetch(payload);
 			console.log(response);
+
 			if (response.status === 0) {
 				element.remove();
 				showAlert({
@@ -228,8 +238,11 @@ document.addEventListener('alpine:init', () => {
 		async initChart(el) {
 			const payload = {
 				url: this.url,
-				type: this.selectedType,
-				project: this.project,
+				method: 'POST',
+				data: {
+					type: this.selectedType,
+					project: this.project,
+				},
 			};
 
 			const [response, error] = await useFetch(payload);
@@ -267,8 +280,11 @@ document.addEventListener('alpine:init', () => {
 
 			const payload = {
 				url: this.url,
-				type: this.selectedType,
-				project: this.project,
+				method: 'POST',
+				data: {
+					type: this.selectedType,
+					project: this.project,
+				},
 			};
 
 			const [response, error] = await useFetch(payload);
@@ -361,8 +377,11 @@ document.addEventListener('alpine:init', () => {
 		async getIssues() {
 			const payload = {
 				url: this.url,
-				projectId: this.projectId,
-				projectSlug: this.projectSlug,
+				method: 'POST',
+				data: {
+					projectId: this.projectId,
+					projectSlug: this.projectSlug,
+				},
 			};
 
 			const [response, error] = await useFetch(payload);
@@ -388,20 +407,59 @@ document.addEventListener('alpine:init', () => {
 		},
 	}));
 
-	// TODO: Usar el fetch que hice en snap-issue
+	Alpine.data('saveItem', () => ({
+		item: '',
+		url: '',
+		isLoading: false,
+		status: '',
+		async saveItem() {
+			const payload = {
+				url: this.url,
+				method: 'POST',
+				data: this.item,
+			};
+
+			const oldStatusText = this.status;
+
+			this.isLoading = true;
+			this.status = 'Loading...';
+
+			const [response, error] = await useFetch(payload);
+			console.log(response);
+
+			if (response.status === 0) {
+				this.isLoading = false;
+				this.status = oldStatusText;
+				showAlert({
+					isToast: true,
+					text: 'Action done successfully',
+					sweetAlertIcon: 'success',
+					bootstrapClassColor: 'success',
+					bootstrapHexColor: '#198754',
+				});
+			} else {
+				console.log(error);
+				this.isLoading = false;
+				this.status = 'Try again';
+				showAlert({
+					isToast: true,
+					text: 'Unexpected error ocurred',
+					sweetAlertIcon: 'error',
+					bootstrapClassColor: 'danger',
+					bootstrapHexColor: '#dc3545',
+				});
+			}
+		},
+	}));
+
 	async function useFetch(payload) {
 		try {
-			const { csrfName, csrfHash } = getCsrf();
-			payload[csrfName] = csrfHash;
+			if (payload.method !== 'GET') {
+				const { csrfName, csrfHash } = getCsrf();
+				payload.data[csrfName] = csrfHash;
+			}
 
-			const source = await fetch(payload.url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-				},
-				body: JSON.stringify(payload),
-			});
+			const source = await fetch(buildRequest(payload));
 			const response = await source.json();
 			getCsrf(response.token);
 			return [response, null];
@@ -409,6 +467,21 @@ document.addEventListener('alpine:init', () => {
 			console.log(error);
 			return [null, error];
 		}
+	}
+
+	function buildRequest(params) {
+		return new Request(params.url, {
+			method: params.method,
+			headers: buildHeaders(params.method),
+			body: params.data ? JSON.stringify(params.data) : null,
+		});
+	}
+
+	function buildHeaders(method) {
+		const headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		if (method !== 'GET') headers.append('X-Requested-With', 'XMLHttpRequest');
+		return headers;
 	}
 
 	function getCsrf(csrfValue) {

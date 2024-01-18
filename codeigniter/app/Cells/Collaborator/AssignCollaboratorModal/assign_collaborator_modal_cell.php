@@ -138,45 +138,24 @@
               x-text="project.name" 
             >
           </template>
-          <button 
-            class="btn btn-rounded btn-primary btn-block w-100 mt-4 py-3"
-            type="button"
-            @click="assignProjects(payload.projects, payload.collaborators)"
-          >
-            Save changes
-          </button>
+          <div x-data="saveItem" x-init="url = '/collaborator/assignProjects'">
+            <button 
+              class="btn btn-rounded btn-primary btn-block w-100 mt-4 py-3"
+              type="button"
+              x-init="status = 'Save changes'"
+              :disabled="isLoading"
+              @click="
+                item = { projects: payload.projects, collaborators: payload.collaborators };
+                saveItem();
+              "
+            >
+              <span class="spinner-border spinner-border-sm me-1" aria-hidden="true" x-show="isLoading"></span>
+              <span role="status" x-text="status"></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <input class="csrf" type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-<script>
-  async function assignProjects(projects, collaborators) {
-    try {
-			const csrfSelector = document.querySelector('.csrf');
-			const csrfName = csrfSelector.attributes.name.value;
-			const csrfHash = csrfSelector.value;
-      const payload = {
-        [csrfName]: csrfHash,
-        url: '/collaborator/assignProjects',
-        projects: projects,
-        collaborators: collaborators,
-      }
-
-			const source = await fetch(payload.url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Requested-With': 'XMLHttpRequest',
-				},
-				body: JSON.stringify(payload),
-			});
-			const response = await source.json();
-			csrfSelector.value = response.token;
-			console.log(response);
-		} catch (error) {
-			console.log(error);
-		}
-  }
-</script>
