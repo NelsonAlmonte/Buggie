@@ -140,40 +140,57 @@
         </div>
         <div class="col-6 mb-4">
           <div 
-            x-data="searchSelect" 
-            x-init='query = <?=json_encode($issue['assignee_name'])?>'
-            class="form-floating auto-complete"
+            class="input-group"
+            x-data="searchSelect"
+            x-init='
+              query = <?=json_encode($issue['assignee_name'])?>,
+              options = {
+                controller: "collaborator",
+                method: "searchCollaborators",
+                project: <?=json_encode($issue['project'])?>
+              }
+            '
           >
-            <input 
-              type="text" 
-              class="form-control bg-dominant border-0" 
-              id="assignee-search" 
-              name="assignee-search"
-              placeholder="Assign to" 
-              autocomplete="off" 
-              x-model="query"
-              @input="getItems('collaborator', 'searchCollaborators')"
-            >
-            <ul x-show="items.length > 0">
-              <template x-for="item in items">
-                <li 
-                  x-text="`${item.name} ${item.last}`" 
-                  @click="
-                    query = `${item.name} ${item.last}`; 
-                    items = []; 
-                    $refs.assignee.value = item.id;"
-                  @click.outside="items = []">
-                </li>
-              </template>
-            </ul>
-            <input 
-              type="hidden" 
-              id="assignee" 
-              name="assignee" 
-              value="<?=esc($issue['assignee'])?>"
-              x-ref="assignee"
-            >
-            <label for="assign to">Assign to</label>
+            <div class="form-floating auto-complete">
+              <input 
+                type="text" 
+                class="form-control bg-dominant border-0" 
+                id="assignee-search" 
+                name="assignee-search"
+                placeholder="Assign to" 
+                autocomplete="off" 
+                x-model="query"
+                @input="getItems(options)"
+              >
+              <ul x-show="items.length > 0">
+                <template x-for="item in items">
+                  <li 
+                    x-text="`${item.name} ${item.last}`" 
+                    @click="
+                      query = `${item.name} ${item.last}`; 
+                      items = []; 
+                      $refs.assignee.value = item.id;"
+                    @click.outside="items = []">
+                  </li>
+                </template>
+              </ul>
+              <input 
+                type="hidden" 
+                id="assignee" 
+                name="assignee" 
+                value="<?=esc($issue['assignee'])?>"
+                x-ref="assignee"
+              >
+              <label for="assign to">Assign to</label>
+            </div>
+            <button 
+              class="btn bg-dominant" 
+              type="button"
+              @click="
+                $refs.assignee.value = '';
+                query = '';
+              "
+            ><i class="bi bi-x-lg text-white"></i></button>
           </div>
         </div>
         <div class="col-12 my-4">

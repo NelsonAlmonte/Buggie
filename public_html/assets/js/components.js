@@ -3,15 +3,22 @@ document.addEventListener('alpine:init', () => {
 		query: '',
 		items: [],
 		selectedItems: [],
-		async getItems(controller, method) {
+		options: {},
+		destroy() {
+			this.options = {};
+		},
+		async getItems(options) {
 			const payload = {
-				url: `/${controller}/${method}`,
+				url: `/${options.controller}/${options.method}`,
 				method: 'POST',
 				data: {
 					query: this.query,
 					unwanted: this.selectedItems,
 				},
 			};
+
+			if (Object.keys(options).length > 2)
+				payload.data[Object.keys(options).pop()] = Object.values(options).pop();
 
 			if (this.query.length > 0) {
 				const [response, error] = await useFetch(payload);
@@ -24,9 +31,9 @@ document.addEventListener('alpine:init', () => {
 			this.items = [];
 			this.query = '';
 		},
-		removeItem(selectedItem) {
+		removeItem(itemToBeRemoved) {
 			this.selectedItems = this.selectedItems.filter(
-				(project) => project.id !== selectedItem.id
+				(selectedItem) => selectedItem.id !== itemToBeRemoved.id
 			);
 		},
 	}));

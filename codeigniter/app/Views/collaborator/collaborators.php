@@ -55,11 +55,21 @@
               <li>
                 <a class="dropdown-item text-white" href="#">
                   <div class="d-inline-block">
-                    <i class="bi bi-trash"></i>
+                    <i class="bi bi-person-x"></i>
                   </div>
-                  <span>Delete</span>
+                  <span>Remove</span>
                 </a>
               </li>
+                <?php if(session()->get('id') != $collaborator['id']): ?>
+                <li>
+                  <a class="dropdown-item text-white" href="#">
+                    <div class="d-inline-block">
+                      <i class="bi bi-trash"></i>
+                    </div>
+                    <span>Delete</span>
+                  </a>
+                </li>
+                <?php endif; ?>
               <?php endif; ?>
             </ul>
           </div>

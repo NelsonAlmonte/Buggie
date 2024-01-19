@@ -283,6 +283,7 @@ class Collaborator extends BaseController
         $json = [];
         $response = [];
         $collaborators = [];
+        $project = '';
 
         $json = $this->request->getJSON(true);
 
@@ -290,7 +291,8 @@ class Collaborator extends BaseController
 
         $response['data'] = [];
         if (!empty($json['query'])) {
-            $collaborators = $collaboratorModel->searchCollaborators($json['query']);
+            if (isset($json['project'])) $project = $json['project'];
+            $collaborators = $collaboratorModel->searchCollaborators($json['query'], $project);
             $response['data'] = array_udiff(
                 $collaborators, $json['unwanted'], 
                 fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']

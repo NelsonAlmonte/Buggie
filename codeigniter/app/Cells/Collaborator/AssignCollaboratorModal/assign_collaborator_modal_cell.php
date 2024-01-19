@@ -19,7 +19,16 @@
         </div>
       </div>
       <div class="modal-body">
-        <div x-data="searchSelect" :class="step === 0 ? '' : 'd-none'">
+        <div 
+          x-data="searchSelect" 
+          x-init='
+            options = {
+              controller: "project",
+              method: "searchProjects"
+            }
+          '
+          :class="step === 0 ? '' : 'd-none'"
+        >
           <div class="form-floating mb-3">
             <input 
               class="form-control bg-complementary border-0" 
@@ -28,7 +37,7 @@
               placeholder="project"
               autocomplete="off" 
               x-model="query" 
-              @input="getItems('project', 'searchProjects')"
+              @input="getItems(options)"
             >
             <label for="project">Search for projects</label>
           </div>
@@ -67,7 +76,16 @@
           </button>
         </div>
         <div 
-          x-data="searchSelect, selectedProjects = []" 
+          x-data="
+            searchSelect, 
+            selectedProjects = []
+          "
+          x-init='
+            options = {
+              controller: "collaborator",
+              method: "searchCollaborators"
+            }
+          '
           :class="step === 1 ? '' : 'd-none'"
           @get-selected-projects.window="selectedProjects = JSON.parse($event.detail)"
         >
@@ -79,7 +97,7 @@
               placeholder="collaborator"
               autocomplete="off" 
               x-model="query" 
-              @input="getItems('collaborator', 'searchCollaborators')"
+              @input="getItems(options)"
             >
             <label for="collaborator">Search for collaborators</label>
           </div>

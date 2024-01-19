@@ -91,18 +91,20 @@ class CollaboratorModel extends Model
 
     public function searchCollaborators($query, $project = '')
     {
-        return $this->db
+        $builder = $this->db
             ->table('collaborators c')
-            ->select('c.*')
-            ->join('collaborators_projects cp', 'cp.collaborator = c.id')
-            ->join('projects p', 'p.id = cp.project')
-            ->where('p.id', $project)
-            ->like('c.name', $query)
+            ->select('c.*');
+        if (!empty($project)) {
+            $builder->join('collaborators_projects cp', 'cp.collaborator = c.id', 'right')
+                ->join('projects p', 'p.id = cp.project')
+                ->where('p.id', $project);
+        }
+            $builder->like('c.name', $query)
             ->orLike('c.last', $query)
             ->orLike('c.username', $query)
             ->limit(5)
-            ->groupBy('c.id')
-            ->get()
+            ->groupBy('c.id');
+        return $builder->get()
             ->getResultArray();
     }
 }

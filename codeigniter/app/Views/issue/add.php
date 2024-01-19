@@ -72,7 +72,14 @@
         <div class="col-6 mb-4">
           <div 
             x-data="searchSelect" 
-            x-init='query = <?=json_encode($auth["fullname"])?>' 
+            x-init='
+              query = <?=json_encode($auth["fullname"])?>,
+              options = {
+                controller: "collaborator",
+                method: "searchCollaborators",
+                project: <?=json_encode($project['id'])?>
+              }
+            ' 
             class="form-floating auto-complete"
           >
             <input 
@@ -84,7 +91,7 @@
               placeholder="Reporter" 
               autocomplete="off" 
               x-model="query"
-              @input="getItems('collaborator', 'searchCollaborators')"
+              @input="getItems(options)"
             >
             <ul x-show="items.length > 0">
               <template x-for="item in items">
@@ -111,6 +118,13 @@
         <div class="col-6 mb-4">
           <div 
             x-data="searchSelect" 
+            x-init='
+              options = {
+                controller: "collaborator",
+                method: "searchCollaborators",
+                project: <?=json_encode($project['id'])?>
+              }
+            '
             class="form-floating auto-complete"
           >
             <input 
@@ -121,7 +135,7 @@
               placeholder="Assign to" 
               autocomplete="off" 
               x-model="query"
-              @input="getItems('collaborator', 'searchCollaborators')"
+              @input="getItems(options)"
             >
             <ul x-show="items.length > 0">
               <template x-for="item in items">

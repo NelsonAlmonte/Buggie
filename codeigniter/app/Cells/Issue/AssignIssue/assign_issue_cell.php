@@ -4,7 +4,14 @@
   tabindex="-1" 
   aria-labelledby="assign-issue-modal-label"
   aria-hidden="true"
-  x-data="searchSelect" 
+  x-data="searchSelect"
+  x-init='
+    options = {
+      controller: "collaborator",
+      method: "searchCollaborators",
+      project: <?=json_encode($project['id'])?>
+    }
+  '
   @get-issue-id.window="$refs.issue.value = $event.detail.issue"
 >
   <div class="modal-dialog modal-dialog-centered">
@@ -24,7 +31,7 @@
             placeholder="Assign to" 
             autocomplete="off" 
             x-model="query"
-            @input="getItems('collaborator', 'searchCollaborators')"
+            @input="getItems(options)"
           >
           <ul x-show="items.length > 0">
             <template x-for="item in items">

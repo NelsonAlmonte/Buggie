@@ -1,5 +1,18 @@
-<div x-data="searchSelect" x-init='selectedItems = <?=json_encode($collaboratorProjects)?>' class="modal fade" id="projects-modal" tabindex="-1" aria-labelledby="projects-modal-label"
-  aria-hidden="true">
+<div 
+  class="modal fade" 
+  x-data="searchSelect" 
+  x-init='
+    selectedItems = <?=json_encode($collaboratorProjects)?>,
+    options = {
+      controller: "project",
+      method: "searchProjects"
+    }
+  ' 
+  id="projects-modal" 
+  tabindex="-1" 
+  aria-labelledby="projects-modal-label"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dominant border-0">
       <div class="d-flex justify-content-between align-items-center p-3">
@@ -10,7 +23,7 @@
       <div class="modal-body">
         <div class="form-floating mb-3">
           <input type="text" class="form-control bg-complementary border-0" id="projects" placeholder="project"
-            autocomplete="off" x-model="query" @input="getItems('project', 'searchProjects')">
+            autocomplete="off" x-model="query" @input="getItems(options)">
           <label for="projects">Search for projects</label>
         </div>
         <div class="mb-4">

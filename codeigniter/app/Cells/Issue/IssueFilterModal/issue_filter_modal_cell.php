@@ -29,7 +29,14 @@
             <div 
               class="form-floating auto-complete mb-3"
               x-data="searchSelect" 
-              x-init="query = '<?=isset($_GET[$key]) ? $_GET[$key] : '' ;?>'" 
+              x-init="
+                query = '<?=isset($_GET[$key]) ? $_GET[$key] : '' ;?>',
+                options = {
+                  controller: '<?=$filter['controller']?>',
+                  method: '<?=$filter['method']?>',
+                  project: '<?=$project['id']?>'
+                }
+              " 
             >
               <input 
                 class="form-control bg-dominant border-0" 
@@ -39,7 +46,7 @@
                 autocomplete="off" 
                 value="<?=isset($_GET[$key]) ? $_GET[$key] : '' ;?>"
                 x-model="query"
-                @input="getItems('<?=$filter['controller']?>', '<?=$filter['method']?>')"
+                @input="getItems(options)"
               >
               <ul x-show="items.length > 0">
                 <template x-for="item in items">
