@@ -95,16 +95,23 @@ class CollaboratorModel extends Model
             ->table('collaborators c')
             ->select('c.*');
         if (!empty($project)) {
-            $builder->join('collaborators_projects cp', 'cp.collaborator = c.id', 'right')
+            $builder->join('collaborators_projects cp', 'cp.collaborator = c.id')
                 ->join('projects p', 'p.id = cp.project')
                 ->where('p.id', $project);
         }
-            $builder->like('c.name', $query)
-            ->orLike('c.last', $query)
-            ->orLike('c.username', $query)
+        return $builder->like('c.name', $query)
             ->limit(5)
-            ->groupBy('c.id');
-        return $builder->get()
+            ->groupBy('c.id')
+            ->get()
             ->getResultArray();
+    }
+
+    public function removeCollaboratorFromProject($collaborator, $project)
+    {
+        return $this->db
+            ->table('collaborators_projects')
+            ->where('collaborator', $collaborator)
+            ->where('project', $project)
+            ->delete();
     }
 }

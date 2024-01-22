@@ -317,7 +317,7 @@ class Collaborator extends BaseController
 
 			$json = $this->request->getJSON(true);
 
-            $cartesian = $this->cartesian([$json['collaborators'], $json['projects']]);
+            $cartesian = $this->_cartesian([$json['collaborators'], $json['projects']]);
             $projectsToAdd = $this->verifyCollaboratorProjects($cartesian);
             $operationsToValidate = count($projectsToAdd);
             if (!empty($projectsToAdd))
@@ -358,7 +358,25 @@ class Collaborator extends BaseController
         return $projectsToAdd;
     }
 
-    public function cartesian($array)
+    public function removeCollaboratorFromProject()
+    {
+        $collaboratorModel = model(CollaboratorModel::class);
+        $json = [];
+        $response = [];
+
+        $json = $this->request->getJSON(true);
+
+        $response['token'] = csrf_hash();
+
+        if ($collaboratorModel->removeCollaboratorFromProject($json['collaborator'], $json['project']))
+            $response['status'] = EXIT_SUCCESS;
+        else
+            $response['status'] = EXIT_ERROR;
+
+        return $this->response->setJSON($response);
+    }
+
+    private function _cartesian($array)
     {
         $result = [[]];
 

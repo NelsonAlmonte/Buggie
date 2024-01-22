@@ -78,7 +78,18 @@
             <template x-if="imageUrl !== ''">
               <img class="d-block w-25 rounded-4 mt-4" :src="imageUrl" alt="Profile picture">
             </template>
-            <input class="d-none" type="file" name="image" id="image" x-ref="image" @change="renderImage($event)" accept="image/*">
+            <input 
+              class="d-none" 
+              type="file" 
+              name="image" 
+              id="image" 
+              accept="image/*"
+              x-ref="image" 
+              @change="
+                renderImage($event)
+                $dispatch('image-rendered')
+              " 
+            >
           </div>
         </div>
         <div class="col-12 my-4">
@@ -112,8 +123,18 @@
         <div class="col-12 mb-4">
           <small>Fields with * are required.</small>
         </div>
-        <div class="col-12">
-          <button class="btn btn-rounded btn-primary" type="submit">Add collaborator</button>
+        <div 
+          class="col-12" 
+          x-data="{ imageRendered: false }"
+          @image-rendered.window="imageRendered = true"
+        >
+          <button 
+            class="btn btn-rounded btn-primary" 
+            type="submit"
+            :disabled="!imageRendered"
+          >
+            Add collaborator
+          </button>
         </div>
       </form>
     </div>

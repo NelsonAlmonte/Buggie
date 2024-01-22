@@ -27,7 +27,7 @@
   </div>
   <div class="row mt-4">
     <?php foreach ($collaborators as $collaborator): ?>
-    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4" x-data x-ref="collaborator">
       <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="position-relative">
           <div class="position-absolute top-0 end-0 mt-3 me-4">
@@ -43,32 +43,77 @@
                 </a>
               </li>
               <?php if(in_array('collaborator', session()->get('auth')['permissions'])): ?>
-              <li>
-                <a class="dropdown-item text-white"
-                  href="<?=site_url('collaborator/edit/'. $collaborator['id'])?>">
-                  <div class="d-inline-block">
-                    <i class="bi bi-pencil"></i>
-                  </div>
-                  <span>Edit</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item text-white" href="#">
-                  <div class="d-inline-block">
-                    <i class="bi bi-person-x"></i>
-                  </div>
-                  <span>Remove</span>
-                </a>
-              </li>
-                <?php if(session()->get('id') != $collaborator['id']): ?>
                 <li>
-                  <a class="dropdown-item text-white" href="#">
+                  <a class="dropdown-item text-white"
+                    href="<?=site_url('collaborator/edit/'. $collaborator['id'])?>">
                     <div class="d-inline-block">
-                      <i class="bi bi-trash"></i>
+                      <i class="bi bi-pencil"></i>
                     </div>
-                    <span>Delete</span>
+                    <span>Edit</span>
                   </a>
                 </li>
+                <?php if(isset($project)): ?>
+                  <li>
+                    <button 
+                      class="dropdown-item text-white"
+                      x-data="deleteItem"
+                      x-init="
+                        options = {
+                          payload: {
+                            collaborator: '<?=$collaborator['id']?>',
+                            project: '<?=$project['id']?>'
+                          },
+                          alert: {
+                            title: 'Remove collaborator from this project?',
+                            text: 'Are you sure you want to remove this collaborator from this project?',
+                            confirmButtonText: 'Yes, remove it'
+                          },
+                          toast: {
+                            text: 'Collaborator removed successfully'
+                          },
+                          element: $refs.collaborator
+                        },
+                        url = '/collaborator/removeCollaboratorFromProject'
+                      "
+                      @click="deleteItem()"
+                    >
+                      <div class="d-inline-block">
+                        <i class="bi bi-person-x"></i>
+                      </div>
+                      <span>Remove</span>
+                    </button>
+                  </li>
+                <?php endif; ?>
+                <?php if(session()->get('id') != $collaborator['id']): ?>
+                  <li>
+                    <button 
+                      class="dropdown-item text-white"
+                      x-data="deleteItem"
+                      x-init="
+                        options = {
+                          payload: {
+                            collaborator: '<?=$collaborator['id']?>'
+                          },
+                          alert: {
+                            title: 'Delete this collaborator?',
+                            text: 'Are you sure you want to delete this collaborator?',
+                            confirmButtonText: 'Yes, delete it'
+                          },
+                          toast: {
+                            text: 'Collaborator deleted successfully'
+                          },
+                          element: $refs.collaborator
+                        },
+                        url = '/collaborator/deleteCollaborator'
+                      "
+                      @click="deleteItem()"
+                    >
+                      <div class="d-inline-block">
+                        <i class="bi bi-trash"></i>
+                      </div>
+                      <span>Delete</span>
+                    </button>
+                  </li>
                 <?php endif; ?>
               <?php endif; ?>
             </ul>

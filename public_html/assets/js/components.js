@@ -7,9 +7,9 @@ document.addEventListener('alpine:init', () => {
 		destroy() {
 			this.options = {};
 		},
-		async getItems(options) {
+		async getItems() {
 			const payload = {
-				url: `/${options.controller}/${options.method}`,
+				url: `/${this.options.controller}/${this.options.method}`,
 				method: 'POST',
 				data: {
 					query: this.query,
@@ -17,8 +17,10 @@ document.addEventListener('alpine:init', () => {
 				},
 			};
 
-			if (Object.keys(options).length > 2)
-				payload.data[Object.keys(options).pop()] = Object.values(options).pop();
+			if (Object.keys(this.options).length > 2)
+				payload.data[Object.keys(this.options).pop()] = Object.values(
+					this.options
+				).pop();
 
 			if (this.query.length > 0) {
 				const [response, error] = await useFetch(payload);
@@ -171,24 +173,24 @@ document.addEventListener('alpine:init', () => {
 	}));
 
 	Alpine.data('deleteItem', () => ({
-		item: '',
 		url: '',
-		key: '',
-		async deleteItem(element) {
+		options: {},
+		destroy() {
+			this.options = {};
+		},
+		async deleteItem() {
 			const payload = {
 				url: this.url,
 				method: 'POST',
-				data: {
-					[this.key]: this.item,
-				},
+				data: this.options.payload,
 			};
 
 			const confirmationOptions = {
 				type: 'alert',
-				title: 'Delete this issue?',
-				text: 'Are you sure you want to delete this issue and all of its files?',
+				title: this.options.alert.title,
+				text: this.options.alert.text,
 				icon: 'warning',
-				confirmButtonText: 'Yes, delete it',
+				confirmButtonText: this.options.alert.confirmButtonText,
 			};
 
 			const confirmationStatus = await showAlert(confirmationOptions);
@@ -198,10 +200,10 @@ document.addEventListener('alpine:init', () => {
 			console.log(response);
 
 			if (response.status === 0) {
-				element.remove();
+				this.options.element.remove();
 				showAlert({
 					isToast: true,
-					text: 'Issue deleted successfully',
+					text: this.options.toast.text,
 					sweetAlertIcon: 'success',
 					bootstrapClassColor: 'success',
 					bootstrapHexColor: '#198754',

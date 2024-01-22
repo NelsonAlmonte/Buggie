@@ -40,11 +40,23 @@
                     class="dropdown-item text-white" 
                     x-data="deleteItem" 
                     x-init='
-                      item = <?=json_encode($file)?>; 
-                      url = "/issue/deleteIssueFile"; 
-                      key = "file"
+                      options = {
+                        payload: {
+                          file: <?=json_encode($file)?>
+                        },
+                        alert: {
+                          title: "Delete this file?",
+                          text: "Are you sure you want to delete this file?",
+                          confirmButtonText: "Yes, delete it"
+                        },
+                        toast: {
+                          text: "File deleted successfully"
+                        },
+                        element: $refs.file
+                      },
+                      url = "/issue/deleteIssueFile"
                     ' 
-                    @click="deleteItem($refs.file)"
+                    @click="deleteItem()"
                   >
                     <div class="d-inline-block">
                       <i class="bi bi-trash"></i>

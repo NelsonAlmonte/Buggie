@@ -106,11 +106,23 @@
                   class="dropdown-item text-white" 
                   x-data="deleteItem"
                   x-init='
-                    item = <?=json_encode($issue)?>; 
-                    url = "/issue/deleteIssue"; 
-                    key = "issue"
-                  '
-                  @click="deleteItem($refs.issue)"
+                    options = {
+                      payload: {
+                        issue: <?=json_encode($issue)?>
+                      },
+                      alert: {
+                        title: "Delete this issue?",
+                        text: "Are you sure you want to delete this issue?",
+                        confirmButtonText: "Yes, delete it"
+                      },
+                      toast: {
+                        text: "Issue deleted successfully"
+                      },
+                      element: $refs.issue
+                    },
+                    url = "/issue/deleteIssue"
+                  ' 
+                  @click="deleteItem()"
                 >
                   <div class="d-inline-block">
                     <i class="bi bi-trash"></i>

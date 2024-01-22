@@ -59,10 +59,23 @@
                         type="button" 
                         x-data="deleteItem" 
                         x-init='
-                          item = <?=json_encode($file)?>;
-                          url = "/issue/deleteIssueFile";
-                          key = "file";' 
-                        @click="deleteItem($refs.file)">
+                          options = {
+                            payload: {
+                              file: <?=json_encode($file)?>
+                            },
+                            alert: {
+                              title: "Delete this file?",
+                              text: "Are you sure you want to delete this file?",
+                              confirmButtonText: "Yes, delete it"
+                            },
+                            toast: {
+                              text: "File removed successfully"
+                            },
+                            element: $refs.file
+                          },
+                          url = "/issue/deleteIssueFile"
+                        ' 
+                        @click="deleteItem()">
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
@@ -102,7 +115,14 @@
         <div class="col-6 mb-4">
           <div 
             x-data="searchSelect" 
-            x-init='query = <?=json_encode($issue["reporter_name"])?>'
+            x-init='
+              query = <?=json_encode($issue["reporter_name"])?>,
+              options = {
+                controller: "collaborator",
+                method: "searchCollaborators",
+                project: <?=json_encode($project['id'])?>
+              }
+            '
             class="form-floating auto-complete"
           >
             <input 
@@ -114,7 +134,7 @@
               placeholder="Reporter" 
               autocomplete="off" 
               x-model="query"
-              @input="getItems('collaborator', 'searchCollaborators')"
+              @input="getItems(options)"
             >
             <ul x-show="items.length > 0">
               <template x-for="item in items">
