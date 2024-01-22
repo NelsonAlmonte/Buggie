@@ -80,9 +80,13 @@
           </a>
           <?php endif; ?>
           <div class="d-flex align-items-center mt-3" style="font-size: 14px;">
-            <a class="text-decoration-none" href="<?=site_url('collaborator/view/' . $file['collaborator'])?>" target="_blank" title="Added by <?=esc($file['collaborator_name'] . ' ' . $file['last'])?>">
-              <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $file['image']?>" alt="collaborator image" style="width: 24px; height: 24px;">
-            </a>
+            <?php if($file['is_active'] != '0'): ?>
+              <a class="text-decoration-none" href="<?=site_url('collaborator/view/' . $file['collaborator'])?>" target="_blank" title="Added by <?=esc($file['collaborator_name'] . ' ' . $file['last'])?>">
+                <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $file['image']?>" alt="collaborator image" style="width: 24px; height: 24px;">
+              </a>
+            <?php else: ?>
+              <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . DEFAULT_PROFILE_IMAGE?>" alt="collaborator image" style="width: 24px; height: 24px;">
+            <?php endif; ?>
             <a class="text-accent text-decoration-none text-truncate"
             href="<?=site_url('issue/' . $project['slug'] . '/issue/' . $file['issue_id'])?>"
             style="max-width: 150px;" target="_blank" title="<?=esc($file['title'])?>"><?=esc($file['title'])?></a>

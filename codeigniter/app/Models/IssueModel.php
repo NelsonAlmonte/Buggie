@@ -24,8 +24,8 @@ class IssueModel extends Model
     public function getIssues($project, $filters = ['fields' => [], 'limit' => 0, 'offset' => 0])
     {
         $issues = 'i.id, i.title, i.description, i.reporter AS reporter_id, i.assignee AS assignee_id, i.start_date, i.end_date,';
-        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.username AS reporter,';
-        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name, c_a.username AS assignee,';
+        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.username AS reporter, c_r.is_active AS reporter_is_active,,';
+        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name, c_a.username AS assignee, c_a.is_active AS assignee_is_active,';
         $classification = 'c_cl.name AS classification_name, c_cl.color AS classification_color,';
         $severity = 'c_se.name AS severity_name, c_se.color AS severity_color,';
         $status = 'c_st.name AS status_name, c_st.color AS status_color, c_st.name AS status';
@@ -49,8 +49,8 @@ class IssueModel extends Model
     public function getIssue($id)
     {
         $issues = 'i.*, ';
-        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name,';
-        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name,';
+        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.is_active AS reporter_is_active,,';
+        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name, c_a.is_active AS assignee_is_active,';
         $classification = 'c_cl.name AS classification_name, c_cl.color AS classification_color,';
         $severity = 'c_se.name AS severity_name, c_se.color AS severity_color,';
         $status = 'c_st.name AS status_name, c_st.color AS status_color';
@@ -87,8 +87,8 @@ class IssueModel extends Model
     public function getCollaboratorIssues($collaborator)
     {
         $issues = 'i.id, i.title, i.reporter AS reporter_id, i.assignee AS assignee_id, i.start_date, i.end_date,';
-        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name,';
-        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name,';
+        $reporter = 'CONCAT(c_r.name, " ", c_r.last) AS reporter_name, c_r.is_active AS reporter_is_active,';
+        $assignee = 'CONCAT(c_a.name, " ", c_a.last) AS assignee_name, c_a.is_active AS assignee_is_active,';
         $classification = 'c_cl.name AS classification_name, c_cl.color AS classification_color,';
         $severity = 'c_se.name AS severity_name, c_se.color AS severity_color,';
         $status = 'c_st.name AS status_name, c_st.color AS status_color, c_st.name AS status,';

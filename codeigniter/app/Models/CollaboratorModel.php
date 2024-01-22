@@ -44,6 +44,7 @@ class CollaboratorModel extends Model
             ->select('c.*, r.id AS roleId, r.name AS roleName')
             ->join('roles r', 'r.id = c.role')
             ->where($field, $value)
+            ->where('is_active', '1')
             ->get()
             ->getRowArray();
     }
@@ -57,6 +58,7 @@ class CollaboratorModel extends Model
             ->join('collaborators c', 'c.id = cp.collaborator')
             ->join('categories ca', 'ca.id = p.status')
             ->where('c.id', $collaborator)
+            ->where('is_active', '1')
             ->get()
             ->getResultArray();
     }
@@ -73,6 +75,7 @@ class CollaboratorModel extends Model
     {
         return $this->db
             ->table('collaborators')
+            ->where('is_active', '1')
             ->get()
             ->getResultArray();
     }
@@ -85,6 +88,7 @@ class CollaboratorModel extends Model
             ->join('collaborators_projects cp', 'cp.collaborator = c.id')
             ->join('projects p', 'p.id = cp.project')
             ->where('p.id', $project)
+            ->where('is_active', '1')
             ->get()
             ->getResultArray();
     }
@@ -99,7 +103,8 @@ class CollaboratorModel extends Model
                 ->join('projects p', 'p.id = cp.project')
                 ->where('p.id', $project);
         }
-        return $builder->like('c.name', $query)
+        return $builder->where('is_active', '1')
+            ->like('c.name', $query)
             ->limit(5)
             ->groupBy('c.id')
             ->get()

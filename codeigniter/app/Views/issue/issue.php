@@ -21,11 +21,19 @@
       <div class="card bg-complementary border border-0 rounded-4">
         <div class="card-body">
           <h6 class="text-white">Reporter</h6>
-          <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['reporter']?>"><?=esc($issue['reporter_name'])?></a>
+          <?php if($issue['reporter_is_active'] != '0'): ?>
+            <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['reporter']?>"><?=esc($issue['reporter_name'])?></a>
+          <?php else: ?>
+            <span><?=esc($issue['reporter_name'])?></span>
+          <?php endif; ?>
           <hr>
           <h6 class="text-white">Assignee</h6>
           <?php if(!empty($issue['assignee'])): ?>
-            <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['assignee']?>"><?=esc($issue['assignee_name'])?></a>
+            <?php if($issue['assignee_is_active'] != '0'): ?>
+              <a class="text-light text-decoration-none" href="<?=site_url('collaborator/view/') . $issue['assignee']?>"><?=esc($issue['assignee_name'])?></a>
+            <?php else: ?>
+              <span><?=esc($issue['assignee_name'])?></span>
+            <?php endif; ?>
           <?php else: ?>
             <span class="text-light">None</span>
           <?php endif; ?>
@@ -115,9 +123,13 @@
             </a>
             <?php endif; ?>
             <div class="d-flex align-items-center mt-3" style="font-size: 14px;">
-              <a class="text-decoration-none" href="<?=site_url('collaborator/view/' . $file['collaborator'])?>" target="_blank" title="Added by <?=esc($file['collaborator_name'] . ' ' . $file['last'])?>">
-                <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $file['image']?>" alt="collaborator image" style="width: 24px; height: 24px;">
-              </a>
+              <?php if($file['is_active'] != '0'): ?>
+                <a class="text-decoration-none" href="<?=site_url('collaborator/view/' . $file['collaborator'])?>" target="_blank" title="Added by <?=esc($file['collaborator_name'] . ' ' . $file['last'])?>">
+                  <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_PROFILE_IMAGE . $file['image']?>" alt="collaborator image" style="width: 24px; height: 24px;">
+                </a>
+              <?php else: ?>
+                <img class="collaborator-item-image me-2" src="<?=PATH_TO_VIEW_ASSETS_IMAGE . DEFAULT_PROFILE_IMAGE?>" alt="collaborator image" style="width: 24px; height: 24px;">
+              <?php endif; ?>
               <span class="text-white" title="<?=esc($issue['title'])?>">On this issue</span>
               <span class="text-white mx-2">•</span>
               <span class="text-white" title="Added on <?=esc($file['created_at'])?>">

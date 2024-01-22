@@ -24,7 +24,7 @@ class FileModel extends Model
     {
         return $this->db
             ->table('files f')
-            ->select('f.*, c.name AS collaborator_name, c.last, c.image')
+            ->select('f.*, c.name AS collaborator_name, c.last, c.image, c.is_active')
             ->join('collaborators c', 'c.id = f.collaborator')
             ->where('f.issue', $issue)
             ->get()
@@ -43,7 +43,7 @@ class FileModel extends Model
     {
         return $this->db
             ->table('files f')
-            ->select('f.*, i.title, i.id AS issue_id, c.name AS collaborator_name, c.last, c.image')
+            ->select('f.*, i.title, i.id AS issue_id, c.name AS collaborator_name, c.last, c.image, c.is_active')
             ->join('issues i', 'i.id = f.issue')
             ->join('projects p', 'p.id = i.project')
             ->join('collaborators c', 'c.id = f.collaborator')
