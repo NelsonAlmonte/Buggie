@@ -58,7 +58,6 @@ class CollaboratorModel extends Model
             ->join('collaborators c', 'c.id = cp.collaborator')
             ->join('categories ca', 'ca.id = p.status')
             ->where('c.id', $collaborator)
-            ->where('is_active', '1')
             ->get()
             ->getResultArray();
     }

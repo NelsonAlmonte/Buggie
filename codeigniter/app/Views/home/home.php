@@ -69,11 +69,18 @@
                     <a class="text-accent text-decoration-none fw-bold"
                       href="<?=site_url('issue/' . $issue['project_slug'] . '/issue/' . $issue['id'])?>">
                       #<?=esc($issue['id'])?></a>
-                    opened on <a class="text-accent text-decoration-none fw-bold"
-                      href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a>
-                    by <a class="text-accent text-decoration-none fw-bold"
-                      href="<?=site_url('collaborator/view/') . $issue['reporter_id']?>"><?=esc($issue['reporter_name'])?></a>
-                    on <a class="text-accent text-decoration-none fw-bold"
+                      opened on <a class="text-accent text-decoration-none fw-bold"
+                      href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a> by 
+                      <?php if($issue['reporter_is_active'] != '0'): ?> 
+                        <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('collaborator/view/' . $issue['reporter_id'])?>">
+                          <?=esc($issue['reporter_name'])?>
+                        </a>
+                      <?php else: ?>
+                        <span class="fw-bold">
+                          <?=esc($issue['reporter_name'])?>
+                        </span>
+                      <?php endif; ?>
+                      on <a class="text-accent text-decoration-none fw-bold"
                       href="<?=site_url('project/' . $issue['project_slug'] . '/dashboard/')?>"><?=esc($issue['project_name'])?></a>
                   </small>
                 </div>
@@ -121,11 +128,18 @@
                     <a class="text-accent text-decoration-none fw-bold"
                       href="<?=site_url('issue/' . $issue['project_slug'] . '/issue/' . $issue['id'])?>">
                       #<?=esc($issue['id'])?></a>
-                    opened on <a class="text-accent text-decoration-none fw-bold"
-                      href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a>
-                    by <a class="text-accent text-decoration-none fw-bold"
-                      href="<?=site_url('collaborator/view/') . $issue['reporter_id']?>"><?=esc($issue['reporter_name'])?></a>
-                    on <a class="text-accent text-decoration-none fw-bold"
+                      opened on <a class="text-accent text-decoration-none fw-bold"
+                      href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a> by 
+                      <?php if($issue['reporter_is_active'] != '0'): ?> 
+                        <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('collaborator/view/' . $issue['reporter_id'])?>">
+                          <?=esc($issue['reporter_name'])?>
+                        </a>
+                      <?php else: ?>
+                        <span class="fw-bold">
+                          <?=esc($issue['reporter_name'])?>
+                        </span>
+                      <?php endif; ?>
+                      on <a class="text-accent text-decoration-none fw-bold"
                       href="<?=site_url('project/' . $issue['project_slug'] . '/dashboard/')?>"><?=esc($issue['project_name'])?></a>
                   </small><br>
                   <small class="fw-bold text-danger">Late by <?=$issue['overdueDays']?> days</small>

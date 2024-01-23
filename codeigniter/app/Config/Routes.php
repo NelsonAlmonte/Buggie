@@ -46,6 +46,7 @@ $routes->group('collaborator', ['filter' => 'isloggedin'], static function ($rou
     $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
     $routes->post('assignProjects', 'Collaborator::assignProjects');
     $routes->post('removeCollaboratorFromProject', 'Collaborator::removeCollaboratorFromProject');
+    $routes->post('deleteCollaborator', 'Collaborator::deleteCollaborator');
 });
 
 $routes->group('issue', ['filter' => 'isloggedin'], static function ($routes) {

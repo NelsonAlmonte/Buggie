@@ -170,7 +170,7 @@
                   href="<?=site_url('issue/' . $project['slug'] . '/issue/' . $issue['id'])?>">
                   #<?=esc($issue['id'])?></a>
                   opened on <a class="text-accent text-decoration-none fw-bold"
-                  href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a>by
+                  href="#"><?=date_format(date_create($issue['start_date']), 'M j, Y')?></a> by
                   <?php if($issue['reporter_is_active'] != '0'): ?> 
                     <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('collaborator/view/' . $issue['reporter_id'])?>">
                       <?=esc($issue['reporter_name'])?>

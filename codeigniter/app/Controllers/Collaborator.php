@@ -376,6 +376,38 @@ class Collaborator extends BaseController
         return $this->response->setJSON($response);
     }
 
+    public function deleteCollaborator()
+    {
+        $collaboratorModel = model(CollaboratorModel::class);
+        $json = [];
+        $response = [];
+        $data = ['is_active' => '0'];
+        $collaboratorProjects = [];
+        $operationsToValidate = 1;
+        $successfulOperations = 0;
+
+        $json = $this->request->getJSON(true);
+
+        $response['token'] = csrf_hash();
+        $response['status'] = EXIT_ERROR;
+
+        $data['id'] = $json['collaborator'];
+
+        if ($collaboratorModel->updateCollaborator($data)) $successfulOperations ++;
+
+        $collaboratorProjects = $collaboratorModel->getCollaboratorProjects($json['collaborator']);
+        $operationsToValidate += count($collaboratorProjects);
+
+        foreach ($collaboratorProjects as $project) {
+            if ($collaboratorModel->removeCollaboratorFromProject($json['collaborator'], $project['id']))
+                $successfulOperations ++;
+        }
+
+        if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
+
+        return $this->response->setJSON($response);
+    }
+
     private function _cartesian($array)
     {
         $result = [[]];
