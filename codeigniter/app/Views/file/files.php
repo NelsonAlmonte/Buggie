@@ -54,7 +54,7 @@
                         },
                         element: $refs.file
                       },
-                      url = "/issue/deleteIssueFile"
+                      url = "/v1/issue/deleteIssueFile"
                     ' 
                     @click="deleteItem()"
                   >

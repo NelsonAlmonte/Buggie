@@ -187,26 +187,24 @@ class Project extends BaseController
 
 	public function searchProjects()
 	{
-		if ($this->request->isAJAX()) {
-			$projectModel = model(ProjectModel::class);
-      $json = [];
-      $response = [];
-      $projects = [];
+    $projectModel = model(ProjectModel::class);
+    $json = [];
+    $response = [];
+    $projects = [];
 
-			$json = $this->request->getJSON(true);
+    $json = $this->request->getJSON(true);
 
-			$response['token'] = csrf_hash();
+    $response['token'] = csrf_hash();
 
-      $response['data'] = [];
-      if (!empty($json['query'])) {
-			  $projects = $projectModel->searchProjects($json['query']);
-        $response['data'] = array_udiff(
-          $projects, $json['unwanted'], 
-          fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
-        );
-      }
+    $response['data'] = [];
+    if (!empty($json['query'])) {
+      $projects = $projectModel->searchProjects($json['query']);
+      $response['data'] = array_udiff(
+        $projects, $json['unwanted'], 
+        fn ($needle, $haystack) => $needle['id'] <=> $haystack['id']
+      );
+    }
 
-			echo json_encode($response);
-		}
+    return $this->response->setJSON($response);
 	}
 }

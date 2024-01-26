@@ -4,8 +4,7 @@
   x-init='
     selectedItems = <?=json_encode($collaboratorProjects)?>,
     options = {
-      controller: "project",
-      method: "searchProjects"
+      url: "/v1/project/searchProjects",
     }
   ' 
   id="projects-modal" 

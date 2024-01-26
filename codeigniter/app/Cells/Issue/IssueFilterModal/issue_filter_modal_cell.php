@@ -32,8 +32,7 @@
               x-init="
                 query = '<?=isset($_GET[$key]) ? $_GET[$key] : '' ;?>',
                 options = {
-                  controller: '<?=$filter['controller']?>',
-                  method: '<?=$filter['method']?>',
+                  url: '/v1/<?=$filter['controller']?>/<?=$filter['method']?>',
                   project: '<?=$project['id']?>'
                 }
               " 

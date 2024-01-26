@@ -75,8 +75,7 @@
             x-init='
               query = <?=json_encode($auth["fullname"])?>,
               options = {
-                controller: "collaborator",
-                method: "searchCollaborators",
+                url: "/v1/collaborator/searchCollaborators",
                 project: <?=json_encode($project['id'])?>
               }
             ' 
@@ -120,8 +119,7 @@
             x-data="searchSelect" 
             x-init='
               options = {
-                controller: "collaborator",
-                method: "searchCollaborators",
+                url: "/v1/collaborator/searchCollaborators",
                 project: <?=json_encode($project['id'])?>
               }
             '

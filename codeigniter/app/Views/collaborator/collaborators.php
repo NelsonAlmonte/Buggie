@@ -73,7 +73,7 @@
                           },
                           element: $refs.collaborator
                         },
-                        url = '/collaborator/removeCollaboratorFromProject'
+                        url = '/v1/collaborator/removeCollaboratorFromProject'
                       "
                       @click="deleteItem()"
                     >
@@ -104,7 +104,7 @@
                           },
                           element: $refs.collaborator
                         },
-                        url = '/collaborator/deleteCollaborator'
+                        url = '/v1/collaborator/deleteCollaborator'
                       "
                       @click="deleteItem()"
                     >

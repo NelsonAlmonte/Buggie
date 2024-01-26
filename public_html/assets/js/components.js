@@ -9,7 +9,7 @@ document.addEventListener('alpine:init', () => {
 		},
 		async getItems() {
 			const payload = {
-				url: `/${this.options.controller}/${this.options.method}`,
+				url: `${this.options.url}`,
 				method: 'POST',
 				data: {
 					query: this.query,
@@ -17,7 +17,7 @@ document.addEventListener('alpine:init', () => {
 				},
 			};
 
-			if (Object.keys(this.options).length > 2)
+			if (Object.keys(this.options).length > 1)
 				payload.data[Object.keys(this.options).pop()] = Object.values(
 					this.options
 				).pop();
@@ -116,7 +116,7 @@ document.addEventListener('alpine:init', () => {
 					},
 				},
 				quickInsertEnabled: false,
-				imageUploadURL: '/issue/uploadIssueImage',
+				imageUploadURL: '/v1/issue/uploadIssueImage',
 				imageUploadParams: {
 					[csrfName]: csrfHash,
 				},
@@ -142,8 +142,8 @@ document.addEventListener('alpine:init', () => {
 						if (image[0].classList.contains('fr-uploading')) return;
 
 						const payload = {
-							url: `/issue/deleteIssueImage`,
-							method: 'POST',
+							url: `/v1/issue/deleteIssueImage`,
+							method: 'DELETE',
 							data: {
 								image: image[0].src,
 							},
@@ -181,7 +181,7 @@ document.addEventListener('alpine:init', () => {
 		async deleteItem() {
 			const payload = {
 				url: this.url,
-				method: 'POST',
+				method: 'DELETE',
 				data: this.options.payload,
 			};
 
@@ -221,7 +221,7 @@ document.addEventListener('alpine:init', () => {
 	}));
 
 	Alpine.data('reportChart', () => ({
-		url: '/report/getReport',
+		url: '/v1/report/getReport',
 		selectedType: 'assignee',
 		types: ['assignee', 'reporter', 'status', 'classification', 'severity'],
 		project: '',
@@ -246,12 +246,9 @@ document.addEventListener('alpine:init', () => {
 		},
 		async initChart(el) {
 			const payload = {
-				url: this.url,
-				method: 'POST',
-				data: {
-					type: this.selectedType,
-					project: this.project,
-				},
+				url: `${this.url}?type=${this.selectedType}&project=${this.project}`,
+				method: 'GET',
+				data: null,
 			};
 
 			const [response, error] = await useFetch(payload);
@@ -288,12 +285,9 @@ document.addEventListener('alpine:init', () => {
 			const chart = Chart.getChart(el);
 
 			const payload = {
-				url: this.url,
-				method: 'POST',
-				data: {
-					type: this.selectedType,
-					project: this.project,
-				},
+				url: `${this.url}?type=${this.selectedType}&project=${this.project}`,
+				method: 'GET',
+				data: null,
 			};
 
 			const [response, error] = await useFetch(payload);
@@ -353,7 +347,7 @@ document.addEventListener('alpine:init', () => {
 	}));
 
 	Alpine.data('calendar', () => ({
-		url: '/calendar/getIssues',
+		url: '/v1/calendar/getIssues',
 		projectId: '',
 		projectSlug: '',
 		async initCalendar(el) {
@@ -385,12 +379,9 @@ document.addEventListener('alpine:init', () => {
 		},
 		async getIssues() {
 			const payload = {
-				url: this.url,
-				method: 'POST',
-				data: {
-					projectId: this.projectId,
-					projectSlug: this.projectSlug,
-				},
+				url: `${this.url}?projectId=${this.projectId}&projectSlug=${this.projectSlug}`,
+				method: 'GET',
+				data: null,
 			};
 
 			const [response, error] = await useFetch(payload);

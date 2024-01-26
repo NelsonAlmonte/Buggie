@@ -288,8 +288,8 @@ class Collaborator extends BaseController
         $json = $this->request->getJSON(true);
 
         $response['token'] = csrf_hash();
-
         $response['data'] = [];
+
         if (!empty($json['query'])) {
             if (isset($json['project'])) $project = $json['project'];
             $collaborators = $collaboratorModel->searchCollaborators($json['query'], $project);
@@ -306,31 +306,29 @@ class Collaborator extends BaseController
 
     public function assignProjects()
     {
-        if ($this->request->isAJAX()) {
-			$collaboratorModel = model(CollaboratorModel::class);
-            $json = [];
-            $response = [];
-            $cartesian = [];
-            $projectsToAdd = [];
-            $operationsToValidate = 0;
-            $successfulOperations = 0;
+        $collaboratorModel = model(CollaboratorModel::class);
+        $json = [];
+        $response = [];
+        $cartesian = [];
+        $projectsToAdd = [];
+        $operationsToValidate = 0;
+        $successfulOperations = 0;
 
-			$json = $this->request->getJSON(true);
+        $json = $this->request->getJSON(true);
 
-            $cartesian = $this->_cartesian([$json['collaborators'], $json['projects']]);
-            $projectsToAdd = $this->verifyCollaboratorProjects($cartesian);
-            $operationsToValidate = count($projectsToAdd);
-            if (!empty($projectsToAdd))
-                $successfulOperations += $collaboratorModel->saveCollaboratorProjects($projectsToAdd);
+        $cartesian = $this->_cartesian([$json['collaborators'], $json['projects']]);
+        $projectsToAdd = $this->verifyCollaboratorProjects($cartesian);
+        $operationsToValidate = count($projectsToAdd);
+        if (!empty($projectsToAdd))
+            $successfulOperations += $collaboratorModel->saveCollaboratorProjects($projectsToAdd);
 
-            $response['status'] = EXIT_DATABASE;
-            $response['token'] = csrf_hash();
-            $response['data'] = $projectsToAdd;
+        $response['status'] = EXIT_DATABASE;
+        $response['token'] = csrf_hash();
+        $response['data'] = $projectsToAdd;
 
-            if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
+        if ($successfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
 
-			echo json_encode($response);
-		}
+        return $this->response->setJSON($response);
     }
 
     public function verifyCollaboratorProjects($data)

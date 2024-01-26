@@ -35,7 +35,6 @@ $routes->get('home', 'Home::home', ['filter' => 'isloggedin']);
 $routes->group('project', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->get('/', 'Project::projects');
     $routes->get('(:segment)/dashboard', 'Project::dashboard/$1', ['filter' => ['isloggedin', 'projectaccess']]);
-    $routes->post('searchProjects', 'Project::searchProjects');
 });
 
 $routes->group('collaborator', ['filter' => 'isloggedin'], static function ($routes) {
@@ -43,10 +42,6 @@ $routes->group('collaborator', ['filter' => 'isloggedin'], static function ($rou
     $routes->get('(:segment)', 'Collaborator::collaborators/$1', ['filter' => ['isloggedin', 'projectaccess']]);
     $routes->get('edit/(:num)', 'Collaborator::edit/$1', ['filter' => ['isloggedin', 'checkownership']]);
     $routes->post('update/(:num)', 'Collaborator::update/$1', ['filter' => 'checkownership']);
-    $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
-    $routes->post('assignProjects', 'Collaborator::assignProjects');
-    $routes->post('removeCollaboratorFromProject', 'Collaborator::removeCollaboratorFromProject');
-    $routes->post('deleteCollaborator', 'Collaborator::deleteCollaborator');
 });
 
 $routes->group('issue', ['filter' => 'isloggedin'], static function ($routes) {
@@ -57,11 +52,6 @@ $routes->group('issue', ['filter' => 'isloggedin'], static function ($routes) {
     $routes->post('(:segment)/save', 'Issue::save/$1');
     $routes->get('(:segment)/edit/(:num)', 'Issue::edit/$1/$2', ['filter' => ['isloggedin', 'issueownership']]);
     $routes->post('(:segment)/update/(:num)', 'Issue::update/$1/$2', ['filter' => ['isloggedin', 'issueownership']]);
-    $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
-    $routes->post('deleteIssueImage', 'Issue::deleteIssueImage');
-    $routes->post('deleteIssueFile', 'Issue::deleteIssueFile');
-    $routes->post('deleteIssue', 'Issue::deleteIssue');
-    $routes->post('assignIssue', 'Issue::assignIssue');
 });
 
 $routes->group('auth', static function ($routes) {
@@ -115,7 +105,37 @@ $routes->group('manage', ['filter' => ['isloggedin', 'checkpermissions']], stati
     });
 });
 
-$routes->post('category/searchCategories', 'Category::searchCategories');
+$routes->group('v1', ['filter' => 'isloggedin'], static function($routes) {
+    $routes->group('project', static function($routes) {
+        $routes->post('searchProjects', 'Project::searchProjects');
+    });
+
+    $routes->group('collaborator', static function($routes) {
+        $routes->post('searchCollaborators', 'Collaborator::searchCollaborators');
+        $routes->post('assignProjects', 'Collaborator::assignProjects');
+        $routes->delete('removeCollaboratorFromProject', 'Collaborator::removeCollaboratorFromProject');
+        $routes->delete('deleteCollaborator', 'Collaborator::deleteCollaborator');
+    });
+
+    $routes->group('issue', static function($routes) {
+        $routes->post('uploadIssueImage', 'Issue::uploadIssueImage');
+        $routes->post('assignIssue', 'Issue::assignIssue');
+        $routes->delete('deleteIssueImage', 'Issue::deleteIssueImage');
+        $routes->delete('deleteIssueFile', 'Issue::deleteIssueFile');
+        $routes->delete('deleteIssue', 'Issue::deleteIssue');
+    });
+
+    $routes->group('report', ['filter' => 'isloggedin'], static function ($routes) {
+        $routes->get('getReport', 'Report::getReport');
+    });
+    
+    $routes->group('calendar', ['filter' => 'isloggedin'], static function ($routes) {
+        $routes->get('getIssues', 'Calendar::getIssues');
+    });
+    
+    $routes->post('category/searchCategories', 'Category::searchCategories');
+});
+
 
 
 /*

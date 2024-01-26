@@ -136,7 +136,7 @@
                       },
                       element: $refs.issue
                     },
-                    url = "/issue/deleteIssue"
+                    url = "/v1/issue/deleteIssue"
                   ' 
                   @click="deleteItem()"
                 >

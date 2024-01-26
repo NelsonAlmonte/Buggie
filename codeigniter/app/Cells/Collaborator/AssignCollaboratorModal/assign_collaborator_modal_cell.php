@@ -23,8 +23,7 @@
           x-data="searchSelect" 
           x-init='
             options = {
-              controller: "project",
-              method: "searchProjects"
+              url: "/v1/project/searchProjects"
             }
           '
           :class="step === 0 ? '' : 'd-none'"
@@ -82,8 +81,7 @@
           "
           x-init='
             options = {
-              controller: "collaborator",
-              method: "searchCollaborators"
+              url: "/v1/collaborator/searchCollaborators",
             }
           '
           :class="step === 1 ? '' : 'd-none'"
@@ -156,7 +154,7 @@
               x-text="project.name" 
             >
           </template>
-          <div x-data="saveItem" x-init="url = '/collaborator/assignProjects'">
+          <div x-data="saveItem" x-init="url = '/v1/collaborator/assignProjects'">
             <button 
               class="btn btn-rounded btn-primary btn-block w-100 mt-4 py-3"
               type="button"

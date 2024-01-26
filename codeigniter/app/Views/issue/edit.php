@@ -73,7 +73,7 @@
                             },
                             element: $refs.file
                           },
-                          url = "/issue/deleteIssueFile"
+                          url = "/v1/issue/deleteIssueFile"
                         ' 
                         @click="deleteItem()">
                         <i class="bi bi-trash"></i>
@@ -118,8 +118,7 @@
             x-init='
               query = <?=json_encode($issue["reporter_name"])?>,
               options = {
-                controller: "collaborator",
-                method: "searchCollaborators",
+                url: "/v1/collaborator/searchCollaborators",
                 project: <?=json_encode($project['id'])?>
               }
             '
@@ -165,8 +164,7 @@
             x-init='
               query = <?=json_encode($issue['assignee_name'])?>,
               options = {
-                controller: "collaborator",
-                method: "searchCollaborators",
+                url: "/v1/collaborator/searchCollaborators",
                 project: <?=json_encode($issue['project'])?>
               }
             '

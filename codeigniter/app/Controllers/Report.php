@@ -33,7 +33,7 @@ class Report extends BaseController
         $response = [];
         $report = [];
 
-        $json = $this->request->getJSON(true);
+        $json = $this->request->getGet();
 
         $response['token'] = csrf_hash();
         

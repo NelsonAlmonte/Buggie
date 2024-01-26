@@ -40,7 +40,7 @@ class Calendar extends BaseController
         $response = [];
         $issues = [];
 
-        $json = $this->request->getJSON(true);
+        $json = $this->request->getGet();
 
         $response['token'] = csrf_hash();
         $response['events'] = $issues;

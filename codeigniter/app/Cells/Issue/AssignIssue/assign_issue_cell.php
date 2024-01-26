@@ -7,8 +7,7 @@
   x-data="searchSelect"
   x-init='
     options = {
-      controller: "collaborator",
-      method: "searchCollaborators",
+      url: "/v1/collaborator/searchCollaborators",
       project: <?=json_encode($project['id'])?>
     }
   '
@@ -53,7 +52,7 @@
       <div 
         class="px-3 pb-3" 
         x-data="saveItem"
-        x-init="url = '/issue/assignIssue'"
+        x-init="url = '/v1/issue/assignIssue'"
       >
         <button 
           class="btn btn-rounded btn-primary btn-block w-100 py-3" 
