@@ -11,6 +11,7 @@
       project: <?=json_encode($project['id'])?>
     }
   '
+  x-ref="modal"
   @get-issue-id.window="$refs.issue.value = $event.detail.issue"
 >
   <div class="modal-dialog modal-dialog-centered">
@@ -30,7 +31,7 @@
             placeholder="Assign to" 
             autocomplete="off" 
             x-model="query"
-            @input="getItems(options)"
+            @input.debounce.500ms="getItems(options)"
           >
           <ul x-show="items.length > 0">
             <template x-for="item in items">
@@ -52,7 +53,16 @@
       <div 
         class="px-3 pb-3" 
         x-data="saveItem"
-        x-init="url = '/v1/issue/assignIssue'"
+        x-init="
+          url = '/v1/issue/assignIssue';
+          $watch('isLoading', value => {
+            if (!value) {
+              bootstrap.Modal.getInstance($refs.modal).hide();
+              step = 0;
+              query = '';
+            }
+          });
+        "
       >
         <button 
           class="btn btn-rounded btn-primary btn-block w-100 py-3" 
@@ -61,7 +71,7 @@
           :disabled="isLoading"
           @click="
             item = { issue: $refs.issue.value, collaborator: $refs.collaborator.value };
-            saveItem()
+            saveItem();
           "
         >
           <span class="spinner-border spinner-border-sm me-1" aria-hidden="true" x-show="isLoading"></span>

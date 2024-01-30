@@ -90,7 +90,7 @@
               placeholder="Reporter" 
               autocomplete="off" 
               x-model="query"
-              @input="getItems(options)"
+              @input.debounce.500ms="getItems(options)"
             >
             <ul x-show="items.length > 0">
               <template x-for="item in items">
@@ -133,7 +133,7 @@
               placeholder="Assign to" 
               autocomplete="off" 
               x-model="query"
-              @input="getItems(options)"
+              @input.debounce.500ms="getItems(options)"
             >
             <ul x-show="items.length > 0">
               <template x-for="item in items">

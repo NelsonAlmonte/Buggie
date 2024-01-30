@@ -45,7 +45,7 @@
                 autocomplete="off" 
                 value="<?=isset($_GET[$key]) ? $_GET[$key] : '' ;?>"
                 x-model="query"
-                @input="getItems(options)"
+                @input.debounce.500ms="getItems(options)"
               >
               <ul x-show="items.length > 0">
                 <template x-for="item in items">

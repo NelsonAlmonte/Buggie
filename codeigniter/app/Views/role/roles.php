@@ -20,11 +20,8 @@
           <td><?=esc($role['name'])?></td>
           <td><?=esc($role['description'])?></td>
           <td>
-            <a class="btn btn-success btn-rounded me-2" href="<?=site_url('manage/role/edit/') . $role['id']?>"><i
-                class="bi bi-pencil me-2"></i>Edit</a>
-
-            <button class="btn btn-danger btn-rounded"><i
-                class="bi bi-trash me-2"></i>Delete</button>
+            <a class="btn btn-success btn-rounded me-2" href="<?=site_url('manage/role/edit/') . $role['id']?>">Edit</a>
+            <button class="btn btn-danger btn-rounded">Delete</button>
           </td>
         </tr>
         <?php endforeach; ?>

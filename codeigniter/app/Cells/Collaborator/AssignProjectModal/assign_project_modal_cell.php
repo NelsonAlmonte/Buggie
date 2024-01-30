@@ -22,7 +22,7 @@
       <div class="modal-body">
         <div class="form-floating mb-3">
           <input type="text" class="form-control bg-complementary border-0" id="projects" placeholder="project"
-            autocomplete="off" x-model="query" @input="getItems(options)">
+            autocomplete="off" x-model="query" @input.debounce.500ms="getItems(options)">
           <label for="projects">Search for projects</label>
         </div>
         <div class="mb-4">

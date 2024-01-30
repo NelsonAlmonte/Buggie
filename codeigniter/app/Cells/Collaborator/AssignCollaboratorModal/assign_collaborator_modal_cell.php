@@ -1,6 +1,12 @@
-<div class="modal fade" id="collaborators-modal" tabindex="-1"
-  aria-labelledby="collaborators-modal-label" aria-hidden="true" 
-  x-data="{ step: 0, titles: ['Select projects', 'Select collaborators', 'Confirmation'] }">
+<div 
+  class="modal fade" 
+  id="collaborators-modal" 
+  tabindex="-1"
+  aria-labelledby="collaborators-modal-label" 
+  aria-hidden="true" 
+  x-data="{ step: 0, titles: ['Select projects', 'Select collaborators', 'Confirmation'] }"
+  x-ref="modal"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dominant border-0">
       <div class="d-flex justify-content-between align-items-center p-3">
@@ -36,7 +42,7 @@
               placeholder="project"
               autocomplete="off" 
               x-model="query" 
-              @input="getItems(options)"
+              @input.debounce.500ms="getItems(options)"
             >
             <label for="project">Search for projects</label>
           </div>
@@ -95,7 +101,7 @@
               placeholder="collaborator"
               autocomplete="off" 
               x-model="query" 
-              @input="getItems(options)"
+              @input.debounce.500ms="getItems(options)"
             >
             <label for="collaborator">Search for collaborators</label>
           </div>
@@ -154,7 +160,18 @@
               x-text="project.name" 
             >
           </template>
-          <div x-data="saveItem" x-init="url = '/v1/collaborator/assignProjects'">
+          <div 
+            x-data="saveItem" 
+            x-init="
+              url = '/v1/collaborator/assignProjects';
+              $watch('isLoading', value => {
+                if (!value) {
+                  bootstrap.Modal.getInstance($refs.modal).hide();
+                  step = 0;
+                }
+              });
+            "
+          >
             <button 
               class="btn btn-rounded btn-primary btn-block w-100 mt-4 py-3"
               type="button"
