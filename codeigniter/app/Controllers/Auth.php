@@ -32,7 +32,12 @@ class Auth extends BaseController
         $collaborator = $collaboratorModel->getCollaborator($username, 'username');
 
         if (!$collaborator) {
-            session()->setFlashdata('message', 'Este usuario no existe');
+            session()->setFlashdata([
+                'message' => 'This user does not exist', 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
+            ]);
             return redirect()->to('auth/login');
         }
 
@@ -40,7 +45,12 @@ class Auth extends BaseController
         $isPasswordAuthenticated = password_verify($password, $collaboratorPassword);
 
         if (!$isPasswordAuthenticated) {
-            session()->setFlashdata('message', 'Contraseña incorrecta');
+            session()->setFlashdata([
+                'message' => 'Invalid password', 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
+            ]);
             return redirect()->to('auth/login');
         }
 

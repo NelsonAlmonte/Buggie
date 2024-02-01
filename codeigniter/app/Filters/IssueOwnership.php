@@ -39,6 +39,7 @@ class IssueOwnership implements FilterInterface
             session()->setFlashdata([
                 'message' => MESSAGE_ERROR, 
                 'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
                 'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('project');

@@ -26,7 +26,12 @@ class IsLoggedIn implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if (!session()->get('isLoggedIn')) {
-            session()->setFlashdata('message', 'Debe iniciar sesión para poder acceder a esta página');
+            session()->setFlashdata([
+                'message' => 'You need to log in first', 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
+            ]);
             return redirect()->to('auth/login');
         }
     }

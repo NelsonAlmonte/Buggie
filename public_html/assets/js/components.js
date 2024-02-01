@@ -501,7 +501,7 @@ document.addEventListener('alpine:init', () => {
 			iconColor: options.bootstrapHexColor,
 			showConfirmButton: false,
 			position: 'bottom',
-			timer: 3000,
+			timer: 4000,
 			customClass: {
 				popup: `sweet-alert-toast-popup border rounded-5 border-${options.bootstrapClassColor}`,
 				title: 'sweet-alert-toast-title',

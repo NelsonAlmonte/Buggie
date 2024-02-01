@@ -39,9 +39,10 @@ class ProjectAccess implements FilterInterface
 
         if (!in_array($projectToBeAccessed, $collaboratorProjects)) {
             session()->setFlashdata([
-              'message' => MESSAGE_ERROR, 
-              'color' => MESSAGE_ERROR_COLOR, 
-              'icon' => MESSAGE_ERROR_ICON
+                'message' => MESSAGE_ERROR, 
+                'color' => MESSAGE_ERROR_COLOR, 
+                'hexColor' => MESSAGE_ERROR_HEX_COLOR, 
+                'icon' => MESSAGE_ERROR_ICON
             ]);
             return redirect()->to('project');
         }
