@@ -12,28 +12,28 @@
   <link rel="stylesheet" href="/assets/css/style.css">
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
-    
+
   </style>
 </head>
 
 <body class="login-background">
-  <header id="header" class="header fixed-top d-flex align-items-center justify-content-between bg-transparent shadow-none ms-3">
+  <header id="header" class="header fixed-top d-flex align-items-center justify-content-between bg-transparent shadow-none">
     <div class="d-flex align-items-center">
       <div class="d-flex align-items-center justify-content-between">
         <a href="#" class="logo d-flex align-items-center">
           <i class="bi bi-bug me-2"></i>
-          <span class="d-none d-lg-block">Buggie</span>
+          <span>Buggie</span>
         </a>
       </div>
     </div>
   </header>
   <main class="main">
     <div class="d-flex align-items-center justify-content-start vh-100">
-      <div class="ms-5 w-25">
+      <div class="mx-4 vw-50">
         <div class="py-4">
-          <p class="mb-3 fw-bold text-uppercase" style="letter-spacing: 1px;">Your one simple bugtracker</p>
-          <h1 class="mb-4 fw-bold">Welcome back!</h1>
-          <p class="mb-4 fw-bold">Use the credentials assigned by your project manager</p>
+          <p class="mb-3 fw-bold text-uppercase text-white" style="letter-spacing: 1px;">Your one simple <span class="text-primary">bugtracker</span></p>
+          <h1 class="mb-4 fw-bold">Welcome to <span class="text-primary">Buggie</span></h1>
+          <p class="mb-4 fw-bold text-white">Use the credentials assigned by your project manager</p>
         </div>
         <form class="row g-3 pb-4" action="<?= site_url('auth/authenticate') ?>" method="post">
           <?= csrf_field() ?>

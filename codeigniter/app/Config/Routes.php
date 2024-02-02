@@ -29,7 +29,7 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::home', ['filter' => 'isloggedin']);
+$routes->get('/', 'Auth::login');
 $routes->get('home', 'Home::home', ['filter' => 'isloggedin']);
 
 $routes->group('project', ['filter' => 'isloggedin'], static function ($routes) {
