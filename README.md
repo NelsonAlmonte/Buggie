@@ -112,38 +112,42 @@ Buggie is a simple bugtracker made to track issues and bugs in projects focused 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+As per [CodeIgniter](https://codeigniter.com/) requirements you will need to have [PHP](https://www.php.net/) version 7.4 or newer, with the followind PHP extensions enabled:
+
+* [itnl](https://www.php.net/manual/en/intl.requirements.php)
+* [mbstring](https://www.php.net/manual/en/mbstring.requirements.php)
+* [json](https://www.php.net/manual/en/json.requirements.php)
+  
+_For more, please refer to the [CodeIgniter requirements documentation](https://codeigniter.com/user_guide/intro/requirements.html)_
+
+Buggie uses [MySQL](https://www.mysql.com/) as the database, so you need to have a database created named **buggie**.
+
+You can also use [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](https://www.wampserver.com/en/).
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/NelsonAlmonte/Buggie.git
    ```
-3. Install NPM packages
+2. Start either [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](https://www.wampserver.com/en/).
+   
+3. Open the Database.php file that is in your codeigniter/app/Config directory and setup your MySQL username and password.
+4. Using a terminal navigate to the codeigniter directory and run the followind command (You need to have the buggie database alredy created for this to work):
    ```sh
-   npm install
+    php spark migrate
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+5. In the same directory run the following command:
+   ```sh
+    php spark db:seed SetupAuthRecords
+   ```
+   And the command:
+   ```sh
+    php spark db:seed InsertCategories
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
