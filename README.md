@@ -65,7 +65,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -83,7 +82,7 @@ Buggie is a simple bugtracker made to track issues and bugs in projects focused 
 
 * Manage multiple project.
 * A dashboard for your projects.
-* Search and filter issues by name, reporter, assigne and status.
+* Search and filter issues by name, reporter, assignee and status.
 * Manage your collaborators and assign them to multiple projects.
 * Your own home page with the necessary info to keep working.
 * Graph report for everyone of your projects.
@@ -124,20 +123,20 @@ As per [CodeIgniter](https://codeigniter.com/) requirements you will need to hav
   
 _For more, please refer to the [CodeIgniter requirements documentation](https://codeigniter.com/user_guide/intro/requirements.html)_
 
-Buggie uses [MySQL](https://www.mysql.com/) as the database, so you need to have a database created named **buggie**.
+Buggie uses [MySQL](https://www.mysql.com/) as the database, so you need to have a database created named `buggie`.
 
 You can also use [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](https://www.wampserver.com/en/).
 
 ### Installation
 
-1. Clone the repo
+1. Clone the repo.
    ```sh
    git clone https://github.com/NelsonAlmonte/Buggie.git
    ```
 2. Start either [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](https://www.wampserver.com/en/).
    
-3. Open the Database.php file that is in your codeigniter/app/Config directory and setup your MySQL username and password.
-4. Using a terminal navigate to the codeigniter directory and run the followind command (You need to have the buggie database alredy created for this to work):
+3. Open the Database.php file that is in your `codeigniter/app/Config` directory and setup your MySQL username and password.
+4. Using a terminal navigate to the `codeigniter` directory and run the following command (You need to have the `buggie` database already created for this to work):
    ```sh
     php spark migrate
    ```
@@ -149,7 +148,7 @@ You can also use [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](
    ```sh
     php spark db:seed InsertCategories
    ```
-
+   These commands will insert the necessary auth and categories for the project to work.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -157,43 +156,38 @@ You can also use [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+To run the project go the `codeigniter` directory and run the following command:
+```sh
+  php spark serve
+```
+This will run the project on your [localhost](http://localhost:8080/).
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+By default the project is running in production mode. To run the project on development mode go to the `codeigniter` directory and rename the `env` file to `.env` inside the recently renamed file change the line following line:
+
+```sh
+  # CI_ENVIRONMENT = production
+```
+
+To:
+
+```sh
+  CI_ENVIRONMENT = development
+```
+
+_For more information on how to run a CodeIgniter project, please refer to the [CodeIgniter documentation](https://codeigniter.com/user_guide/installation/running.html)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/amazing-feature`)
+3. Commit your Changes (`git commit -m 'add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -212,9 +206,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Nelson Almonte - almontetejedanelson@gmail.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/NelsonAlmonte/Buggie](https://github.com/NelsonAlmonte/Buggie)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -223,16 +217,9 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 * [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
 * [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
