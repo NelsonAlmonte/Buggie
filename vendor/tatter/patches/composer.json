@@ -1,0 +1,32 @@
+{
+	"name": "tatter/patches",
+	"type": "library",
+	"description": "Automated project updates for CodeIgniter 4",
+	"keywords": [
+		"codeigniter",
+		"codeigniter4",
+		"patches",
+		"automatic",
+		"update",
+		"autoupdate"
+	],
+	"homepage": "https://github.com/tattersoftware/codeigniter4-patches",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Matthew Gatner",
+			"email": "mgatner@tattersoftware.com",
+			"homepage": "https://tattersoftware.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": "^7.3 || ^8.0"
+	},
+	"bin": [
+		"src/patch"
+	],
+	"scripts": {
+		"test": "tests/run"
+	}
+}
