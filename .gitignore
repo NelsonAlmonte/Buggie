@@ -41,67 +41,67 @@ $RECYCLE.BIN/
 #-------------------------
 # These should never be under version control,
 # as it poses a security risk.
-codeigniter/.env
-codeigniter/.vagrant
-codeigniter/Vagrantfile
+.env
+.vagrant
+Vagrantfile
 
 #-------------------------
 # Temporary Files
 #-------------------------
-codeigniter/writable/cache/*
-codeigniter/!writable/cache/index.html
+writable/cache/*
+!writable/cache/index.html
 
-codeigniter/writable/logs/*
-codeigniter/!writable/logs/index.html
+writable/debugbar/*
+!writable/debugbar/index.html
 
-codeigniter/writable/session/*
-codeigniter/!writable/session/index.html
+writable/logs/*
+!writable/logs/index.html
 
-codeigniter/writable/uploads/*
-codeigniter/!writable/uploads/index.html
+writable/session/*
+!writable/session/index.html
 
-!public_html/uploads
-public_html/uploads/*
-!public_html/uploads/.gitkeep
+writable/uploads/*
+!writable/uploads/index.html
 
-!public_html/uploads/profile-image
-public_html/uploads/profile-image/*
-!public_html/uploads/profile-image/.gitkeep
+!public/uploads
+public/uploads/*
+!public/uploads/.gitkeep
 
-!public_html/uploads/issues-images
-public_html/uploads/issues-images/*
-!public_html/uploads/issues-images/.gitkeep
+!public/uploads/profile-image
+public/uploads/profile-image/*
+!public/uploads/profile-image/.gitkeep
 
-!public_html/uploads/issues-files
-public_html/uploads/issues-files/*
-!public_html/uploads/issues-files/.gitkeep
+!public/uploads/issues-images
+public/uploads/issues-images/*
+!public/uploads/issues-images/.gitkeep
 
-codeigniter/writable/debugbar/*
-codeigniter/!writable/debugbar/.gitkeep
+!public/uploads/issues-files
+public/uploads/issues-files/*
+!public/uploads/issues-files/.gitkeep
 
-codeigniter/writable/**/*.db
-codeigniter/writable/**/*.sqlite
+writable/**/*.db
+writable/**/*.sqlite
 
-codeigniter/php_errors.log
+php_errors.log
 
 #-------------------------
 # User Guide Temp Files
 #-------------------------
-codeigniter/user_guide_src/build/*
+user_guide_src/build/*
 
 #-------------------------
 # Test Files
 #-------------------------
-codeigniter/tests/coverage*
+tests/coverage*
 
 # Don't save phpunit under version control.
-codeigniter/phpunit
+phpunit
 
 #-------------------------
 # Composer
 #-------------------------
-codeigniter/vendor/
-codeigniter/composer.lock
+vendor/
+composer.lock
 
 #-------------------------
 # IDE / Development Files
