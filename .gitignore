@@ -101,7 +101,7 @@ phpunit
 # Composer
 #-------------------------
 vendor/
-composer.lock
+# composer.lock
 
 #-------------------------
 # IDE / Development Files
