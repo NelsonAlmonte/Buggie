@@ -47,25 +47,6 @@ class Cache extends BaseConfig
 
     /**
      * --------------------------------------------------------------------------
-     * Cache Include Query String
-     * --------------------------------------------------------------------------
-     *
-     * Whether to take the URL query string into consideration when generating
-     * output cache files. Valid options are:
-     *
-     *    false      = Disabled
-     *    true       = Enabled, take all query parameters into account.
-     *                 Please be aware that this may result in numerous cache
-     *                 files generated for the same page over and over again.
-     *    array('q') = Enabled, but only take into account the specified list
-     *                 of query parameters.
-     *
-     * @var bool|string[]
-     */
-    public $cacheQueryString = false;
-
-    /**
-     * --------------------------------------------------------------------------
      * Key Prefix
      * --------------------------------------------------------------------------
      *
@@ -156,7 +137,7 @@ class Cache extends BaseConfig
      * This is an array of cache engine alias' and class names. Only engines
      * that are listed here are allowed to be used.
      *
-     * @var array<string, string>
+     * @var array<string, class-string<CacheInterface>>
      */
     public array $validHandlers = [
         'dummy'     => DummyHandler::class,
@@ -166,4 +147,23 @@ class Cache extends BaseConfig
         'redis'     => RedisHandler::class,
         'wincache'  => WincacheHandler::class,
     ];
+
+    /**
+     * --------------------------------------------------------------------------
+     * Web Page Caching: Cache Include Query String
+     * --------------------------------------------------------------------------
+     *
+     * Whether to take the URL query string into consideration when generating
+     * output cache files. Valid options are:
+     *
+     *    false = Disabled
+     *    true  = Enabled, take all query parameters into account.
+     *            Please be aware that this may result in numerous cache
+     *            files generated for the same page over and over again.
+     *    ['q'] = Enabled, but only take into account the specified list
+     *            of query parameters.
+     *
+     * @var bool|list<string>
+     */
+    public $cacheQueryString = false;
 }
