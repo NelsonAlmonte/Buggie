@@ -134,16 +134,16 @@ You need to have [Composer](https://getcomposer.org/) installed to install the n
    git clone https://github.com/NelsonAlmonte/Buggie.git
    ```
 2. Start either [XAMPP](https://www.apachefriends.org/es/index.html) or [WAMP](https://www.wampserver.com/en/).
-3. Enter the `codeigniter` directory and run the following command to install the project dependencies:
+3. Run the following command to install the project dependencies:
    ```sh
    composer install
    ```
-4. Open the **Database.php** file that is in your `codeigniter/app/Config` directory and setup your MySQL username and password.
-5. Using a terminal go to the `codeigniter` directory and run the following command (You need to have the `buggie` database already created for this to work):
+4. Open the **Database.php** file that is in your `app/Config` directory and setup your MySQL username and password.
+5. Using the terminal run the following command (You need to have the `buggie` database already created for this to work):
    ```sh
     php spark migrate
    ```
-6. In the same directory run the following command:
+6. Run the following command:
    ```sh
     php spark db:seed SetupAuthRecords
    ```
@@ -158,7 +158,7 @@ You need to have [Composer](https://getcomposer.org/) installed to install the n
 
 ## Usage
 
-To run the project go the `codeigniter` directory and run the following command:
+To start the project run the following command:
 
 ```sh
   php spark serve
@@ -166,7 +166,7 @@ To run the project go the `codeigniter` directory and run the following command:
 
 This will run the project on your [localhost](http://localhost:8080/).
 
-By default the project is running in production mode. To run the project on development mode go to the `codeigniter` directory and rename the `env` file to `.env` inside the recently renamed file change the line following line:
+By default the project is running in production mode. To start the project on development mode rename the `env` file to `.env`, then inside the recently renamed file change the following line:
 
 ```sh
   # CI_ENVIRONMENT = production
@@ -183,6 +183,7 @@ _For more information on how to run a CodeIgniter project, please refer to the [
 To login in to the project use the following credentials:
 
 Username: **admin**
+<br>
 Password: **123456**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
