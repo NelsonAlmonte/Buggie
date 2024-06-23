@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6024420b1721e2725ff5d581d9ad54ad",
+    "content-hash": "e29a8240d9f41326dbbfd2a1bea41527",
     "packages": [
         {
             "name": "codeigniter4/framework",
@@ -12,30 +12,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/codeigniter4/framework.git",
-                "reference": "30008a0e3c342f2b6e5083927bec49feec95ed53"
+                "reference": "163f11101a49d7ab70287f6163e5b647a0e26fa4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/30008a0e3c342f2b6e5083927bec49feec95ed53",
-                "reference": "30008a0e3c342f2b6e5083927bec49feec95ed53",
+                "url": "https://api.github.com/repos/codeigniter4/framework/zipball/163f11101a49d7ab70287f6163e5b647a0e26fa4",
+                "reference": "163f11101a49d7ab70287f6163e5b647a0e26fa4",
                 "shasum": ""
             },
             "require": {
                 "ext-intl": "*",
-                "ext-json": "*",
                 "ext-mbstring": "*",
-                "laminas/laminas-escaper": "^2.9",
-                "php": "^7.4 || ^8.0",
-                "psr/log": "^1.1"
+                "laminas/laminas-escaper": "^2.13",
+                "php": "^8.1",
+                "psr/log": "^3.0"
             },
             "require-dev": {
-                "codeigniter/coding-standard": "^1.5",
+                "codeigniter/coding-standard": "^1.7",
                 "fakerphp/faker": "^1.9",
-                "friendsofphp/php-cs-fixer": "3.13.0",
+                "friendsofphp/php-cs-fixer": "^3.47.1",
                 "kint-php/kint": "^5.0.4",
                 "mikey179/vfsstream": "^1.6",
                 "nexusphp/cs-config": "^3.6",
-                "phpunit/phpunit": "^9.1",
+                "phpunit/phpunit": "^10.5.16",
                 "predis/predis": "^1.1 || ^2.0"
             },
             "suggest": {
@@ -54,6 +53,7 @@
                 "ext-readline": "Improves CLI::input() usability",
                 "ext-redis": "If you use Cache class RedisHandler",
                 "ext-simplexml": "If you format XML",
+                "ext-sodium": "If you use Encryption SodiumHandler",
                 "ext-sqlite3": "If you use SQLite3",
                 "ext-sqlsrv": "If you use SQL Server",
                 "ext-xdebug": "If you use CIUnitTestCase::assertHeaderEmitted()"
@@ -78,7 +78,7 @@
                 "slack": "https://codeigniterchat.slack.com",
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
-            "time": "2023-08-25T07:02:01+00:00"
+            "time": "2024-06-10T08:02:36+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -144,30 +144,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.4",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe5ea303b0887d5caefd3d431c3e61ad47037001",
+                "reference": "fe5ea303b0887d5caefd3d431c3e61ad47037001",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                    "Psr\\Log\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -188,9 +188,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
+                "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
-            "time": "2021-05-03T11:20:27+00:00"
+            "time": "2021-07-14T16:46:02+00:00"
         }
     ],
     "packages-dev": [
