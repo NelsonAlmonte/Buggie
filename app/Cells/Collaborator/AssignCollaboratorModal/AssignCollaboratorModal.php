@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Cells;
+namespace App\Cells\Collaborator\AssignCollaboratorModal;
 
 use CodeIgniter\View\Cells\Cell;
 
