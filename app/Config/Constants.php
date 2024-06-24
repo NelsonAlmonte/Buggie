@@ -103,9 +103,9 @@ define('MESSAGE_ERROR_COLOR', 'danger');
 define('MESSAGE_ERROR_HEX_COLOR', '#dc3545');
 define('MESSAGE_ERROR_ICON', 'error');
 // Uploads
-define('PATH_UPLOAD_PROFILE_IMAGE', '../public_html/uploads/profile-image/');
-define('PATH_UPLOAD_ISSUES_IMAGES', '../public_html/uploads/issues-images/');
-define('PATH_UPLOAD_ISSUES_FILES', '../public_html/uploads/issues-files/');
+define('PATH_UPLOAD_PROFILE_IMAGE', '/public/uploads/profile-image/');
+define('PATH_UPLOAD_ISSUES_IMAGES', '/public/uploads/issues-images/');
+define('PATH_UPLOAD_ISSUES_FILES', '/public/uploads/issues-files/');
 // View files
 define('PATH_TO_VIEW_PROFILE_IMAGE', '/uploads/profile-image/');
 define('PATH_TO_VIEW_ISSUES_IMAGES', '/uploads/issues-images/');

@@ -104,7 +104,7 @@ class Toolbar extends BaseConfig
      */
     public array $watchedDirectories = [
         'app',
-        '../public_html'
+        'public'
     ];
     
     /**
