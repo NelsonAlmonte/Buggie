@@ -60,6 +60,7 @@ class Project extends BaseController
   {
     helper('url');
     $projectModel = model(ProjectModel::class);
+    $createdProjectId = 0;
     $data = [];
 
     $data = [
@@ -72,7 +73,9 @@ class Project extends BaseController
       'end_date' => $this->request->getPost('end_date'),
     ];
 
-    if ($projectModel->saveProject($data)) {
+    $createdProjectId = $projectModel->saveProject($data);
+
+    if ($this->_assignCreatedProjectToCurrentCollaborator($createdProjectId)) {
       session()->setFlashdata([
         'message' => MESSAGE_SUCCESS, 
         'color' => MESSAGE_SUCCESS_COLOR, 
@@ -89,6 +92,28 @@ class Project extends BaseController
       ]);
       return redirect()->to('manage/project/add');
     }
+  }
+
+  private function _assignCreatedProjectToCurrentCollaborator($createdProjectId)
+  {
+    $projectModel = model(ProjectModel::class);
+    $collaboratorModel = model(CollaboratorModel::class);
+    $currentCollaborator = 0;
+    $createdProject = [];
+    $collaboratorToAdd = [];
+    $projects = [];
+
+    $createdProject = $projectModel->getProject($createdProjectId);
+    $currentCollaborator = session()->get('id');
+    $collaboratorToAdd = [
+      'collaborator' => $currentCollaborator,
+      'project' => $createdProjectId,
+    ];
+    $projects = session()->get('projects');
+    array_push($projects, $createdProject);
+    session()->set('projects', $projects);
+
+    return $collaboratorModel->saveCollaboratorProjects($collaboratorToAdd);
   }
 
   public function edit($slug, $id)
