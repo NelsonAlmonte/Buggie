@@ -70,11 +70,12 @@ class CollaboratorModel extends Model
             ->update($data);
     }
 
-    public function getCollaborators()
+    public function getCollaborators($value = '1', $field = 'is_active')
     {
         return $this->db
             ->table('collaborators')
-            ->where('is_active', '1')
+            // ->where('is_active', '1')
+            ->where($field, $value)
             ->get()
             ->getResultArray();
     }
@@ -117,5 +118,13 @@ class CollaboratorModel extends Model
             ->where('collaborator', $collaborator)
             ->where('project', $project)
             ->delete();
+    }
+
+    public function updateToDefaultRole($data)
+    {
+        return $this->db
+            ->table('collaborators')
+            ->where(['role' => $data['role']])
+            ->update(['role' => SYSTEM_DEFAULT_ROLE['id']]);
     }
 }

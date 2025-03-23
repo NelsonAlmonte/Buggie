@@ -69,7 +69,7 @@
         <div class="col-12 my-4">
           <h4><i class="bi bi-people text-primary me-3"></i>Collaborators</h4>
         </div>
-        <div class="col-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div 
             x-data="searchSelect" 
             x-init='
@@ -114,7 +114,7 @@
             >
           </div>
         </div>
-        <div class="col-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div 
             x-data="searchSelect" 
             x-init='
@@ -195,14 +195,14 @@
         <div class="col-12 my-4">
           <h4><i class="bi bi-calendar3 text-primary me-3"></i>Dates</h4>
         </div>
-        <div class="col-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <input type="date" class="form-control bg-dominant border-0" id="start_date" name="start_date"
               value="<?=date('Y-m-d')?>" required>
             <label for="start_date">Start date*</label>
           </div>
         </div>
-        <div class="col-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-4">
           <div class="form-floating">
             <input type="date" class="form-control bg-dominant border-0" id="end_date" name="end_date">
             <label for="end_date">End date</label>

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="d-flex align-items-center justify-content-between">
+  <div class="d-flex flex-column align-items-start flex-md-row align-items-md-center justify-content-between">
     <div class="d-flex align-items-center justify-content-start">
       <?php if(count($projects) > 1): ?>
         <h2>Reports on</h2>

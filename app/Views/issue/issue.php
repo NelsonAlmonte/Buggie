@@ -10,7 +10,7 @@
     <?php endif; ?>
   </div>
   <div class="row my-4">
-    <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12">
+    <div class="col-xl-9 col-lg-8 col-md-12 col-sm-12 mb-4">
       <div class="card bg-complementary border border-0 rounded-4 h-100">
         <div class="card-body text-light">
           <?=$issue['description']?>

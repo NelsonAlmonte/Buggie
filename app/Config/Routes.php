@@ -110,5 +110,9 @@ $routes->group('v1', ['filter' => 'isloggedin'], static function($routes) {
         $routes->get('getIssues', 'Calendar::getIssues');
     });
     
+    $routes->group('role', ['isloggedin', 'checkpermissions'], static function ($routes) {
+        $routes->delete('deleteRole', 'Role::deleteRole');
+    });
+    
     $routes->post('category/searchCategories', 'Category::searchCategories');
 });

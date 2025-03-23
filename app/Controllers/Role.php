@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\CollaboratorModel;
 use App\Models\PermissionModel;
 use App\Models\RoleModel;
 
@@ -118,35 +119,98 @@ class Role extends BaseController
         $rolesToRemove = [];
         $operationsToValidate = 0;
         $succesfulOperations = 0;
-
-        $rolesToAdd = array_udiff(
-            $selectedPermissions, $rolePermissions,
-            fn ($needle, $haystack) => $needle['id'] <=> $haystack['permission']
+    
+        $rolePermissions = array_map(
+            fn ($perm) => ['permission' => $perm['permission'] ?? null], 
+            $rolePermissions ?? []
         );
+    
+        $selectedPermissions = array_map(
+            fn ($perm) => ['id' => $perm['id'] ?? null], 
+            $selectedPermissions ?? []
+        );
+    
+        $selectedPermissions = array_filter($selectedPermissions, fn($perm) => isset($perm['id']));
+        $rolePermissions = array_filter($rolePermissions, fn($perm) => isset($perm['permission']));
+    
+        $rolesToAdd = empty($rolePermissions) 
+            ? $selectedPermissions 
+            : array_udiff(
+                $selectedPermissions, $rolePermissions,
+                fn ($needle, $haystack) => ($needle['id'] ?? null) <=> ($haystack['permission'] ?? null)
+        );
+    
         $rolesToAdd = array_map(
             fn ($permission) => [
                 'role' => $role,
-                'permission' => $permission['id']
+                'permission' => $permission['id'] ?? null
             ], $rolesToAdd
         );
+    
         if (!empty($rolesToAdd)) 
             $succesfulOperations += $permissionModel->saveRolePermissions($rolesToAdd);
-
-        $rolesToRemove = array_udiff(
-            $rolePermissions, $selectedPermissions,
-            fn ($needle, $haystack) => $needle['permission'] <=> $haystack['id']
+    
+        $rolesToRemove = empty($rolePermissions) 
+            ? []  
+            : array_udiff(
+                $rolePermissions, $selectedPermissions,
+                fn ($needle, $haystack) => ($needle['permission'] ?? null) <=> ($haystack['id'] ?? null)
         );
+    
         $rolesToRemove = array_map(
             fn ($permission) => [
                 'role' => $role,
-                'permission' => $permission['permission']
+                'permission' => $permission['permission'] ?? null
             ], $rolesToRemove
         );
+    
         if (!empty($rolesToRemove)) 
             $succesfulOperations += $permissionModel->deleteRolePermissions($rolesToRemove);
-        
+    
         $operationsToValidate = count($rolesToAdd) + count($rolesToRemove);
+    
+        return ($succesfulOperations == $operationsToValidate);
+    }
 
-        return ($succesfulOperations == $operationsToValidate) ? true : false;
+    public function deleteRole()
+    {
+        $roleModel = model(RoleModel::class);
+        $permissionModel = model(PermissionModel::class);
+        $collaboratorModel = model(CollaboratorModel::class);
+        $json = [];
+        $response = [];
+        $role = [];
+        $rolesToRemove = [];
+        $operationsToValidate = 2;
+        $succesfulOperations = 0;
+        
+        $json = $this->request->getJSON(true);
+        
+        $response['token'] = csrf_hash();
+        $response['status'] = EXIT_ERROR;
+
+        $role = $json['role'];
+        $rolePermissions = $permissionModel->getRolePermissions($role['id']);
+
+        if ($collaboratorModel->updateToDefaultRole(['role' => $role['id']])) $succesfulOperations ++;
+
+        $rolesToRemove = array_map(
+            fn ($permission) => [
+                'role' => $role['id'],
+                'permission' => $permission['permission'] ?? null
+            ], $rolePermissions
+        );
+          
+        if (!empty($rolesToRemove)) 
+            $succesfulOperations += $permissionModel->deleteRolePermissions($rolesToRemove);
+
+        if ($roleModel->deleteRole($role['id'])) 
+            $succesfulOperations ++;
+
+        $operationsToValidate += count($rolesToRemove);
+
+        if ($succesfulOperations == $operationsToValidate) $response['status'] = EXIT_SUCCESS;
+
+        return $this->response->setJSON($response);
     }
 }

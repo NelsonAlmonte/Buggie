@@ -5,8 +5,8 @@
       <div class="status-badge d-inline-block text-capitalize" style="<?=esc($project['statusStyle'])?>">
         <?=esc($project['status'])?>
       </div>
-      <div class="d-inline-block mx-2">|</div>
       <?php if($project['end_date'] != '0000-00-00'): ?>
+      <div class="d-inline-block mx-2">|</div>
       <?php $endDate = new DateTime($project['end_date']);?>
       <?php $startDate = new DateTime($project['start_date']);?>
       <span><?=$endDate->diff($startDate)->format("Ends in %m months and %d days")?></span>
@@ -161,8 +161,8 @@
           <?php if(!empty($issues)): ?>
           <?php foreach($issues as $key => $issue): ?>
           <div
-            class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
-            <div>
+            class="issue-item d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>">
+            <div class="mb-2 mb-md-0">
               <a class="text-accent text-decoration-none fw-bold d-block"
                 href="<?=site_url('issue/' . $project['slug'] . '/issue/' . $issue['id'])?>"><?=esc($issue['title'])?></a>
               <small>
@@ -195,7 +195,7 @@
               </small>
             </div>
             <div>
-              <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
+              <div class="status-badge d-inline-block text-capitalize me-1 mb-2 mb-xl-0"
                 style="color: #<?=esc($issue['classification_color'])?>; background-color: #<?=esc($issue['classification_color'])?>1a; border: 1px solid #<?=esc($issue['classification_color'])?>;">
                 <?=esc($issue['classification_name'])?>
               </div>

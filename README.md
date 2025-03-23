@@ -52,6 +52,9 @@
       <a href="#features">Features</a>
     </li>
     <li>
+      <a href="#demo">Demo</a>
+    </li>
+    <li>
       <a href="#built-with">Built With</a>
     </li>
     <li>
@@ -85,6 +88,17 @@ Buggie is a simple bugtracker made to track issues and bugs in projects focused 
 - Graph report for everyone of your projects.
 - A calendar to see all the issues of a project.
 - Simple role and permission module.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Demo
+
+[Working demo hosted on DOM Cloud](https://buggie.mnz.dom.my.id/)
+
+To login to the project use the following credentials:
+
+Username: **test**
+Password: **123456**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,10 +194,9 @@ To:
 
 _For more information on how to run a CodeIgniter project, please refer to the [CodeIgniter documentation](https://codeigniter.com/user_guide/installation/running.html)_
 
-To login in to the project use the following credentials:
+To login to the project use the following credentials:
 
 Username: **admin**
-<br>
 Password: **123456**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

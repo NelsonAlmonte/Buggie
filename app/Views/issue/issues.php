@@ -7,46 +7,48 @@
     </a>
   </div>
   <div class="card bg-complementary border border-0 rounded-4 mt-4">
-    <div class="card-header d-flex justify-content-start align-items-center bg-complementary rounded-top-4 px-4 py-3">
-      <ul class="nav">
-        <li class="nav-item me-2">
-          <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=isset($_GET['status']) && $_GET['status'] == 'open' ? 'active' : '' ;?>" href="?status=open">
-            <span class="me-1">Open</span> 
-            <span class="badge rounded-pill text-bg-secondary"><?=count($openIssues)?></span>
-          </a>
-        </li>
-        <li class="nav-item me-2">
-          <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=isset($_GET['status']) && $_GET['status'] == 'closed' ? 'active' : '' ;?>" href="?status=closed">
-            <span class="me-1 ">Closed</span> 
-            <span class="badge rounded-pill text-bg-secondary"><?=count($closedIssues)?></span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=!isset($_GET['status']) ? 'active' : '' ;?>" href="<?=site_url('issue/' . $slug)?>">
-            <span class="me-1 ">All</span> 
-            <span class="badge rounded-pill text-bg-secondary"><?=count($projectIssues)?></span>
-          </a>
-        </li>
-      </ul>
-      <form class="flex-grow-1" action="<?=site_url('issue/' . $slug)?>" method="get">
-        <div class="input-group">
-          <input type="text" class="form-control bg-dominant border-0" placeholder="Search by issue title..." name="title" value="<?=isset($_GET['title']) ? $_GET['title'] : '' ;?>" aria-label="Search" aria-describedby="search" autocomplete="off">
-          <a class="btn bg-dominant <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
-          <button class="btn bg-dominant" type="submit"><i class="bi bi-search text-white"></i></button>
-          <button class="btn bg-dominant" type="button" data-bs-toggle="modal"
-          data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
-        </div>
-      </form>
+    <div class="card-header bg-complementary rounded-top-4 px-4 py-3">
+      <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+        <ul class="nav mb-2 mb-md-0">
+          <li class="nav-item me-2">
+            <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=isset($_GET['status']) && $_GET['status'] == 'open' ? 'active' : '' ;?>" href="?status=open">
+              <span class="me-1">Open</span> 
+              <span class="badge rounded-pill text-bg-secondary"><?=count($openIssues)?></span>
+            </a>
+          </li>
+          <li class="nav-item me-2">
+            <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=isset($_GET['status']) && $_GET['status'] == 'closed' ? 'active' : '' ;?>" href="?status=closed">
+              <span class="me-1 ">Closed</span> 
+              <span class="badge rounded-pill text-bg-secondary"><?=count($closedIssues)?></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link issue-filter d-flex justify-content-center align-items-center ps-0 <?=!isset($_GET['status']) ? 'active' : '' ;?>" href="<?=site_url('issue/' . $slug)?>">
+              <span class="me-1 ">All</span> 
+              <span class="badge rounded-pill text-bg-secondary"><?=count($projectIssues)?></span>
+            </a>
+          </li>
+        </ul>
+        <form class="flex-grow-1" action="<?=site_url('issue/' . $slug)?>" method="get">
+          <div class="input-group">
+            <input type="text" class="form-control bg-dominant border-0" placeholder="Search by issue title..." name="title" value="<?=isset($_GET['title']) ? $_GET['title'] : '' ;?>" aria-label="Search" aria-describedby="search" autocomplete="off">
+            <a class="btn bg-dominant <?=count(array_keys($_GET)) > 0 ? '' : 'd-none' ;?>" href="<?=site_url('issue/' . $slug)?>" type="button"><i class="bi bi-x-lg text-white"></i></a>
+            <button class="btn bg-dominant" type="submit"><i class="bi bi-search text-white"></i></button>
+            <button class="btn bg-dominant" type="button" data-bs-toggle="modal"
+            data-bs-target="#issues-filter-modal"><i class="bi bi-funnel text-white"></i></button>
+          </div>
+        </form>
+      </div>
     </div>
     <div class="card-body p-0">
       <?php if(!empty($issues)): ?>
         <?php foreach($issues as $key => $issue): ?>
         <div 
-          class="issue-item d-flex justify-content-between align-items-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>"
+          class="issue-item d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center py-2 px-4 <?=$key != 0 ? 'border-top' : ''?>"
           x-data
           x-ref="issue"
         >
-          <div>
+          <div class="mb-2 mb-lg-0">
             <a class="text-accent text-decoration-none fw-bold d-block" href="<?=site_url('issue/' . $slug . '/issue/' . $issue['id'])?>"><?=esc($issue['title'])?></a>
             <small>
               <a class="text-accent text-decoration-none fw-bold" href="<?=site_url('issue/' . $slug . '/issue/' . $issue['id'])?>"> #<?=esc($issue['id'])?></a>
@@ -75,7 +77,7 @@
             </small>
           </div>
           <div>
-            <div class="status-badge d-inline-block text-capitalize mx-1 mb-2 mb-xl-0"
+            <div class="status-badge d-inline-block text-capitalize me-1 mb-2 mb-xl-0"
               style="color: #<?=esc($issue['classification_color'])?>; background-color: #<?=esc($issue['classification_color'])?>1a; border: 1px solid #<?=esc($issue['classification_color'])?>;">
               <?=esc($issue['classification_name'])?>
             </div>

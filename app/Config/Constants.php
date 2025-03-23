@@ -105,6 +105,7 @@ define('PAGINATION_RECORDS_PER_PAGE', 10);
 // Auth
 define('SYSTEM_ADMIN_ROLE', ['id' => 1, 'name' => 'Administrator']);
 define('SYSTEM_PERMISSIONS', ['project', 'collaborator', 'role', 'issue']);
+define('SYSTEM_DEFAULT_ROLE', ['id' => 2, 'name' => 'Default']);
 // Assets
 define('DEFAULT_PROFILE_IMAGE', 'default-profile-image.png');
 define('EMPTY_IMAGE', 'empty.svg');
